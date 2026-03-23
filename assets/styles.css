@@ -119,24 +119,304 @@ textarea {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.55rem;
   list-style: none;
   padding: 0;
   margin: 0;
   color: var(--muted);
-  font-size: 0.97rem;
+  font-size: 0.95rem;
+}
+
+.nav-links li {
+  display: flex;
 }
 
 .nav-links a {
-  padding: 0.45rem 0.75rem;
-  border-radius: 999px;
-  transition: color 180ms ease, background 180ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.55rem 0.8rem;
+  border-radius: 14px;
+  text-align: center;
+  line-height: 1.15;
+  transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease;
 }
 
 .nav-links a:hover,
 .nav-links a.is-active {
   color: var(--navy-900);
   background: rgba(19, 58, 98, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(19, 58, 98, 0.06);
+}
+
+.nav-links a:focus-visible {
+  outline: 2px solid rgba(255, 127, 42, 0.55);
+  outline-offset: 2px;
+}
+
+.nav-links a[href="/floor-plans-pricing"] {
+  max-width: 108px;
+}
+
+.nav-links a[href="/the-oasis"] {
+  max-width: 78px;
+}
+
+.nav-links a[href="/communities"] {
+  max-width: 110px;
+}
+
+.nav-links a[href="/cornerstone"] {
+  max-width: 100px;
+}
+
+.nav-links a[href="/"] {
+  min-width: 62px;
+}
+
+.nav-links a[href="/faq"] {
+  min-width: 58px;
+}
+
+.nav-links a[href="/about"] {
+  min-width: 66px;
+}
+
+.nav-links a[href="/contact"] {
+  min-width: 76px;
+}
+
+.nav-links a[href="/amenities"] {
+  min-width: 92px;
+}
+
+.nav-links a[href="/floor-plans-pricing"],
+.nav-links a[href="/the-oasis"],
+.nav-links a[href="/communities"],
+.nav-links a[href="/cornerstone"] {
+  white-space: normal;
+}
+
+.nav-links a:not([href="/floor-plans-pricing"]):not([href="/the-oasis"]):not([href="/communities"]):not([href="/cornerstone"]) {
+  white-space: nowrap;
+}
+
+@media (min-width: 901px) {
+  .nav-shell {
+    gap: 1rem;
+  }
+
+  .brand img {
+    width: 150px;
+  }
+
+  .nav-actions .btn-dark {
+    padding-inline: 1.15rem;
+  }
+}
+
+@media (max-width: 1160px) and (min-width: 901px) {
+  .nav-links {
+    gap: 0.35rem;
+    font-size: 0.9rem;
+  }
+
+  .nav-links a {
+    padding: 0.5rem 0.65rem;
+  }
+}
+
+@media (max-width: 1000px) and (min-width: 901px) {
+  .brand img {
+    width: 138px;
+  }
+
+  .nav-actions .btn-dark {
+    font-size: 0.92rem;
+    min-height: 46px;
+    padding-inline: 1rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav-links li {
+    display: block;
+  }
+
+  .nav-links a,
+  .nav-links a[href="/floor-plans-pricing"],
+  .nav-links a[href="/the-oasis"],
+  .nav-links a[href="/communities"],
+  .nav-links a[href="/cornerstone"] {
+    max-width: none;
+    justify-content: flex-start;
+    white-space: normal;
+  }
+}
+
+.amenity-card {
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.surface.navy .amenity-card {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 12px 24px rgba(4, 15, 28, 0.18);
+}
+
+.surface.navy .amenity-card strong {
+  color: var(--navy-900);
+}
+
+.surface.navy .amenity-card p {
+  color: var(--muted);
+}
+
+.surface.navy .kicker {
+  color: #ffb27a;
+}
+
+.surface.navy .section-head h2 {
+  max-width: 14ch;
+}
+
+.surface.navy .section-head {
+  align-items: start;
+}
+
+.surface.navy .section-head p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.note-card p,
+.note-card a {
+  color: var(--white);
+}
+
+.note-card strong {
+  color: var(--white);
+}
+
+.cta-band .note-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.footer-brand + p,
+.site-footer p {
+  color: var(--muted);
+}
+
+.faq-card p,
+.info-card p,
+.community-card p,
+.pricing-card p,
+.amenity-card p,
+.contact-card p,
+.form-card p,
+.spotlight__copy p,
+.surface p {
+  color: var(--muted);
+}
+
+.surface.navy .stat-card {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.surface.navy .stat-card span {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.surface.navy .compare-card,
+.surface.navy .info-card,
+.surface.navy .note-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.surface.navy .compare-card strong,
+.surface.navy .info-card strong,
+.surface.navy .note-card strong {
+  color: var(--white);
+}
+
+.surface.navy .compare-card p,
+.surface.navy .info-card p,
+.surface.navy .note-card p {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.quote {
+  color: var(--navy-900);
+}
+
+.quote strong {
+  color: inherit;
+}
+
+.contact-card a,
+.note-card a,
+.site-footer a {
+  word-break: break-word;
+}
+
+.hero-actions .btn-secondary {
+  border: 1px solid rgba(15, 39, 68, 0.1);
+}
+
+.hero-actions .btn-secondary:hover {
+  background: rgba(15, 39, 68, 0.12);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid rgba(255, 127, 42, 0.35);
+  border-color: rgba(255, 127, 42, 0.45);
+}
+
+::selection {
+  background: rgba(255, 127, 42, 0.18);
+}
+
+@media (max-width: 680px) {
+  .surface.navy .section-head h2 {
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .btn,
+  .nav-links a {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .nav-links a:focus-visible,
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: 2px solid CanvasText;
+  }
+}
+
+@media print {
+  .site-header,
+  .site-footer,
+  .nav-toggle,
+  .btn,
+  .hero-actions {
+    display: none !important;
+  }
 }
 
 .nav-actions {
