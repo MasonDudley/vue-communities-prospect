@@ -1,6 +1,6 @@
-# Vue Communities Prospect Redesign
+# VUE Communities Prospect Redesign
 
-Static, multi-page prospect/demo website for Vue Communities in Lynchburg, Virginia. The site is designed as a polished redesign mockup and is ready to preview locally or deploy on Vercel.
+Static, multi-page prospect/demo website for VUE Communities in Lynchburg, Virginia. The site is designed as a polished redesign mockup and is ready to preview locally or deploy on Vercel.
 
 ## Local preview
 
@@ -23,5 +23,5 @@ The included `vercel.json` enables clean URLs, so routes such as `/about`, `/faq
 ## Notes
 
 - Brand assets reused locally live in `assets/images/`.
-- Property photography references current image URLs exposed by the live Vue Communities site and scrape.
+- Property photography references current image URLs exposed by the live VUE Communities site and scrape.
 - Contact form is a lightweight `mailto:` prospect form suitable for demo/prospect use without backend setup.
