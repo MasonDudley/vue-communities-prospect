@@ -6,7 +6,7 @@
     <title>VUE Communities | Student Apartments Near Liberty University</title>
     <meta
       name="description"
-      content="Premium prospect redesign for VUE Communities: student-only apartments in Lynchburg, VA with individual leases, furnished units, roommate matching, Oasis shuttle access, and communities near Liberty University."
+      content="Student apartments near Liberty University in Lynchburg, VA with furnished units, individual leases, roommate matching, and two distinct communities: The Oasis and Cornerstone."
     />
     <meta property="og:title" content="VUE Communities | Student Apartments Near Liberty University" />
     <meta
@@ -14,6 +14,19 @@
       content="Explore The Oasis and Cornerstone student apartments in Lynchburg, Virginia."
     />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://vuecommunities.com/" />
+    <meta property="og:image" content="https://vuecommunities.com/assets/images/vue-logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="VUE Communities | Student Apartments Near Liberty University" />
+    <meta
+      name="twitter:description"
+      content="Explore The Oasis and Cornerstone student apartments in Lynchburg, Virginia."
+    />
+    <link rel="canonical" href="https://vuecommunities.com/" />
+    <link rel="icon" type="image/png" href="/assets/images/icon-192.png" />
+    <link rel="apple-touch-icon" href="/assets/images/icon-192.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0d2744" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -30,11 +43,18 @@
         <a class="brand" href="/">
           <img src="/assets/images/vue-logo.png" alt="VUE Communities logo" />
         </a>
-        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" data-nav-toggle>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Toggle navigation"
+          aria-controls="site-menu"
+          aria-expanded="false"
+          data-nav-toggle
+        >
           <span></span><span></span><span></span>
         </button>
         <nav aria-label="Primary">
-          <ul class="nav-links">
+          <ul class="nav-links" id="site-menu">
             <li><a class="is-active" href="/">Home</a></li>
             <li><a href="/communities">Communities</a></li>
             <li><a href="/the-oasis">The Oasis</a></li>
@@ -79,8 +99,8 @@
                 <span>You rent your room only, not the entire apartment.</span>
               </div>
               <div class="meta-card">
-                <strong>Mostly included</strong>
-                <span>Internet and core utilities are included, with electricity billed separately.</span>
+                <strong>Leasing details</strong>
+                <span>Electricity is billed separately. Contact leasing for full utility details by community.</span>
               </div>
             </div>
           </div>
@@ -110,7 +130,7 @@
               </div>
               <div class="visual-chip is-orange">
                 <strong>Cornerstone</strong>
-                A focused 3BR/3BA layout with ensuite baths, walk-in closets, and a quieter neighborhood feel.
+                A focused 3BR/3BA layout with ensuite baths, walk-in closets, and a residential neighborhood feel.
               </div>
             </div>
           </div>
@@ -125,8 +145,8 @@
               <h2>Built around the parts of college housing that actually matter.</h2>
             </div>
             <p class="section-intro">
-              The current VUE Communities site emphasizes the same fundamentals residents and guarantors care about:
-              student-only leasing, furnished apartments, roommate matching, and a simple monthly setup.
+              VUE Communities emphasizes the same fundamentals residents and guarantors care about: student-only leasing,
+              furnished apartments, roommate matching, and a straightforward monthly setup.
             </p>
           </div>
           <div class="stat-grid">
@@ -153,7 +173,7 @@
       <section class="section reveal">
         <div class="section-head">
           <div>
-            <div class="kicker">Brand cues from the live site</div>
+            <div class="kicker">Recognizable brand, refined</div>
             <h2>Kept the orange-and-navy identity, <span class="accent">elevated the presentation</span>.</h2>
           </div>
           <p class="section-intro">
@@ -194,7 +214,7 @@
                   closely tied to campus movement.
                 </p>
                 <ul class="list">
-                  <li>Only privately owned apartment community on the current site advertising Liberty shuttle access.</li>
+                  <li>Published community details highlight Liberty shuttle access at Oasis.</li>
                   <li>Floor plans range from 1 to 6 bedrooms, including office/study layouts.</li>
                   <li>Clubhouse, fitness center, pool, study areas, nature trail, and more.</li>
                 </ul>
@@ -212,7 +232,7 @@
               </div>
               <div class="community-card__body">
                 <div class="kicker">Cornerstone</div>
-                <h3>Streamlined 3BR/3BA living near restaurants and retail.</h3>
+                <h3>Streamlined 3BR/3BA living in a residential setting.</h3>
                 <p>
                   Best for students who want an ensuite bathroom, walk-in closet, and a more focused residential setting
                   off Greenview Drive.
@@ -238,8 +258,8 @@
             <h2>Pricing that covers the full spectrum of student housing needs.</h2>
           </div>
           <p class="section-intro">
-            Rates below are grounded in the current live site and shown per person, per room, per installment. Pricing is
-            subject to change.
+            Rates below are shown per person, per room, per installment. Contact leasing for current availability,
+            specials, and pricing updates.
           </p>
         </div>
         <div class="pricing-grid three">
@@ -274,9 +294,9 @@
             <div class="pricing-card__body">
               <div class="kicker">Cornerstone</div>
               <h3>3BR / 3BA layout</h3>
-              <p>The live site positions Cornerstone as a simple single-layout option with private ensuite bathrooms.</p>
+              <p>Cornerstone offers a simple single-layout option with private ensuite bathrooms.</p>
               <div class="price"><strong>$699</strong><span>/installment</span></div>
-              <div class="pricing-note">Current site also notes limited April and May move-in availability. Call for current leasing details.</div>
+              <div class="pricing-note">Contact leasing for current availability and lease timing.</div>
             </div>
           </article>
         </div>
@@ -311,15 +331,17 @@
       <section class="section reveal">
         <div class="cta-band">
           <div>
-            <div class="kicker">Current leasing callout</div>
-            <h2>Now leasing for August 2026.</h2>
+            <div class="kicker">Talk to leasing</div>
+            <h2>Get current pricing, availability, and tour details.</h2>
             <p>
-              The current site promotes August 2026 availability and a limited lease incentive. Contact the office for the
-              most current specials and room availability.
+              Availability, specials, and lease timing can change throughout the season. Reach out to the leasing office
+              for the latest openings at The Oasis or Cornerstone.
             </p>
           </div>
-          <div style="max-width: 380px; width: 100%">
-            <img src="/assets/images/lease-special.jpg" alt="Current Vue lease special graphic" />
+          <div class="note-stack">
+            <div class="note-card"><strong>Phone</strong><p><a href="tel:4343297979">434-329-7979</a></p></div>
+            <div class="note-card"><strong>Email</strong><p><a href="mailto:gm1@vuecommunities.com">gm1@vuecommunities.com</a></p></div>
+            <div class="note-card"><strong>Office hours</strong><p>Monday-Friday: 10:00 AM to 5:00 PM</p></div>
           </div>
         </div>
       </section>
@@ -331,15 +353,15 @@
             <h3>Questions students ask first</h3>
             <details open>
               <summary>Can online students live at The VUE?</summary>
-              <p>Yes. The current FAQ says online students are welcome with proof of enrollment in at least one college class.</p>
+              <p>Yes. Online students are welcome with proof of enrollment in at least one college class.</p>
             </details>
             <details>
               <summary>What is included with rent?</summary>
-              <p>Internet, trash, water, and sewer are included across the current FAQ, while electricity is billed separately.</p>
+              <p>Published community details include internet and community-specific bundled services, while electricity is billed separately. Contact leasing for exact utility details by property.</p>
             </details>
             <details>
               <summary>Are the apartments furnished?</summary>
-              <p>Yes. The current site says all units are fully furnished, reducing move-in friction.</p>
+              <p>Yes. All units are marketed as fully furnished, reducing move-in friction.</p>
             </details>
             <details>
               <summary>Is parking available?</summary>
@@ -350,8 +372,8 @@
             <div class="kicker">Contact the office</div>
             <h3>Need a fast answer?</h3>
             <p>
-              The leasing office is located at 40 Oasis Way in Lynchburg, Virginia and the current site lists weekday hours
-              from 10:00 AM to 5:00 PM.
+              The leasing office is located at 40 Oasis Way in Lynchburg, Virginia and publishes weekday hours from
+              10:00 AM to 5:00 PM.
             </p>
             <div class="pill-row">
               <span class="pill">40 Oasis Way, Lynchburg, VA 24502</span>
@@ -374,25 +396,23 @@
             <img src="/assets/images/vue-logo.png" alt="VUE Communities logo" />
           </div>
           <p>
-            Prospect redesign mockup for VUE Communities student apartments in Lynchburg, Virginia. Grounded in live-site
-            details for The Oasis and Cornerstone.
+            Student apartments in Lynchburg, Virginia with two distinct community options near Liberty University.
           </p>
           <div class="footer-links">
             <a href="/communities">Communities</a>
             <a href="/floor-plans-pricing">Pricing</a>
             <a href="/about">About</a>
             <a href="/contact">Contact</a>
-            <a href="https://sclas.twa.rentmanager.com/" target="_blank" rel="noreferrer">Resident Portal</a>
+            <a href="https://sclas.twa.rentmanager.com/" target="_blank" rel="noopener noreferrer">Resident Portal</a>
           </div>
         </div>
         <div>
           <div class="social-links">
-            <a href="https://www.facebook.com/profile.php?id=100093957887209&mibextid=LQQJ4d" target="_blank" rel="noreferrer">Facebook</a>
-            <a href="https://www.tiktok.com/@the_vuelynchburg?lang=en" target="_blank" rel="noreferrer">TikTok</a>
-            <a href="https://www.youtube.com/@vuecommunities3652" target="_blank" rel="noreferrer">YouTube</a>
+            <a href="https://www.facebook.com/profile.php?id=100093957887209&mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a href="https://www.tiktok.com/@the_vuelynchburg?lang=en" target="_blank" rel="noopener noreferrer">TikTok</a>
           </div>
           <p>40 Oasis Way, Lynchburg, VA 24502<br />Phone: <a href="tel:4343297979">434-329-7979</a></p>
-          <p>&copy; <span data-year></span> VUE Communities prospect redesign.</p>
+          <p>&copy; <span data-year></span> VUE Communities. All rights reserved.</p>
         </div>
       </div>
     </footer>

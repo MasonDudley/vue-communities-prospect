@@ -8,6 +8,25 @@
       name="description"
       content="Contact VUE Communities in Lynchburg, VA for student apartment availability, tours, pricing, and lease questions for The Oasis and Cornerstone."
     />
+    <meta property="og:title" content="Contact VUE Communities | Lynchburg Student Apartments" />
+    <meta
+      property="og:description"
+      content="Contact the VUE Communities leasing office for tours, pricing, availability, and lease questions."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://vuecommunities.com/contact" />
+    <meta property="og:image" content="https://vuecommunities.com/assets/images/vue-logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Contact VUE Communities | Lynchburg Student Apartments" />
+    <meta
+      name="twitter:description"
+      content="Contact the VUE Communities leasing office for tours, pricing, availability, and lease questions."
+    />
+    <link rel="canonical" href="https://vuecommunities.com/contact" />
+    <link rel="icon" type="image/png" href="/assets/images/icon-192.png" />
+    <link rel="apple-touch-icon" href="/assets/images/icon-192.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0d2744" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -22,11 +41,18 @@
     <header class="site-header">
       <div class="nav-shell">
         <a class="brand" href="/"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></a>
-        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" data-nav-toggle>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Toggle navigation"
+          aria-controls="site-menu"
+          aria-expanded="false"
+          data-nav-toggle
+        >
           <span></span><span></span><span></span>
         </button>
         <nav aria-label="Primary">
-          <ul class="nav-links">
+          <ul class="nav-links" id="site-menu">
             <li><a href="/">Home</a></li>
             <li><a href="/communities">Communities</a></li>
             <li><a href="/the-oasis">The Oasis</a></li>
@@ -49,8 +75,8 @@
             <div class="eyebrow">Talk to the leasing office</div>
             <h1>Get pricing, availability, or tour help without chasing down scattered details.</h1>
             <p>
-              The current VUE Communities site points prospects to the leasing office at 40 Oasis Way in Lynchburg.
-              Use the quick contact options below or send a prospect message through the demo form.
+              Reach the leasing office at 40 Oasis Way in Lynchburg. Use the quick contact options below or send a
+              message through the inquiry form.
             </p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="tel:4343297979">Call Now</a>
@@ -79,11 +105,9 @@
           </article>
           <article class="contact-card">
             <div class="kicker">Hours</div>
-            <h3>Current hours on the live site</h3>
+            <h3>Office hours</h3>
             <p>Monday-Friday: 10:00 AM - 5:00 PM</p>
-            <p>Saturday: 11:00 AM - 6:00 PM</p>
-            <p>Sunday: closed on the live local business listing.</p>
-            <div class="hero-actions"><a class="btn btn-secondary" href="https://maps.google.com/?q=40+Oasis+Way+Lynchburg+VA+24502" target="_blank" rel="noreferrer">Get Directions</a></div>
+            <div class="hero-actions"><a class="btn btn-secondary" href="https://maps.google.com/?q=40+Oasis+Way+Lynchburg+VA+24502" target="_blank" rel="noopener noreferrer">Get Directions</a></div>
           </article>
         </div>
       </section>
@@ -95,9 +119,15 @@
               <div class="kicker">Prospect form</div>
               <h2>Send a quick leasing inquiry</h2>
             </div>
-            <p class="section-intro">This demo form opens your email client with a prebuilt message to the leasing team.</p>
+            <p class="section-intro">This form opens your email app with a prebuilt message to the leasing team.</p>
           </div>
-          <form class="form-grid" data-mailto-form>
+          <form
+            class="form-grid"
+            action="mailto:gm1@vuecommunities.com"
+            method="post"
+            enctype="text/plain"
+            data-mailto-form
+          >
             <div>
               <label for="name">Name</label>
               <input id="name" name="name" type="text" required />

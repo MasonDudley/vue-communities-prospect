@@ -46,6 +46,11 @@ a {
   text-decoration: none;
 }
 
+a:focus-visible {
+  outline: 2px solid rgba(255, 127, 42, 0.55);
+  outline-offset: 3px;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -433,6 +438,7 @@ textarea:focus {
   border-radius: 18px;
   background: rgba(15, 39, 68, 0.08);
   color: var(--navy-900);
+  cursor: pointer;
 }
 
 .nav-toggle span {
@@ -451,6 +457,7 @@ textarea:focus {
   gap: 0.55rem;
   min-height: 50px;
   padding: 0.8rem 1.3rem;
+  border: 0;
   border-radius: 999px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -459,6 +466,14 @@ textarea:focus {
 
 .btn:hover {
   transform: translateY(-1px);
+}
+
+.btn:focus-visible,
+.faq-card summary:focus-visible,
+.footer-links a:focus-visible,
+.social-links a:focus-visible {
+  outline: 2px solid rgba(255, 127, 42, 0.55);
+  outline-offset: 3px;
 }
 
 .btn-primary {
@@ -1100,13 +1115,13 @@ textarea {
   font-weight: 600;
 }
 
-.reveal {
+.js .reveal {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 600ms ease, transform 600ms ease;
 }
 
-.reveal.is-visible {
+.js .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -1136,11 +1151,11 @@ textarea {
 }
 
 @media (max-width: 900px) {
-  .nav-toggle {
+  .js .nav-toggle {
     display: inline-block;
   }
 
-  .nav-links {
+  .js .nav-links {
     position: fixed;
     inset: 84px 1rem auto;
     flex-direction: column;
@@ -1156,10 +1171,27 @@ textarea {
     transition: opacity 180ms ease, transform 180ms ease;
   }
 
+  .js .nav-links[hidden] {
+    display: none;
+  }
+
   body.menu-open .nav-links {
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0);
+  }
+
+  body.menu-open::before {
+    content: "";
+    position: fixed;
+    inset: 84px 0 0;
+    background: rgba(8, 23, 38, 0.16);
+    backdrop-filter: blur(2px);
+    z-index: 10;
+  }
+
+  .site-header {
+    z-index: 20;
   }
 
   .nav-actions .btn-dark {
