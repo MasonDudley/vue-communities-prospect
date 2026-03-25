@@ -6,7 +6,7 @@
     <title>Floor Plans &amp; Pricing | VUE Communities</title>
     <meta
       name="description"
-      content="Review current floor plan options and pricing for VUE Communities in Lynchburg, VA, including Oasis 1BR-6BR layouts and Cornerstone 3BR/3BA student apartments."
+      content="Review current floor plan options and pricing for VUE Communities in Lynchburg, VA, including The Oasis 1BR-6BR layouts and The VUE at Cornerstone 3BR/3BA student apartments."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,11 +22,18 @@
     <header class="site-header">
       <div class="nav-shell">
         <a class="brand" href="/"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></a>
-        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" data-nav-toggle>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+          data-nav-toggle
+        >
           <span></span><span></span><span></span>
         </button>
         <nav aria-label="Primary">
-          <ul class="nav-links">
+          <ul class="nav-links" id="primary-nav">
             <li><a href="/">Home</a></li>
             <li><a href="/communities">Communities</a></li>
             <li><a href="/the-oasis">The Oasis</a></li>
@@ -49,8 +56,8 @@
             <div class="eyebrow">Current pricing snapshot</div>
             <h1>Floor plans for students who want either <span class="accent">value</span> or <span class="accent">privacy</span>.</h1>
             <p>
-              VUE Communities' current site lists rates by room and installment. The pricing below is grounded in that
-              source and should be treated as subject to change.
+              VUE Communities lists rates by room and installment. The options below are shown per person, per room, per
+              installment, and pricing remains subject to change.
             </p>
             <div class="pill-row">
               <span class="pill">All pricing is per person, per room, per installment</span>
@@ -92,7 +99,7 @@
                 <li>2BR: $895</li>
                 <li>2BR with office/study: $955</li>
                 <li>3BR with office/study: $885</li>
-                <li>1BR currently waitlisted / sold out</li>
+                <li>1BR availability is limited; contact leasing for current status</li>
               </ul>
             </div>
           </article>
@@ -115,22 +122,22 @@
         <div class="surface">
           <div class="section-head">
             <div>
-              <div class="kicker">How to read the pricing</div>
-              <h2>Installments, roommate structure, and value positioning.</h2>
+              <div class="kicker">How pricing works</div>
+              <h2>Installments, lease structure, and what is included.</h2>
             </div>
           </div>
           <div class="info-grid three">
             <div class="info-card">
               <strong>Installment structure</strong>
-              <p>The FAQ says lease totals are divided into 12 equal installments even though the lease term is about 11.5 months.</p>
+              <p>Lease totals are divided into 12 equal installments even though the lease term is typically about 11.5 months.</p>
             </div>
             <div class="info-card">
               <strong>Individual lease protection</strong>
-              <p>Your pricing is tied to your room only. You are not responsible for other roommates' balances.</p>
+              <p>Your pricing is tied to your room only, so you are not responsible for another roommate's balance.</p>
             </div>
             <div class="info-card">
-              <strong>Utilities mostly included</strong>
-              <p>Internet and core utilities are included according to the live site, while electricity remains resident-paid.</p>
+              <strong>Utility structure</strong>
+              <p>Electricity is resident-paid. Internet is included, and the rest of the bundled utilities vary by community.</p>
             </div>
           </div>
         </div>
@@ -142,9 +149,9 @@
             <div class="kicker">Best-fit guidance</div>
             <h2>Which plan type makes the most sense?</h2>
             <ul class="list">
-              <li><strong>Oasis 4BR / 6BR:</strong> best for price-sensitive students who still want a furnished, amenity-rich community.</li>
-              <li><strong>Oasis office/study layouts:</strong> best for students who want quieter academic space and fewer roommates.</li>
-              <li><strong>Cornerstone 3BR / 3BA:</strong> best for students who want a private bathroom and consistent layout quality.</li>
+              <li><strong>Oasis 4BR / 6BR:</strong> best for students who want the lowest monthly entry point in an amenity-rich community.</li>
+              <li><strong>Oasis office/study layouts:</strong> best for students who want fewer roommates and extra workspace.</li>
+              <li><strong>Cornerstone 3BR / 3BA:</strong> best for students who want a private bathroom and one consistent layout option.</li>
             </ul>
             <div class="hero-actions">
               <a class="btn btn-primary" href="/contact">Get current availability</a>
@@ -162,8 +169,49 @@
 
     <footer class="site-footer">
       <div class="site-footer__inner">
-        <div><div class="footer-brand"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></div><p>Rates on this mockup are grounded in the current live site and should be confirmed with the leasing office.</p></div>
-        <div class="footer-links"><a href="/faq">FAQ</a><a href="/contact">Contact Leasing</a></div>
+        <div>
+          <div class="footer-brand"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></div>
+          <p>
+            Student-only apartments in Lynchburg, Virginia near Liberty University, with furnished units, individual
+            leases, roommate matching, and two distinct community options.
+          </p>
+          <div class="footer-links">
+            <a href="/communities">Communities</a>
+            <a href="/the-oasis">The Oasis</a>
+            <a href="/cornerstone">Cornerstone</a>
+            <a href="/floor-plans-pricing">Pricing</a>
+            <a href="/faq">FAQ</a>
+            <a href="/contact">Contact</a>
+            <a href="https://sclas.twa.rentmanager.com/" target="_blank" rel="noopener noreferrer">Resident Portal</a>
+          </div>
+        </div>
+        <div>
+          <div class="social-links">
+            <a
+              href="https://www.facebook.com/profile.php?id=100093957887209&mibextid=LQQJ4d"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Facebook
+            </a>
+            <a
+              href="https://www.instagram.com/the_vuelynchburg?igshid=MjEwN2IyYWYwYw=="
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
+            <a href="https://www.tiktok.com/@the_vuelynchburg?lang=en" target="_blank" rel="noopener noreferrer">TikTok</a>
+            <a href="https://www.youtube.com/channel/UC5Zr5mXkX5QOQk4cFccsYVQ" target="_blank" rel="noopener noreferrer">YouTube</a>
+          </div>
+          <p>
+            40 Oasis Way, Lynchburg, VA 24502<br />
+            Monday-Friday: 10:00 AM to 5:00 PM<br />
+            <a href="tel:4343297979">434-329-7979</a> ·
+            <a href="mailto:gm1@vuecommunities.com">gm1@vuecommunities.com</a>
+          </p>
+          <p>&copy; <span data-year></span> VUE Communities. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   </body>

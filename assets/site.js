@@ -1,38 +1,65 @@
 const toggle = document.querySelector("[data-nav-toggle]");
 const header = document.querySelector(".site-header");
+const nav = document.querySelector(".nav-links");
+const navShell = document.querySelector(".nav-shell");
+
+const setMenuOpen = (isOpen) => {
+  document.body.classList.toggle("menu-open", isOpen);
+
+  if (toggle) {
+    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  }
+};
 
 if (toggle) {
   toggle.addEventListener("click", () => {
-    document.body.classList.toggle("menu-open");
-    toggle.setAttribute(
-      "aria-expanded",
-      document.body.classList.contains("menu-open") ? "true" : "false",
-    );
+    setMenuOpen(!document.body.classList.contains("menu-open"));
   });
 }
 
 document.querySelectorAll(".nav-links a").forEach((link) => {
   link.addEventListener("click", () => {
-    document.body.classList.remove("menu-open");
-    if (toggle) {
-      toggle.setAttribute("aria-expanded", "false");
-    }
+    setMenuOpen(false);
   });
 });
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.12 },
-);
+document.addEventListener("click", (event) => {
+  if (!navShell || !nav || window.innerWidth > 900) return;
+  if (!document.body.classList.contains("menu-open")) return;
+  if (navShell.contains(event.target)) return;
 
-document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+  setMenuOpen(false);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    setMenuOpen(false);
+  }
+});
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 900) {
+    setMenuOpen(false);
+  }
+});
+
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 },
+  );
+
+  document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+} else {
+  document.querySelectorAll(".reveal").forEach((element) => element.classList.add("is-visible"));
+}
 
 const updateHeader = () => {
   if (!header) return;
@@ -59,7 +86,7 @@ if (form) {
     const moveIn = String(formData.get("move-in") || "").trim();
     const message = String(formData.get("message") || "").trim();
     const subject = encodeURIComponent(
-      `Prospect inquiry${community ? ` - ${community}` : ""}${name ? ` - ${name}` : ""}`,
+      `Leasing inquiry${community ? ` - ${community}` : ""}${name ? ` - ${name}` : ""}`,
     );
     const body = encodeURIComponent(
       [

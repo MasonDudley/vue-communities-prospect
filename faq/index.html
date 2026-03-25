@@ -22,11 +22,18 @@
     <header class="site-header">
       <div class="nav-shell">
         <a class="brand" href="/"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></a>
-        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" data-nav-toggle>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+          data-nav-toggle
+        >
           <span></span><span></span><span></span>
         </button>
         <nav aria-label="Primary">
-          <ul class="nav-links">
+          <ul class="nav-links" id="primary-nav">
             <li><a href="/">Home</a></li>
             <li><a href="/communities">Communities</a></li>
             <li><a href="/the-oasis">The Oasis</a></li>
@@ -49,8 +56,8 @@
             <div class="eyebrow">Frequently asked questions</div>
             <h1>Clear answers for students, parents, and guarantors.</h1>
             <p>
-              The answers below are condensed from the current VUE Communities FAQ and rewritten for faster scanning while
-              keeping claims grounded in the live site.
+              These questions cover the lease details, policies, and move-in topics students, parents, and guarantors
+              most often ask about for The Oasis and The VUE at Cornerstone.
             </p>
           </div>
           <div class="reveal">
@@ -71,19 +78,19 @@
             <h3>Application, lease, and payment</h3>
             <details open>
               <summary>Can online students live at VUE Communities?</summary>
-              <p>Yes. The live FAQ says online students are welcome with proof of enrollment in at least one college class.</p>
+              <p>Yes. Online students are welcome with proof of enrollment in at least one college class, and classes must start within 30 days of the lease start date.</p>
             </details>
             <details>
               <summary>What is a rent installment?</summary>
-              <p>The FAQ says the total lease amount is divided into 12 equal installments, even though the lease term is about 11.5 months.</p>
+              <p>The total lease amount is divided into 12 equal installments, even though the lease term is typically about 11.5 months.</p>
             </details>
             <details>
               <summary>When is rent due?</summary>
               <p>Installments are due on or before the 1st of each month, with a grace period through the 5th at 11:59 PM.</p>
             </details>
             <details>
-              <summary>How much are late fees?</summary>
-              <p>The current FAQ says late fees are 10% of the total rent amount after the grace period ends.</p>
+              <summary>Can I pay through the Resident Portal?</summary>
+              <p>Yes. Autopay is available through the Resident Portal.</p>
             </details>
           </article>
           <article class="faq-card">
@@ -91,11 +98,15 @@
             <h3>Protection and qualification</h3>
             <details open>
               <summary>Why do I need a guarantor?</summary>
-              <p>A guarantor is required for residents paying month to month. The FAQ says no guarantor is needed if the total rent amount for the term is paid upfront.</p>
+              <p>A guarantor is required for residents paying month to month. No guarantor is needed if the total lease amount is paid upfront.</p>
             </details>
             <details>
               <summary>What are the guarantor income requirements?</summary>
-              <p>The current FAQ lists $65,000 annually for one guarantor or $110,000 combined if married, with proof of income required.</p>
+              <p>The listed income requirement is $65,000 annually for one guarantor or $110,000 combined if married, with proof of income required.</p>
+            </details>
+            <details>
+              <summary>Is a credit check required?</summary>
+              <p>The FAQ states that no credit check is run.</p>
             </details>
             <details>
               <summary>What are the benefits of an individual lease?</summary>
@@ -103,43 +114,47 @@
             </details>
           </article>
           <article class="faq-card">
-            <div class="kicker">Apartment and amenities</div>
-            <h3>What comes with the apartment?</h3>
+            <div class="kicker">Apartment details</div>
+            <h3>Furnishings, utilities, and bed sizes</h3>
             <details open>
               <summary>Are the units furnished?</summary>
-              <p>Yes. The current site says all properties are fully furnished.</p>
+              <p>Yes. Both communities are marketed as fully furnished.</p>
             </details>
             <details>
               <summary>What utilities are included?</summary>
-              <p>The FAQ lists internet, trash, water, and sewer as included. Community pages also describe similar bundled utility setups, with electricity separate.</p>
+              <p>Electricity is billed separately. Internet is included, and leasing can confirm the full utility bundle for your community.</p>
             </details>
             <details>
-              <summary>What amenities are included?</summary>
-              <p>Oasis includes fitness, clubhouse, pool, grilling areas, trail, and shuttle access. Cornerstone includes outdoor seating and grilling stations.</p>
+              <summary>What bed size should I plan for?</summary>
+              <p>Cornerstone, 1BR Oasis, and 2BR Oasis use Full XL beds. Oasis 2BR with office, 3BR with office, 4BR, and 6BR layouts use Twin XL beds.</p>
             </details>
             <details>
               <summary>Can residents use amenities at another community?</summary>
-              <p>No. The FAQ says amenities are for residents of that specific property only.</p>
+              <p>No. Amenities are reserved for residents of their own property.</p>
             </details>
           </article>
           <article class="faq-card">
             <div class="kicker">Move-in and daily life</div>
-            <h3>Parking, internet, transfers, and pets</h3>
+            <h3>Parking, providers, transfers, and pets</h3>
             <details open>
-              <summary>How does roommate matching work?</summary>
-              <p>Students can list requested roommates on the application or be matched with other college students.</p>
+              <summary>What do I need before move-in?</summary>
+              <p>Residents are asked to submit a class schedule, student ID, and move-in packet, pay their balance and first month of rent, and sign up for a move-in slot.</p>
             </details>
             <details>
               <summary>Where do residents and guests park?</summary>
-              <p>Resident parking is first come, first served. Guest parking is also first come, first served in non-numbered spaces.</p>
+              <p>Parking is first come, first served, with one vehicle allowed per resident. Guest parking is also first come, first served in non-numbered spaces.</p>
             </details>
             <details>
-              <summary>What is the pet policy?</summary>
-              <p>The current FAQ says the properties are pet-free, but ESA animals are allowed with proper paperwork.</p>
+              <summary>What internet provider serves the communities?</summary>
+              <p>The FAQ lists Lumos for Cornerstone and LUMOS for The Oasis.</p>
             </details>
             <details>
               <summary>Can I transfer rooms or communities?</summary>
               <p>Room transfers can be requested in writing if another room is available. Community transfers can be applied for, but not until the current lease term is over.</p>
+            </details>
+            <details>
+              <summary>What is the pet policy?</summary>
+              <p>The properties are pet-free, but ESA animals are allowed with proper paperwork.</p>
             </details>
           </article>
         </div>
@@ -148,8 +163,49 @@
 
     <footer class="site-footer">
       <div class="site-footer__inner">
-        <div><div class="footer-brand"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></div><p>If you need a current answer on pricing, lease timing, or move-in paperwork, call the office directly.</p></div>
-        <div class="footer-links"><a href="tel:4343297979">434-329-7979</a><a href="/contact">Contact Leasing</a></div>
+        <div>
+          <div class="footer-brand"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></div>
+          <p>
+            Student-only apartments in Lynchburg, Virginia near Liberty University, with furnished units, individual
+            leases, roommate matching, and two distinct community options.
+          </p>
+          <div class="footer-links">
+            <a href="/communities">Communities</a>
+            <a href="/the-oasis">The Oasis</a>
+            <a href="/cornerstone">Cornerstone</a>
+            <a href="/floor-plans-pricing">Pricing</a>
+            <a href="/faq">FAQ</a>
+            <a href="/contact">Contact</a>
+            <a href="https://sclas.twa.rentmanager.com/" target="_blank" rel="noopener noreferrer">Resident Portal</a>
+          </div>
+        </div>
+        <div>
+          <div class="social-links">
+            <a
+              href="https://www.facebook.com/profile.php?id=100093957887209&mibextid=LQQJ4d"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Facebook
+            </a>
+            <a
+              href="https://www.instagram.com/the_vuelynchburg?igshid=MjEwN2IyYWYwYw=="
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
+            <a href="https://www.tiktok.com/@the_vuelynchburg?lang=en" target="_blank" rel="noopener noreferrer">TikTok</a>
+            <a href="https://www.youtube.com/channel/UC5Zr5mXkX5QOQk4cFccsYVQ" target="_blank" rel="noopener noreferrer">YouTube</a>
+          </div>
+          <p>
+            40 Oasis Way, Lynchburg, VA 24502<br />
+            Monday-Friday: 10:00 AM to 5:00 PM<br />
+            <a href="tel:4343297979">434-329-7979</a> ·
+            <a href="mailto:gm1@vuecommunities.com">gm1@vuecommunities.com</a>
+          </p>
+          <p>&copy; <span data-year></span> VUE Communities. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   </body>

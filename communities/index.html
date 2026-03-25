@@ -6,7 +6,7 @@
     <title>Communities | VUE Communities</title>
     <meta
       name="description"
-      content="Compare The Oasis and Cornerstone student apartments in Lynchburg, VA. Review location, lifestyle, layouts, utilities, and who each community fits best."
+      content="Compare The Oasis and The VUE at Cornerstone student apartments in Lynchburg, VA. Review location, lifestyle, layouts, utilities, and who each community fits best."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,11 +22,18 @@
     <header class="site-header">
       <div class="nav-shell">
         <a class="brand" href="/"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></a>
-        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" data-nav-toggle>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+          data-nav-toggle
+        >
           <span></span><span></span><span></span>
         </button>
         <nav aria-label="Primary">
-          <ul class="nav-links">
+          <ul class="nav-links" id="primary-nav">
             <li><a href="/">Home</a></li>
             <li><a class="is-active" href="/communities">Communities</a></li>
             <li><a href="/the-oasis">The Oasis</a></li>
@@ -49,9 +56,9 @@
             <div class="eyebrow">Compare both communities</div>
             <h1>Two distinct ways to live near <span class="accent">Liberty University</span>.</h1>
             <p>
-              VUE Communities currently operates two student-only apartment options in Lynchburg: The Oasis and
-              Cornerstone. Both are fully furnished, offer individual leases, and support roommate matching, but they serve
-              different renter priorities.
+              VUE Communities offers two student-only apartment options in Lynchburg: The Oasis and The VUE at
+              Cornerstone. Both communities are furnished, use individual leases, and support roommate matching, but they
+              serve different living priorities.
             </p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="/the-oasis">View The Oasis</a>
@@ -74,50 +81,52 @@
           <div class="section-head">
             <div>
               <div class="kicker">Quick comparison</div>
-              <h2>Where each community wins.</h2>
+              <h2>Where each community stands out.</h2>
             </div>
           </div>
-          <table class="compare-table">
-            <thead>
-              <tr>
-                <th>Category</th>
-                <th>The Oasis</th>
-                <th>Cornerstone</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Location feel</strong></td>
-                <td>Edge of Liberty's campus in Campbell County.</td>
-                <td>Residential neighborhood off Greenview Drive near restaurants.</td>
-              </tr>
-              <tr>
-                <td><strong>Best fit</strong></td>
-                <td>Students who want amenity access and more floor plan choices.</td>
-                <td>Students who want a consistent 3BR/3BA layout and ensuite privacy.</td>
-              </tr>
-              <tr>
-                <td><strong>Layout range</strong></td>
-                <td>1BR to 6BR, plus select office/study layouts.</td>
-                <td>All units are 3BR / 3BA.</td>
-              </tr>
-              <tr>
-                <td><strong>Utility structure</strong></td>
-                <td>Water, furniture, and internet are included; electricity is separate.</td>
-                <td>Internet, water, sewer, and trash are included; electricity is separate.</td>
-              </tr>
-              <tr>
-                <td><strong>Signature benefit</strong></td>
-                <td>Current site says it is the only privately owned community with Liberty shuttle access.</td>
-                <td>Each resident gets a private ensuite bath and walk-in closet.</td>
-              </tr>
-              <tr>
-                <td><strong>Current pricing</strong></td>
-                <td>$525 to $955 depending on layout.</td>
-                <td>$699 for the 3BR / 3BA layout.</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-wrap">
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>The Oasis</th>
+                  <th>Cornerstone</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Category"><strong>Location feel</strong></td>
+                  <td data-label="The Oasis">Edge of Liberty's campus with Liberty Shuttle access.</td>
+                  <td data-label="Cornerstone">Residential neighborhood off Greenview Drive near local restaurants.</td>
+                </tr>
+                <tr>
+                  <td data-label="Category"><strong>Best fit</strong></td>
+                  <td data-label="The Oasis">Students who want more floor plan options and a larger amenity package.</td>
+                  <td data-label="Cornerstone">Students who want a consistent 3BR/3BA layout and more apartment-level privacy.</td>
+                </tr>
+                <tr>
+                  <td data-label="Category"><strong>Layout range</strong></td>
+                  <td data-label="The Oasis">1BR to 6BR, including select office/study layouts.</td>
+                  <td data-label="Cornerstone">All units are 3BR / 3BA.</td>
+                </tr>
+                <tr>
+                  <td data-label="Category"><strong>Utilities</strong></td>
+                  <td data-label="The Oasis">Furnished apartments with internet and water included, and electricity billed separately.</td>
+                  <td data-label="Cornerstone">Internet, water, sewer, and trash are included; electricity is separate.</td>
+                </tr>
+                <tr>
+                  <td data-label="Category"><strong>Signature benefit</strong></td>
+                  <td data-label="The Oasis">Liberty Shuttle access plus a larger amenity lineup.</td>
+                  <td data-label="Cornerstone">Each resident has a private ensuite bathroom and walk-in closet.</td>
+                </tr>
+                <tr>
+                  <td data-label="Category"><strong>Current pricing</strong></td>
+                  <td data-label="The Oasis">$525 to $955 depending on layout.</td>
+                  <td data-label="Cornerstone">$699 for the 3BR / 3BA layout.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
@@ -132,16 +141,15 @@
             </div>
             <div class="community-card__body">
               <div class="kicker">The Oasis</div>
-              <h3>More amenities. More variety. More campus energy.</h3>
+              <h3>More amenities, more variety, and more campus energy.</h3>
               <p>
-                Oasis is the flagship option for students who want broad layout flexibility and a stronger campus-adjacent
-                feel. The live site highlights shuttle access, a clubhouse, study and game spaces, a fitness center, a
-                resort-style pool, and a nature trail.
+                The Oasis is the best fit for students who want broad layout flexibility and stronger community amenities,
+                from a pool and fitness center to study space and outdoor gathering areas.
               </p>
               <ul class="list">
                 <li>Floor plans from one bedroom to six bedrooms.</li>
-                <li>Current site notes access to the Liberty Shuttle Service.</li>
-                <li>Strong match for students who want convenience and amenity density.</li>
+                <li>Clubhouse, study and game rooms, courtyards, grilling areas, and a nature trail.</li>
+                <li>Liberty Shuttle access.</li>
               </ul>
               <div class="hero-actions"><a class="btn btn-primary" href="/the-oasis">Explore The Oasis</a></div>
             </div>
@@ -155,15 +163,15 @@
             </div>
             <div class="community-card__body">
               <div class="kicker">Cornerstone</div>
-              <h3>Simple 3BR / 3BA living with private bathrooms for every resident.</h3>
+              <h3>Simple 3BR / 3BA living with a private bathroom for every resident.</h3>
               <p>
-                Cornerstone is structured for students who know exactly what they want: a furnished three-bedroom
-                apartment, a private ensuite bath, a walk-in closet, and proximity to local dining and retail.
+                Cornerstone is built for students who know exactly what they want: a furnished three-bedroom apartment,
+                a walk-in closet, in-unit laundry, and more apartment-level privacy.
               </p>
               <ul class="list">
-                <li>Every resident gets a private bathroom and walk-in closet.</li>
+                <li>Every resident gets a private ensuite bathroom and walk-in closet.</li>
                 <li>Furnished with a 50-inch TV, washer/dryer, and gigabyte internet.</li>
-                <li>Strong fit for friend groups or students who want a more predictable layout.</li>
+                <li>A strong fit for groups of friends or students who want one predictable layout.</li>
               </ul>
               <div class="hero-actions"><a class="btn btn-primary" href="/cornerstone">Explore Cornerstone</a></div>
             </div>
@@ -175,19 +183,19 @@
         <div class="info-grid four">
           <div class="info-card">
             <strong>Both communities are student-only</strong>
-            <p>Online students are also accepted with current enrollment documentation, according to the FAQ.</p>
+            <p>Online students are also accepted with current enrollment documentation.</p>
           </div>
           <div class="info-card">
             <strong>Both communities are furnished</strong>
-            <p>Students do not need to bring large furniture or rent a moving truck.</p>
+            <p>Students do not need to bring large furniture or build out an apartment from scratch.</p>
           </div>
           <div class="info-card">
             <strong>Both communities use individual leases</strong>
-            <p>You rent your room only, which reduces roommate-related financial exposure.</p>
+            <p>Each resident leases their room only, which reduces roommate-related financial exposure.</p>
           </div>
           <div class="info-card">
             <strong>Both communities offer free parking</strong>
-            <p>The live FAQ says parking is first come, first served, with one vehicle per resident.</p>
+            <p>Parking is first come, first served, with one vehicle allowed per resident.</p>
           </div>
         </div>
       </section>
@@ -197,13 +205,46 @@
       <div class="site-footer__inner">
         <div>
           <div class="footer-brand"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></div>
-          <p>Need help choosing between Oasis and Cornerstone? Call the leasing office at <a href="tel:4343297979">434-329-7979</a>.</p>
+          <p>
+            Student-only apartments in Lynchburg, Virginia near Liberty University, with furnished units, individual
+            leases, roommate matching, and two distinct community options.
+          </p>
+          <div class="footer-links">
+            <a href="/communities">Communities</a>
+            <a href="/the-oasis">The Oasis</a>
+            <a href="/cornerstone">Cornerstone</a>
+            <a href="/floor-plans-pricing">Pricing</a>
+            <a href="/faq">FAQ</a>
+            <a href="/contact">Contact</a>
+            <a href="https://sclas.twa.rentmanager.com/" target="_blank" rel="noopener noreferrer">Resident Portal</a>
+          </div>
         </div>
-        <div class="footer-links">
-          <a href="/floor-plans-pricing">Pricing</a>
-          <a href="/amenities">Amenities</a>
-          <a href="/faq">FAQ</a>
-          <a href="/contact">Contact</a>
+        <div>
+          <div class="social-links">
+            <a
+              href="https://www.facebook.com/profile.php?id=100093957887209&mibextid=LQQJ4d"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Facebook
+            </a>
+            <a
+              href="https://www.instagram.com/the_vuelynchburg?igshid=MjEwN2IyYWYwYw=="
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
+            <a href="https://www.tiktok.com/@the_vuelynchburg?lang=en" target="_blank" rel="noopener noreferrer">TikTok</a>
+            <a href="https://www.youtube.com/channel/UC5Zr5mXkX5QOQk4cFccsYVQ" target="_blank" rel="noopener noreferrer">YouTube</a>
+          </div>
+          <p>
+            40 Oasis Way, Lynchburg, VA 24502<br />
+            Monday-Friday: 10:00 AM to 5:00 PM<br />
+            <a href="tel:4343297979">434-329-7979</a> ·
+            <a href="mailto:gm1@vuecommunities.com">gm1@vuecommunities.com</a>
+          </p>
+          <p>&copy; <span data-year></span> VUE Communities. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -32,6 +32,7 @@ body {
   margin: 0;
   font-family: "Instrument Sans", system-ui, sans-serif;
   color: var(--ink);
+  overflow-x: hidden;
   background:
     radial-gradient(circle at top right, rgba(255, 127, 42, 0.18), transparent 28%),
     linear-gradient(180deg, #fff 0%, #fff9f3 100%);
@@ -56,6 +57,10 @@ input,
 select,
 textarea {
   font: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 .skip-link {
@@ -461,6 +466,11 @@ textarea:focus {
   transform: translateY(-1px);
 }
 
+.btn:focus-visible {
+  outline: 2px solid rgba(255, 127, 42, 0.55);
+  outline-offset: 3px;
+}
+
 .btn-primary {
   color: var(--white);
   background: linear-gradient(135deg, var(--orange-500), #ff6a00);
@@ -611,6 +621,7 @@ textarea:focus {
 .hero-visual {
   position: relative;
   min-height: 620px;
+  overflow: clip;
 }
 
 .photo-stack {
@@ -848,6 +859,10 @@ textarea:focus {
   font-size: 0.96rem;
 }
 
+.table-wrap {
+  overflow-x: auto;
+}
+
 .compare-table th,
 .compare-table td {
   padding: 1rem;
@@ -1015,6 +1030,11 @@ textarea {
   color: var(--ink);
 }
 
+input,
+select {
+  min-height: 52px;
+}
+
 textarea {
   min-height: 150px;
   resize: vertical;
@@ -1146,6 +1166,8 @@ textarea {
     flex-direction: column;
     align-items: stretch;
     padding: 1rem;
+    max-height: calc(100dvh - 104px);
+    overflow: auto;
     border-radius: 24px;
     background: rgba(255, 255, 255, 0.98);
     box-shadow: var(--shadow-lg);
@@ -1180,6 +1202,10 @@ textarea {
     grid-template-columns: 1fr;
     display: grid;
   }
+
+  .compare-table {
+    min-width: 620px;
+  }
 }
 
 @media (max-width: 680px) {
@@ -1192,17 +1218,58 @@ textarea {
     min-height: 420px;
   }
 
-  .photo-small {
-    width: 48%;
+  .hero-actions .btn {
+    width: 100%;
   }
 
+  .hero-visual {
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .photo-stack {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+
+  .photo-main,
+  .photo-small,
+  .photo-float,
+  .visual-chip {
+    position: relative;
+    inset: auto;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: auto;
+    max-width: none;
+  }
+
+  .photo-main {
+    grid-column: 1 / -1;
+    min-height: 240px;
+  }
+
+  .photo-small,
   .photo-float {
-    width: 42%;
+    aspect-ratio: 1;
   }
 
   .visual-chip {
-    max-width: 200px;
+    display: block;
+    padding: 0.9rem 1rem;
+    border-radius: 20px;
     font-size: 0.95rem;
+  }
+
+  .visual-chip.is-orange {
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
   }
 
   .badge-art,
@@ -1230,5 +1297,46 @@ textarea {
 
   .hero h1 {
     font-size: clamp(2.5rem, 11vw, 4rem);
+  }
+
+  .compare-table {
+    min-width: 0;
+  }
+
+  .compare-table thead {
+    display: none;
+  }
+
+  .compare-table,
+  .compare-table tbody,
+  .compare-table tr,
+  .compare-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .compare-table tr {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .compare-table tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .compare-table td {
+    padding: 0.5rem 0;
+    border-bottom: 0;
+  }
+
+  .compare-table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.25rem;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 }

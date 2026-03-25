@@ -6,7 +6,7 @@
     <title>Contact VUE Communities | Lynchburg Student Apartments</title>
     <meta
       name="description"
-      content="Contact VUE Communities in Lynchburg, VA for student apartment availability, tours, pricing, and lease questions for The Oasis and Cornerstone."
+      content="Contact VUE Communities in Lynchburg, VA for student apartment availability, tours, pricing, and lease questions for The Oasis and The VUE at Cornerstone."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,11 +22,18 @@
     <header class="site-header">
       <div class="nav-shell">
         <a class="brand" href="/"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></a>
-        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" data-nav-toggle>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+          data-nav-toggle
+        >
           <span></span><span></span><span></span>
         </button>
         <nav aria-label="Primary">
-          <ul class="nav-links">
+          <ul class="nav-links" id="primary-nav">
             <li><a href="/">Home</a></li>
             <li><a href="/communities">Communities</a></li>
             <li><a href="/the-oasis">The Oasis</a></li>
@@ -47,10 +54,10 @@
         <section class="page-hero">
           <div class="reveal">
             <div class="eyebrow">Talk to the leasing office</div>
-            <h1>Get pricing, availability, or tour help without chasing down scattered details.</h1>
+            <h1>Get pricing, availability, or tour help in one place.</h1>
             <p>
-              The current VUE Communities site points prospects to the leasing office at 40 Oasis Way in Lynchburg.
-              Use the quick contact options below or send a prospect message through the demo form.
+              Reach the VUE Communities leasing office at 40 Oasis Way in Lynchburg for tours, floor plan questions,
+              roommate matching help, guarantor requirements, or move-in guidance for either community.
             </p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="tel:4343297979">Call Now</a>
@@ -61,7 +68,7 @@
             <div class="photo-banner">
               <img
                 src="https://img1.wsimg.com/isteam/ip/11c30b23-0150-4218-b7b3-86394d08a656/IMG_8542.JPG/:/rs=w:1110,cg:true,m"
-                alt="VUE Communities leasing-friendly common area"
+                alt="VUE Communities common area"
               />
             </div>
           </div>
@@ -72,18 +79,26 @@
         <div class="contact-grid">
           <article class="contact-card">
             <div class="kicker">Office details</div>
-            <h3>VUE Communities Office</h3>
+            <h3>VUE Communities Leasing Office</h3>
             <p>40 Oasis Way<br />Lynchburg, Virginia 24502</p>
             <p><strong>Phone</strong><br /><a href="tel:4343297979">434-329-7979</a></p>
             <p><strong>Email</strong><br /><a href="mailto:gm1@vuecommunities.com">gm1@vuecommunities.com</a></p>
           </article>
           <article class="contact-card">
             <div class="kicker">Hours</div>
-            <h3>Current hours on the live site</h3>
-            <p>Monday-Friday: 10:00 AM - 5:00 PM</p>
-            <p>Saturday: 11:00 AM - 6:00 PM</p>
-            <p>Sunday: closed on the live local business listing.</p>
-            <div class="hero-actions"><a class="btn btn-secondary" href="https://maps.google.com/?q=40+Oasis+Way+Lynchburg+VA+24502" target="_blank" rel="noreferrer">Get Directions</a></div>
+            <h3>Office hours</h3>
+            <p>Monday-Friday: 10:00 AM to 5:00 PM</p>
+            <p>Use the leasing office for questions about The Oasis, Cornerstone, pricing, and current availability.</p>
+            <div class="hero-actions">
+              <a
+                class="btn btn-secondary"
+                href="https://maps.google.com/?q=40+Oasis+Way+Lynchburg+VA+24502"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get Directions
+              </a>
+            </div>
           </article>
         </div>
       </section>
@@ -92,10 +107,10 @@
         <div class="form-card">
           <div class="section-head">
             <div>
-              <div class="kicker">Prospect form</div>
+              <div class="kicker">Inquiry form</div>
               <h2>Send a quick leasing inquiry</h2>
             </div>
-            <p class="section-intro">This demo form opens your email client with a prebuilt message to the leasing team.</p>
+            <p class="section-intro">Submitting this form opens your email app with a prefilled message addressed to the leasing team.</p>
           </div>
           <form class="form-grid" data-mailto-form>
             <div>
@@ -121,11 +136,11 @@
             </div>
             <div class="full">
               <label for="move-in">Preferred move-in timing</label>
-              <input id="move-in" name="move-in" type="text" placeholder="Example: August 2026" />
+              <input id="move-in" name="move-in" type="text" placeholder="Example: Fall 2026" />
             </div>
             <div class="full">
               <label for="message">Message</label>
-              <textarea id="message" name="message" placeholder="What are you looking for: pricing, tours, roommates, guarantor info, or a specific floor plan?"></textarea>
+              <textarea id="message" name="message" placeholder="Tell us what you need help with, such as pricing, tours, roommates, guarantor information, or a specific floor plan."></textarea>
             </div>
             <div class="full">
               <button class="btn btn-primary" type="submit">Send inquiry</button>
@@ -137,8 +152,49 @@
 
     <footer class="site-footer">
       <div class="site-footer__inner">
-        <div><div class="footer-brand"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></div><p>For urgent availability questions, calling the office is still the fastest path.</p></div>
-        <div class="footer-links"><a href="/faq">FAQ</a><a href="/communities">Communities</a></div>
+        <div>
+          <div class="footer-brand"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></div>
+          <p>
+            Student-only apartments in Lynchburg, Virginia near Liberty University, with furnished units, individual
+            leases, roommate matching, and two distinct community options.
+          </p>
+          <div class="footer-links">
+            <a href="/communities">Communities</a>
+            <a href="/the-oasis">The Oasis</a>
+            <a href="/cornerstone">Cornerstone</a>
+            <a href="/floor-plans-pricing">Pricing</a>
+            <a href="/faq">FAQ</a>
+            <a href="/contact">Contact</a>
+            <a href="https://sclas.twa.rentmanager.com/" target="_blank" rel="noopener noreferrer">Resident Portal</a>
+          </div>
+        </div>
+        <div>
+          <div class="social-links">
+            <a
+              href="https://www.facebook.com/profile.php?id=100093957887209&mibextid=LQQJ4d"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Facebook
+            </a>
+            <a
+              href="https://www.instagram.com/the_vuelynchburg?igshid=MjEwN2IyYWYwYw=="
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
+            <a href="https://www.tiktok.com/@the_vuelynchburg?lang=en" target="_blank" rel="noopener noreferrer">TikTok</a>
+            <a href="https://www.youtube.com/channel/UC5Zr5mXkX5QOQk4cFccsYVQ" target="_blank" rel="noopener noreferrer">YouTube</a>
+          </div>
+          <p>
+            40 Oasis Way, Lynchburg, VA 24502<br />
+            Monday-Friday: 10:00 AM to 5:00 PM<br />
+            <a href="tel:4343297979">434-329-7979</a> ·
+            <a href="mailto:gm1@vuecommunities.com">gm1@vuecommunities.com</a>
+          </p>
+          <p>&copy; <span data-year></span> VUE Communities. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   </body>
