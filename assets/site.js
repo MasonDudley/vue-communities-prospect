@@ -118,7 +118,7 @@ if (form) {
     const moveIn = String(formData.get("move-in") || "").trim();
     const message = String(formData.get("message") || "").trim();
     const subject = encodeURIComponent(
-      `Prospect inquiry${community ? ` - ${community}` : ""}${name ? ` - ${name}` : ""}`,
+      `Leasing inquiry${community ? ` - ${community}` : ""}${name ? ` - ${name}` : ""}`,
     );
     const body = encodeURIComponent(
       [
