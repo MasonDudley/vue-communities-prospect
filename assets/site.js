@@ -171,3 +171,86 @@ if (form) {
     window.location.href = `mailto:gm1@vuecommunities.com?subject=${subject}&body=${body}`;
   });
 }
+
+const galleries = document.querySelectorAll("[data-gallery]");
+
+if (galleries.length) {
+  const lightbox = document.createElement("div");
+  lightbox.className = "gallery-lightbox";
+  lightbox.innerHTML = `
+    <button class="gallery-lightbox__close" aria-label="Close gallery">&times;</button>
+    <button class="gallery-lightbox__prev" aria-label="Previous image">&#8249;</button>
+    <img class="gallery-lightbox__img" src="" alt="" />
+    <button class="gallery-lightbox__next" aria-label="Next image">&#8250;</button>
+    <div class="gallery-lightbox__counter"></div>
+  `;
+  document.body.appendChild(lightbox);
+
+  const lbImg = lightbox.querySelector(".gallery-lightbox__img");
+  const lbCounter = lightbox.querySelector(".gallery-lightbox__counter");
+  const lbClose = lightbox.querySelector(".gallery-lightbox__close");
+  const lbPrev = lightbox.querySelector(".gallery-lightbox__prev");
+  const lbNext = lightbox.querySelector(".gallery-lightbox__next");
+
+  let currentImages = [];
+  let currentIndex = 0;
+
+  const openLightbox = (images, index) => {
+    currentImages = images;
+    currentIndex = index;
+    showImage();
+    lightbox.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeLightbox = () => {
+    lightbox.classList.remove("is-open");
+    document.body.style.overflow = "";
+  };
+
+  const showImage = () => {
+    const img = currentImages[currentIndex];
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lbCounter.textContent = `${currentIndex + 1} / ${currentImages.length}`;
+  };
+
+  const navigate = (dir) => {
+    currentIndex = (currentIndex + dir + currentImages.length) % currentImages.length;
+    showImage();
+  };
+
+  galleries.forEach((gallery) => {
+    const items = Array.from(gallery.querySelectorAll(".photo-gallery__item"));
+    const images = items.map((item) => item.querySelector("img"));
+
+    items.forEach((item, i) => {
+      item.addEventListener("click", () => openLightbox(images, i));
+    });
+  });
+
+  lbClose.addEventListener("click", closeLightbox);
+  lbPrev.addEventListener("click", () => navigate(-1));
+  lbNext.addEventListener("click", () => navigate(1));
+
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox.classList.contains("is-open")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") navigate(-1);
+    if (e.key === "ArrowRight") navigate(1);
+  });
+
+  let touchStartX = 0;
+  lightbox.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  lightbox.addEventListener("touchend", (e) => {
+    const diff = e.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(diff) > 50) navigate(diff > 0 ? -1 : 1);
+  }, { passive: true });
+}
