@@ -141,11 +141,18 @@ document.querySelectorAll("[data-year]").forEach((element) => {
   element.textContent = new Date().getFullYear();
 });
 
+const SUPABASE_URL = "https://povizsshrvyqcaszwzmr.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_4EFhT1Gx4qk_PHEm4cdRjw_kFKrEDZJ";
+
 const form = document.querySelector("[data-mailto-form]");
 
 if (form) {
-  form.addEventListener("submit", (event) => {
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const originalBtnText = submitBtn ? submitBtn.textContent : "Send inquiry";
+
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
+
     const formData = new FormData(form);
     const name = String(formData.get("name") || "").trim();
     const email = String(formData.get("email") || "").trim();
@@ -153,22 +160,64 @@ if (form) {
     const community = String(formData.get("community") || "").trim();
     const moveIn = String(formData.get("move-in") || "").trim();
     const message = String(formData.get("message") || "").trim();
-    const subject = encodeURIComponent(
-      `Leasing inquiry${community ? ` - ${community}` : ""}${name ? ` - ${name}` : ""}`,
-    );
-    const body = encodeURIComponent(
-      [
-        `Name: ${name || "Not provided"}`,
-        `Email: ${email || "Not provided"}`,
-        `Phone: ${phone || "Not provided"}`,
-        `Community of interest: ${community || "Not provided"}`,
-        `Preferred move-in: ${moveIn || "Not provided"}`,
-        "",
-        message || "No additional notes provided.",
-      ].join("\n"),
-    );
 
-    window.location.href = `mailto:gm1@vuecommunities.com?subject=${subject}&body=${body}`;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending...";
+    }
+
+    try {
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/contact_submissions`, {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+          "Content-Type": "application/json",
+          "Prefer": "return=minimal",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone: phone || null,
+          community: community || null,
+          move_in: moveIn || null,
+          message: message || null,
+        }),
+      });
+
+      if (response.ok) {
+        form.innerHTML = `
+          <div style="text-align:center;padding:2rem 0;">
+            <h3 style="color:var(--navy-900);margin-bottom:0.5rem;">Inquiry sent!</h3>
+            <p style="color:var(--muted);">The leasing team will get back to you soon. You can also reach them at <a href="tel:4343297979">434-329-7979</a>.</p>
+          </div>
+        `;
+      } else {
+        throw new Error("Submission failed");
+      }
+    } catch {
+      // Fallback to mailto if Supabase fails
+      const subject = encodeURIComponent(
+        `Leasing inquiry${community ? ` - ${community}` : ""}${name ? ` - ${name}` : ""}`,
+      );
+      const body = encodeURIComponent(
+        [
+          `Name: ${name || "Not provided"}`,
+          `Email: ${email || "Not provided"}`,
+          `Phone: ${phone || "Not provided"}`,
+          `Community of interest: ${community || "Not provided"}`,
+          `Preferred move-in: ${moveIn || "Not provided"}`,
+          "",
+          message || "No additional notes provided.",
+        ].join("\n"),
+      );
+      window.location.href = `mailto:gm1@vuecommunities.com?subject=${subject}&body=${body}`;
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+      }
+    }
   });
 }
 
