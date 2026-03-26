@@ -306,46 +306,101 @@ if (galleries.length) {
   }, { passive: true });
 }
 
-// ── Availability badges on community pages ────────────────────────────────────
+// ── Availability badges + specials on community pages ────────────────────────
+
+const pagePath = window.location.pathname;
+let community = null;
+if (pagePath.startsWith("/the-oasis")) community = "The Oasis";
+else if (pagePath.startsWith("/cornerstone")) community = "Cornerstone";
 
 const unitCards = document.querySelectorAll("[data-unit-type]");
 
-if (unitCards.length > 0) {
-  const path = window.location.pathname;
-  let community = null;
-  if (path.startsWith("/the-oasis")) community = "The Oasis";
-  else if (path.startsWith("/cornerstone")) community = "Cornerstone";
+if (unitCards.length > 0 && community) {
+  const STATUS_LABELS = {
+    available: "Available",
+    limited: "Limited",
+    waitlist: "Waitlist",
+    unavailable: "Full",
+  };
 
-  if (community) {
-    const STATUS_LABELS = {
-      available: "Available",
-      limited: "Limited",
-      waitlist: "Waitlist",
-      unavailable: "Full",
-    };
+  fetch(
+    `${SUPABASE_URL}/rest/v1/availability?community=eq.${encodeURIComponent(community)}&select=unit_type,status,notes`,
+    {
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+    }
+  )
+    .then((r) => (r.ok ? r.json() : Promise.reject()))
+    .then((data) => {
+      const map = Object.fromEntries(data.map((item) => [item.unit_type, item]));
+      unitCards.forEach((card) => {
+        const info = map[card.dataset.unitType];
+        if (!info) return;
+        const badge = document.createElement("span");
+        badge.className = `avail-badge avail-badge--${info.status}`;
+        badge.textContent = STATUS_LABELS[info.status] || info.status;
+        if (info.notes) badge.title = info.notes;
+        card.insertAdjacentElement("afterend", badge);
+      });
+    })
+    .catch(() => {}); // availability display is non-critical — fail silently
+}
 
-    fetch(
-      `${SUPABASE_URL}/rest/v1/availability?community=eq.${encodeURIComponent(community)}&select=unit_type,status,notes`,
-      {
-        headers: {
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-      }
-    )
+if (community) {
+  const noteStack = document.querySelector(".cta-band .note-stack");
+
+  if (noteStack) {
+    const now = Date.now();
+    const query = new URLSearchParams({
+      community: `eq.${community}`,
+      is_active: "eq.true",
+      select: "title,summary,cta_label,cta_url,starts_at,ends_at,sort_order,created_at",
+      order: "sort_order.asc,created_at.desc",
+    });
+
+    fetch(`${SUPABASE_URL}/rest/v1/specials?${query.toString()}`, {
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+    })
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((data) => {
-        const map = Object.fromEntries(data.map((item) => [item.unit_type, item]));
-        unitCards.forEach((card) => {
-          const info = map[card.dataset.unitType];
-          if (!info) return;
-          const badge = document.createElement("span");
-          badge.className = `avail-badge avail-badge--${info.status}`;
-          badge.textContent = STATUS_LABELS[info.status] || info.status;
-          if (info.notes) badge.title = info.notes;
-          card.insertAdjacentElement("afterend", badge);
+        const special = (Array.isArray(data) ? data : []).find((item) => {
+          const startsAt = item.starts_at ? new Date(item.starts_at).getTime() : null;
+          const endsAt = item.ends_at ? new Date(item.ends_at).getTime() : null;
+          return (!startsAt || startsAt <= now) && (!endsAt || endsAt >= now);
         });
+        if (!special?.title || !special?.summary) return;
+
+        const card = document.createElement("div");
+        card.className = "note-card note-card--special";
+
+        const title = document.createElement("strong");
+        title.textContent = special.title;
+        card.appendChild(title);
+
+        const body = document.createElement("p");
+        body.textContent = special.summary;
+        card.appendChild(body);
+
+        if (special.cta_label && special.cta_url) {
+          const cta = document.createElement("p");
+          const link = document.createElement("a");
+          link.href = special.cta_url;
+          link.textContent = special.cta_label;
+          if (/^https?:\/\//i.test(special.cta_url)) {
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+          }
+          cta.appendChild(link);
+          card.appendChild(cta);
+        }
+
+        noteStack.insertBefore(card, noteStack.firstChild);
       })
-      .catch(() => {}); // availability display is non-critical — fail silently
+      .catch(() => {}); // specials display is non-critical — fail silently
   }
 }

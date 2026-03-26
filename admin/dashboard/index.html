@@ -49,6 +49,15 @@
           >
             Availability
           </button>
+          <button
+            class="admin-tab"
+            role="tab"
+            data-tab="specials"
+            aria-selected="false"
+            aria-controls="panel-specials"
+          >
+            Specials
+          </button>
         </div>
 
         <!-- Inquiries Panel -->
@@ -85,6 +94,91 @@
           </div>
         </div>
 
+        <!-- Specials Panel -->
+        <div class="admin-panel" id="panel-specials" data-panel="specials" role="tabpanel">
+          <div class="admin-panel-header">
+            <div>
+              <h2>Leasing Specials</h2>
+              <span class="admin-panel-meta">Create simple community-specific specials without adding a CMS. The public site only shows active specials inside their matching community.</span>
+            </div>
+          </div>
+
+          <div class="specials-layout">
+            <section class="specials-card">
+              <h3>Add special</h3>
+              <form id="special-form" class="special-form" novalidate>
+                <div class="special-form__grid">
+                  <div>
+                    <label for="special-community">Community</label>
+                    <select id="special-community" name="community" required>
+                      <option value="The Oasis">The Oasis</option>
+                      <option value="Cornerstone">Cornerstone</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="special-sort-order">Priority</label>
+                    <input id="special-sort-order" name="sort_order" type="number" min="0" step="1" value="0" />
+                  </div>
+                  <div>
+                    <label for="special-starts-at">Start date</label>
+                    <input id="special-starts-at" name="starts_at" type="date" />
+                  </div>
+                  <div>
+                    <label for="special-ends-at">End date</label>
+                    <input id="special-ends-at" name="ends_at" type="date" />
+                  </div>
+                </div>
+
+                <div>
+                  <label for="special-title">Headline</label>
+                  <input id="special-title" name="title" type="text" maxlength="120" placeholder="Example: Waived signing fee for April move-ins" required />
+                </div>
+
+                <div>
+                  <label for="special-summary">Summary</label>
+                  <textarea id="special-summary" name="summary" rows="3" maxlength="280" placeholder="Short summary shown on the public site and in the admin list." required></textarea>
+                </div>
+
+                <div>
+                  <label for="special-details">Internal details / terms</label>
+                  <textarea id="special-details" name="details" rows="3" maxlength="600" placeholder="Optional notes for the leasing team. This stays in admin only."></textarea>
+                </div>
+
+                <div class="special-form__grid">
+                  <div>
+                    <label for="special-cta-label">CTA label</label>
+                    <input id="special-cta-label" name="cta_label" type="text" maxlength="40" placeholder="Contact Leasing" />
+                  </div>
+                  <div>
+                    <label for="special-cta-url">CTA URL</label>
+                    <input id="special-cta-url" name="cta_url" type="url" maxlength="300" placeholder="/contact" />
+                  </div>
+                </div>
+
+                <label class="special-checkbox">
+                  <input id="special-is-active" name="is_active" type="checkbox" checked />
+                  <span>Active now</span>
+                </label>
+
+                <div class="special-form__actions">
+                  <button class="btn btn-primary" type="submit" id="special-submit-btn">Save special</button>
+                  <span id="special-form-status" class="admin-panel-meta"></span>
+                </div>
+              </form>
+            </section>
+
+            <section class="specials-card">
+              <div class="specials-card__header">
+                <h3>Current specials</h3>
+                <span class="admin-panel-meta">Top active special per community shows on the public page.</span>
+              </div>
+              <div id="specials-content">
+                <div class="admin-loading">Loading specials…</div>
+              </div>
+            </section>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -102,6 +196,7 @@
       const tabs = document.querySelectorAll('[data-tab]');
       const panels = document.querySelectorAll('[data-panel]');
       let availabilityLoaded = false;
+      let specialsLoaded = false;
 
       tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -115,6 +210,11 @@
             availabilityLoaded = true;
             loadAvailability();
           }
+
+          if (tab.dataset.tab === 'specials' && !specialsLoaded) {
+            specialsLoaded = true;
+            loadSpecials();
+          }
         });
       });
 
@@ -126,6 +226,25 @@
           .replace(/>/g, '&gt;')
           .replace(/"/g, '&quot;')
           .replace(/'/g, '&#39;');
+      }
+
+      function formatDate(value) {
+        if (!value) return '—';
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return '—';
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      }
+
+      function toDateInputValue(value) {
+        if (!value) return '';
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return '';
+        return date.toISOString().slice(0, 10);
+      }
+
+      function toIsoDateBoundary(value, endOfDay = false) {
+        if (!value) return null;
+        return endOfDay ? `${value}T23:59:59.999Z` : `${value}T00:00:00.000Z`;
       }
 
       // ── Inquiries ─────────────────────────────────────────────────────────
@@ -233,7 +352,6 @@
             </table>
           </div>`;
 
-        // Expand / collapse detail rows
         container.querySelectorAll('[data-expand]').forEach(btn => {
           btn.addEventListener('click', () => {
             const id = btn.dataset.expand;
@@ -245,7 +363,6 @@
           });
         });
 
-        // Mark as reviewed
         container.querySelectorAll('[data-mark-reviewed]').forEach(btn => {
           btn.addEventListener('click', async () => {
             const id = btn.dataset.markReviewed;
@@ -265,7 +382,6 @@
               const sub = allSubmissions.find(s => s.id === id);
               if (sub) sub.reviewed = true;
 
-              // Update new badge count
               const newCount = allSubmissions.filter(s => !s.reviewed).length;
               const badge = document.getElementById('new-badge');
               if (newCount > 0) {
@@ -310,7 +426,6 @@
           return;
         }
 
-        // Build lookup: "Community::UnitType" → row
         const map = {};
         (data || []).forEach(item => {
           map[`${item.community}::${item.unit_type}`] = item;
@@ -347,7 +462,6 @@
 
         container.innerHTML = html;
 
-        // Per-row save handlers
         container.querySelectorAll('.avail-save').forEach(btn => {
           btn.addEventListener('click', async () => {
             const row = btn.closest('.avail-row');
@@ -378,6 +492,213 @@
                 btn.className = 'btn btn-primary btn-sm avail-save';
                 btn.disabled = false;
               }, 2000);
+            }
+          });
+        });
+      }
+
+      // ── Specials ──────────────────────────────────────────────────────────
+      let allSpecials = [];
+      const specialForm = document.getElementById('special-form');
+      const specialSubmitBtn = document.getElementById('special-submit-btn');
+      const specialFormStatus = document.getElementById('special-form-status');
+
+      specialForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        specialFormStatus.textContent = '';
+
+        const formData = new FormData(specialForm);
+        const payload = {
+          community: String(formData.get('community') || '').trim(),
+          title: String(formData.get('title') || '').trim(),
+          summary: String(formData.get('summary') || '').trim(),
+          details: String(formData.get('details') || '').trim() || null,
+          cta_label: String(formData.get('cta_label') || '').trim() || null,
+          cta_url: String(formData.get('cta_url') || '').trim() || null,
+          is_active: specialForm.querySelector('#special-is-active').checked,
+          sort_order: Number(formData.get('sort_order') || 0),
+          starts_at: toIsoDateBoundary(String(formData.get('starts_at') || '').trim(), false),
+          ends_at: toIsoDateBoundary(String(formData.get('ends_at') || '').trim(), true),
+          updated_at: new Date().toISOString(),
+        };
+
+        if (!payload.community || !payload.title || !payload.summary) {
+          specialFormStatus.textContent = 'Community, headline, and summary are required.';
+          return;
+        }
+
+        if (payload.cta_url && !/^\/|https?:\/\//i.test(payload.cta_url)) {
+          specialFormStatus.textContent = 'CTA URL should start with / or http(s)://';
+          return;
+        }
+
+        specialSubmitBtn.disabled = true;
+        specialSubmitBtn.textContent = 'Saving…';
+
+        const { error } = await supabase
+          .from('specials')
+          .insert(payload);
+
+        if (error) {
+          specialFormStatus.textContent = `Failed to save special: ${error.message}`;
+          specialSubmitBtn.disabled = false;
+          specialSubmitBtn.textContent = 'Save special';
+          return;
+        }
+
+        specialForm.reset();
+        document.getElementById('special-community').value = 'The Oasis';
+        document.getElementById('special-sort-order').value = '0';
+        document.getElementById('special-is-active').checked = true;
+        specialFormStatus.textContent = 'Special saved.';
+        specialSubmitBtn.disabled = false;
+        specialSubmitBtn.textContent = 'Save special';
+        await loadSpecials();
+      });
+
+      async function loadSpecials() {
+        const { data, error } = await supabase
+          .from('specials')
+          .select('*')
+          .order('community', { ascending: true })
+          .order('sort_order', { ascending: true })
+          .order('created_at', { ascending: false });
+
+        const container = document.getElementById('specials-content');
+
+        if (error) {
+          container.innerHTML = `<div class="admin-alert admin-alert--error">Failed to load specials: ${esc(error.message)}</div>`;
+          return;
+        }
+
+        allSpecials = data || [];
+        renderSpecials();
+      }
+
+      function renderSpecials() {
+        const container = document.getElementById('specials-content');
+
+        if (!allSpecials.length) {
+          container.innerHTML = `
+            <div class="admin-empty">
+              <div class="admin-empty__icon">🏷️</div>
+              <p>No specials yet.</p>
+            </div>`;
+          return;
+        }
+
+        const now = Date.now();
+        const html = allSpecials.map(item => {
+          const startsAtMs = item.starts_at ? new Date(item.starts_at).getTime() : null;
+          const endsAtMs = item.ends_at ? new Date(item.ends_at).getTime() : null;
+          const isWithinWindow = (!startsAtMs || startsAtMs <= now) && (!endsAtMs || endsAtMs >= now);
+          const publicState = item.is_active && isWithinWindow ? 'Showing publicly' : (item.is_active ? 'Scheduled / expired' : 'Hidden');
+
+          return `
+            <article class="special-item" data-special-id="${esc(item.id)}">
+              <div class="special-item__header">
+                <div>
+                  <div class="special-item__meta">
+                    <span class="badge badge--new">${esc(item.community)}</span>
+                    <span class="badge ${item.is_active && isWithinWindow ? 'badge--available' : 'badge--reviewed'}">${esc(publicState)}</span>
+                  </div>
+                  <h4>${esc(item.title)}</h4>
+                </div>
+                <label class="special-toggle">
+                  <input type="checkbox" data-special-active ${item.is_active ? 'checked' : ''} />
+                  <span>Active</span>
+                </label>
+              </div>
+
+              <div class="special-item__body">
+                <label>
+                  <span>Summary</span>
+                  <textarea data-special-summary rows="3" maxlength="280">${esc(item.summary || '')}</textarea>
+                </label>
+                <label>
+                  <span>Internal details / terms</span>
+                  <textarea data-special-details rows="3" maxlength="600">${esc(item.details || '')}</textarea>
+                </label>
+                <div class="special-item__grid">
+                  <label>
+                    <span>Start date</span>
+                    <input data-special-starts-at type="date" value="${esc(toDateInputValue(item.starts_at))}" />
+                  </label>
+                  <label>
+                    <span>End date</span>
+                    <input data-special-ends-at type="date" value="${esc(toDateInputValue(item.ends_at))}" />
+                  </label>
+                  <label>
+                    <span>CTA label</span>
+                    <input data-special-cta-label type="text" maxlength="40" value="${esc(item.cta_label || '')}" />
+                  </label>
+                  <label>
+                    <span>CTA URL</span>
+                    <input data-special-cta-url type="text" maxlength="300" value="${esc(item.cta_url || '')}" placeholder="/contact" />
+                  </label>
+                  <label>
+                    <span>Priority</span>
+                    <input data-special-sort-order type="number" min="0" step="1" value="${esc(item.sort_order ?? 0)}" />
+                  </label>
+                </div>
+                <div class="special-item__schedule">
+                  <span>Window: ${esc(formatDate(item.starts_at))} to ${esc(formatDate(item.ends_at))}</span>
+                  ${item.updated_at ? `<span>Updated ${esc(formatDate(item.updated_at))}</span>` : ''}
+                </div>
+              </div>
+
+              <div class="special-item__actions">
+                <button class="btn btn-primary btn-sm" type="button" data-special-save>Save changes</button>
+              </div>
+            </article>`;
+        }).join('');
+
+        container.innerHTML = `<div class="special-list">${html}</div>`;
+
+        container.querySelectorAll('[data-special-save]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const card = btn.closest('[data-special-id]');
+            const id = card.dataset.specialId;
+            const summary = card.querySelector('[data-special-summary]').value.trim();
+            const details = card.querySelector('[data-special-details]').value.trim() || null;
+            const cta_label = card.querySelector('[data-special-cta-label]').value.trim() || null;
+            const cta_url = card.querySelector('[data-special-cta-url]').value.trim() || null;
+            const sort_order = Number(card.querySelector('[data-special-sort-order]').value || 0);
+            const starts_at = toIsoDateBoundary(card.querySelector('[data-special-starts-at]').value.trim(), false);
+            const ends_at = toIsoDateBoundary(card.querySelector('[data-special-ends-at]').value.trim(), true);
+            const is_active = card.querySelector('[data-special-active]').checked;
+
+            if (!summary) {
+              alert('Summary is required.');
+              return;
+            }
+
+            if (cta_url && !/^\/|https?:\/\//i.test(cta_url)) {
+              alert('CTA URL should start with / or http(s)://');
+              return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Saving…';
+
+            const { error } = await supabase
+              .from('specials')
+              .update({ summary, details, cta_label, cta_url, sort_order, starts_at, ends_at, is_active, updated_at: new Date().toISOString() })
+              .eq('id', id);
+
+            if (error) {
+              btn.disabled = false;
+              btn.textContent = 'Save changes';
+              alert(`Error saving: ${error.message}`);
+            } else {
+              btn.textContent = 'Saved ✓';
+              btn.className = 'btn btn-success btn-sm';
+              setTimeout(async () => {
+                btn.textContent = 'Save changes';
+                btn.className = 'btn btn-primary btn-sm';
+                btn.disabled = false;
+                await loadSpecials();
+              }, 900);
             }
           });
         });

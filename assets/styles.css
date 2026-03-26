@@ -1977,6 +1977,15 @@ textarea {
   }
 }
 
+.note-card--special {
+  border-color: rgba(255, 127, 42, 0.3);
+  box-shadow: 0 10px 28px rgba(13, 39, 68, 0.08);
+}
+
+.note-card--special strong {
+  color: var(--navy-900);
+}
+
 /* ---- Availability badges (community pages) ---- */
 
 .avail-badge {
