@@ -23,26 +23,31 @@ Then open `http://localhost:3000`.
 
 ## Deploy to Vercel
 
-1. Import this folder as a new Vercel project.
-2. Keep the project type as a static site.
-3. Deploy with the repository root as the output source.
-4. Add these project environment variables before deploying the contact form:
-   - `SUPABASE_SERVICE_ROLE_KEY` — service-role key for project `povizsshrvyqcaszwzmr`
-   - `SUPABASE_URL` — optional override; defaults to `https://povizsshrvyqcaszwzmr.supabase.co`
-   - `RESEND_API_KEY` — optional, only needed for email notifications
-   - `CONTACT_NOTIFY_TO` — optional default recipient email(s) for notification copies; comma-separated supported
-   - `CONTACT_NOTIFY_TO_OASIS` — optional community-specific recipient override for Oasis inquiries
-   - `CONTACT_NOTIFY_TO_CORNERSTONE` — optional community-specific recipient override for Cornerstone inquiries
-   - `CONTACT_NOTIFY_TO_STILL_DECIDING` — optional community-specific recipient override for undecided inquiries
-   - `CONTACT_NOTIFY_BCC` — optional blind-copy recipient email(s) for internal visibility
-   - `CONTACT_NOTIFY_FROM` — optional sender identity for Resend notifications
-   - `CONTACT_ALLOWED_ORIGINS` — optional comma-separated allowlist for `/api/contact` origins
-   - `CONTACT_RATE_LIMIT_MAX` — optional per-IP request limit inside the active rate-limit window
-   - `CONTACT_RATE_LIMIT_WINDOW_MS` — optional rate-limit window length in milliseconds
+This repo is currently linked to the Vercel project `vue-communities-prospect-check`.
 
-A starter `.env.example` is included for deployment setup.
+- Production URL: `https://vue-communities-prospect-check.vercel.app`
+- Standard preview deploy: `vercel deploy`
+- Production deploy: `vercel --prod`
+- If the local `.vercel` link is stale, re-link with `vercel link --project vue-communities-prospect-check --yes`
 
-The included `vercel.json` enables clean URLs, so routes such as `/about`, `/faq`, and `/the-oasis` resolve without `.html`.
+Project settings should remain a static site with the repository root as the output source. The included `vercel.json` enables clean URLs, so routes such as `/about`, `/faq`, and `/the-oasis` resolve without `.html`.
+
+Add these project environment variables before expecting the server-side contact form + notification path to work:
+
+- `SUPABASE_SERVICE_ROLE_KEY` — required for `/api/contact` inserts into project `povizsshrvyqcaszwzmr`
+- `SUPABASE_URL` — optional override; defaults to `https://povizsshrvyqcaszwzmr.supabase.co`
+- `RESEND_API_KEY` — optional, only needed for email notifications
+- `CONTACT_NOTIFY_TO` — optional default recipient email(s) for notification copies; comma-separated supported
+- `CONTACT_NOTIFY_TO_OASIS` — optional community-specific recipient override for Oasis inquiries
+- `CONTACT_NOTIFY_TO_CORNERSTONE` — optional community-specific recipient override for Cornerstone inquiries
+- `CONTACT_NOTIFY_TO_STILL_DECIDING` — optional community-specific recipient override for undecided inquiries
+- `CONTACT_NOTIFY_BCC` — optional blind-copy recipient email(s) for internal visibility
+- `CONTACT_NOTIFY_FROM` — optional sender identity for Resend notifications
+- `CONTACT_ALLOWED_ORIGINS` — optional comma-separated allowlist for `/api/contact` origins, e.g. `https://vue-communities-prospect-check.vercel.app`
+- `CONTACT_RATE_LIMIT_MAX` — optional per-IP request limit inside the active rate-limit window
+- `CONTACT_RATE_LIMIT_WINDOW_MS` — optional rate-limit window length in milliseconds
+
+A starter `.env.example` is included for deployment setup, and `docs/deployment-setup.md` now captures the exact SQL/env checklist for production readiness.
 
 ## Notes
 
