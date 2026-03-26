@@ -45,14 +45,14 @@
           class="nav-toggle"
           type="button"
           aria-label="Toggle navigation"
-          aria-controls="site-menu"
           aria-expanded="false"
+          aria-controls="primary-nav"
           data-nav-toggle
         >
           <span></span><span></span><span></span>
         </button>
         <nav aria-label="Primary">
-          <ul class="nav-links" id="site-menu">
+          <ul class="nav-links" id="primary-nav">
             <li><a href="/">Home</a></li>
             <li><a href="/the-oasis">The Oasis</a></li>
             <li><a href="/cornerstone">Cornerstone</a></li>
@@ -60,9 +60,26 @@
             <li><a href="/faq">FAQ</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="/contact">Contact</a></li>
+            <li class="nav-links__portal-item">
+              <a href="https://sclas.twa.rentmanager.com/" target="_blank" rel="noopener noreferrer">Resident Portal</a>
+            </li>
+            <li class="nav-links__mobile-cta">
+              <a class="btn btn-primary" href="tel:4343297979">Call Leasing</a>
+              <a class="btn btn-dark" href="/contact">Schedule a Tour</a>
+            </li>
           </ul>
         </nav>
-        <div class="nav-actions"><a class="btn btn-dark" href="/contact">Contact Leasing</a></div>
+        <div class="nav-actions">
+          <a
+            class="btn btn-secondary btn-portal"
+            href="https://sclas.twa.rentmanager.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Resident Portal
+          </a>
+          <a class="btn btn-dark" href="tel:4343297979">Call Leasing</a>
+        </div>
       </div>
     </header>
 
@@ -73,12 +90,13 @@
             <div class="eyebrow">Page not found</div>
             <h1>The page you requested is no longer available.</h1>
             <p>
-              You can head back to the homepage, compare communities, or contact the leasing office for help finding the
+              You can head back to the homepage, explore a community, or contact the leasing office for help finding the
               right page.
             </p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="/">Return Home</a>
-              <a class="btn btn-secondary" href="/communities">Compare Communities</a>
+              <a class="btn btn-secondary" href="/the-oasis">View The Oasis</a>
+              <a class="btn btn-secondary" href="/cornerstone">View Cornerstone</a>
             </div>
           </div>
           <div class="reveal">
@@ -111,8 +129,48 @@
 
     <footer class="site-footer">
       <div class="site-footer__inner">
-        <div><div class="footer-brand"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></div><p>Student apartments in Lynchburg, Virginia with furnished units, individual leases, and two distinct community options.</p></div>
-        <div class="footer-links"><a href="/">Home</a><a href="/contact">Contact</a></div>
+        <div>
+          <div class="footer-brand"><img src="/assets/images/vue-logo.png" alt="VUE Communities logo" /></div>
+          <p>
+            Student-only apartments in Lynchburg, Virginia near Liberty University, with furnished units, individual
+            leases, roommate matching, and two distinct community options.
+          </p>
+          <div class="footer-links">
+            <a href="/the-oasis">The Oasis</a>
+            <a href="/cornerstone">Cornerstone</a>
+            <a href="/floor-plans-pricing">Pricing</a>
+            <a href="/faq">FAQ</a>
+            <a href="/contact">Contact</a>
+            <a href="https://sclas.twa.rentmanager.com/" target="_blank" rel="noopener noreferrer">Resident Portal</a>
+          </div>
+        </div>
+        <div>
+          <div class="social-links">
+            <a
+              href="https://www.facebook.com/profile.php?id=100093957887209&mibextid=LQQJ4d"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Facebook
+            </a>
+            <a
+              href="https://www.instagram.com/the_vuelynchburg?igshid=MjEwN2IyYWYwYw=="
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
+            <a href="https://www.tiktok.com/@the_vuelynchburg?lang=en" target="_blank" rel="noopener noreferrer">TikTok</a>
+            <a href="https://www.youtube.com/channel/UC5Zr5mXkX5QOQk4cFccsYVQ" target="_blank" rel="noopener noreferrer">YouTube</a>
+          </div>
+          <p>
+            40 Oasis Way, Lynchburg, VA 24502<br />
+            Monday-Friday: 10:00 AM to 5:00 PM<br />
+            <a href="tel:4343297979">434-329-7979</a> ·
+            <a href="mailto:gm1@vuecommunities.com">gm1@vuecommunities.com</a>
+          </p>
+          <p>&copy; <span data-year></span> VUE Communities. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   </body>
