@@ -56,21 +56,9 @@
         <nav aria-label="Primary">
           <ul class="nav-links" id="primary-nav">
             <li><a href="/">Home</a></li>
-            <li class="nav-group is-active">
-              <details class="nav-subnav">
-                <summary class="nav-subnav__summary">
-                  <span>Communities</span>
-                  <span class="nav-subnav__chevron" aria-hidden="true"></span>
-                </summary>
-                <ul class="nav-subnav__menu">
-                  <li><a href="/communities">Compare Communities</a></li>
-                  <li><a href="/the-oasis">The Oasis</a></li>
-                  <li><a class="is-active" href="/cornerstone">Cornerstone</a></li>
-                </ul>
-              </details>
-            </li>
-            <li><a href="/floor-plans-pricing">Floor Plans &amp; Pricing</a></li>
-            <li><a href="/amenities">Amenities</a></li>
+            <li><a href="/the-oasis">The Oasis</a></li>
+            <li><a class="is-active" href="/cornerstone">Cornerstone</a></li>
+            <li><a href="/floor-plans-pricing">Pricing</a></li>
             <li><a href="/faq">FAQ</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="/contact">Contact</a></li>
@@ -117,7 +105,7 @@
               >
                 Apply for Cornerstone
               </a>
-              <a class="btn btn-secondary" href="/floor-plans-pricing">See Current Pricing</a>
+              <a class="btn btn-secondary" href="#cornerstone-pricing">See Current Pricing</a>
               <a class="btn btn-secondary" href="/contact">Schedule a Visit</a>
             </div>
             <div class="pill-row">
@@ -155,6 +143,60 @@
       </section>
 
       <section class="section reveal">
+        <div class="surface navy">
+          <div class="section-head">
+            <div>
+              <div class="kicker">Quick comparison</div>
+              <h2>How Cornerstone compares to The Oasis.</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>The Oasis</th>
+                  <th class="is-highlight">Cornerstone</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Category"><strong>Location feel</strong></td>
+                  <td data-label="The Oasis">Edge of Liberty's campus with Liberty Shuttle access.</td>
+                  <td data-label="Cornerstone" class="is-highlight">Residential neighborhood off Greenview Drive near local restaurants.</td>
+                </tr>
+                <tr>
+                  <td data-label="Category"><strong>Best fit</strong></td>
+                  <td data-label="The Oasis">Students who want more floor plan options and a larger amenity package.</td>
+                  <td data-label="Cornerstone" class="is-highlight">Students who want a consistent 3BR/3BA layout and more apartment-level privacy.</td>
+                </tr>
+                <tr>
+                  <td data-label="Category"><strong>Layout range</strong></td>
+                  <td data-label="The Oasis">1BR to 6BR, including select office/study layouts.</td>
+                  <td data-label="Cornerstone" class="is-highlight">All units are 3BR / 3BA.</td>
+                </tr>
+                <tr>
+                  <td data-label="Category"><strong>Utilities</strong></td>
+                  <td data-label="The Oasis">Furnished apartments with internet and water included, and electricity billed separately.</td>
+                  <td data-label="Cornerstone" class="is-highlight">Internet, water, sewer, and trash are included; electricity is separate.</td>
+                </tr>
+                <tr>
+                  <td data-label="Category"><strong>Signature benefit</strong></td>
+                  <td data-label="The Oasis">Liberty Shuttle access plus a larger amenity lineup.</td>
+                  <td data-label="Cornerstone" class="is-highlight">Each resident has a private ensuite bathroom and walk-in closet.</td>
+                </tr>
+                <tr>
+                  <td data-label="Category"><strong>Current pricing</strong></td>
+                  <td data-label="The Oasis">$525 to $955 depending on layout.</td>
+                  <td data-label="Cornerstone" class="is-highlight">$699 for the 3BR / 3BA layout.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="cornerstone-pricing" class="section reveal">
         <div class="spotlight">
           <div class="spotlight__copy">
             <div class="kicker">Floor plan</div>
@@ -175,6 +217,57 @@
               alt="Cornerstone 3 bedroom, 3 bathroom apartment floor plan"
               loading="lazy"
             />
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="surface">
+          <div class="section-head">
+            <div>
+              <div class="kicker">Layout detail</div>
+              <h2>One consistent floor plan across every unit.</h2>
+            </div>
+          </div>
+          <div class="pricing-grid three">
+            <article class="pricing-card layout-card">
+              <div class="media">
+                <img src="/assets/images/cornerstone-layout.webp" alt="Cornerstone 3 bedroom, 3 bathroom floor plan" loading="lazy" />
+              </div>
+              <div class="pricing-card__body">
+                <h3>3BR / 3BA</h3>
+                <div class="price"><strong>$699</strong><span>/installment</span></div>
+                <ul class="tiny-list">
+                  <li>Private ensuite bathroom for each resident</li>
+                  <li>One consistent furnished layout across the community</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="surface">
+          <div class="section-head">
+            <div>
+              <div class="kicker">How pricing works</div>
+              <h2>Installments, lease structure, and what is included.</h2>
+            </div>
+          </div>
+          <div class="info-grid three">
+            <div class="info-card">
+              <strong>Installment structure</strong>
+              <p>Lease totals are divided into 12 equal installments even though the lease term is typically about 11.5 months.</p>
+            </div>
+            <div class="info-card">
+              <strong>Individual lease protection</strong>
+              <p>Your pricing is tied to your room only, so you are not responsible for another roommate's balance.</p>
+            </div>
+            <div class="info-card">
+              <strong>Utility structure</strong>
+              <p>Electricity is resident-paid. Internet is included, and the rest of the bundled utilities vary by community.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -285,7 +378,6 @@
             leases, roommate matching, and two distinct community options.
           </p>
           <div class="footer-links">
-            <a href="/communities">Communities</a>
             <a href="/the-oasis">The Oasis</a>
             <a href="/cornerstone">Cornerstone</a>
             <a href="/floor-plans-pricing">Pricing</a>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0d2744" />
     <link rel="icon" href="/assets/images/vue-logo.png" type="image/png" />
-    <title>Floor Plans &amp; Pricing | VUE Communities</title>
+    <title>Pricing | VUE Communities</title>
     <meta
       name="description"
       content="Review current floor plan options and pricing for VUE Communities in Lynchburg, VA, including The Oasis 1BR-6BR layouts and The VUE at Cornerstone 3BR/3BA student apartments."
@@ -56,21 +56,9 @@
         <nav aria-label="Primary">
           <ul class="nav-links" id="primary-nav">
             <li><a href="/">Home</a></li>
-            <li class="nav-group">
-              <details class="nav-subnav">
-                <summary class="nav-subnav__summary">
-                  <span>Communities</span>
-                  <span class="nav-subnav__chevron" aria-hidden="true"></span>
-                </summary>
-                <ul class="nav-subnav__menu">
-                  <li><a href="/communities">Compare Communities</a></li>
-                  <li><a href="/the-oasis">The Oasis</a></li>
-                  <li><a href="/cornerstone">Cornerstone</a></li>
-                </ul>
-              </details>
-            </li>
-            <li><a class="is-active" href="/floor-plans-pricing">Floor Plans &amp; Pricing</a></li>
-            <li><a href="/amenities">Amenities</a></li>
+            <li><a href="/the-oasis">The Oasis</a></li>
+            <li><a href="/cornerstone">Cornerstone</a></li>
+            <li><a class="is-active" href="/floor-plans-pricing">Pricing</a></li>
             <li><a href="/faq">FAQ</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="/contact">Contact</a></li>
@@ -167,125 +155,33 @@
       </section>
 
       <section class="section reveal">
-        <div class="surface">
-          <div class="section-head">
-            <div>
-              <div class="kicker">Full layout lineup</div>
-              <h2>Every currently published floor plan, in one place.</h2>
-              <p class="section-intro">
-                Oasis offers the widest range, from solo living to shared layouts with office or study space. Cornerstone
-                offers one consistent 3BR / 3BA plan with a private bathroom for each resident.
-              </p>
+        <div class="section-head">
+          <div>
+            <div class="kicker">See full details</div>
+            <h2>Explore floor plans, photos, and amenities on each community page.</h2>
+          </div>
+        </div>
+        <div class="community-grid">
+          <article class="community-card">
+            <div class="community-card__body">
+              <div class="kicker">The Oasis</div>
+              <h3>6 floor plans from $525 to $955</h3>
+              <p>1BR through 6BR layouts with full amenity access, shuttle service, and campus-edge living.</p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="/the-oasis">Explore The Oasis</a>
+              </div>
             </div>
-          </div>
-          <div class="pricing-grid three">
-            <article class="pricing-card layout-card">
-              <div class="media">
-                <img src="/assets/images/oasis-layout-1br.webp" alt="Oasis 1 bedroom floor plan" loading="lazy" />
+          </article>
+          <article class="community-card">
+            <div class="community-card__body">
+              <div class="kicker">Cornerstone</div>
+              <h3>One consistent 3BR/3BA at $699</h3>
+              <p>Private ensuite bathroom, walk-in closet, and a quieter residential setting for every resident.</p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="/cornerstone">Explore Cornerstone</a>
               </div>
-              <div class="pricing-card__body">
-                <div class="kicker">The Oasis</div>
-                <h3>1BR</h3>
-                <div class="price"><strong>Contact for availability</strong></div>
-                <ul class="tiny-list">
-                  <li>Single-occupancy layout</li>
-                  <li>Best fit for students who want a solo setup</li>
-                </ul>
-              </div>
-            </article>
-            <article class="pricing-card layout-card">
-              <div class="media">
-                <img src="/assets/images/oasis-layout-2br.webp" alt="Oasis 2 bedroom floor plan" loading="lazy" />
-              </div>
-              <div class="pricing-card__body">
-                <div class="kicker">The Oasis</div>
-                <h3>2BR</h3>
-                <div class="price"><strong>$895</strong><span>/installment</span></div>
-                <ul class="tiny-list">
-                  <li>Two-bedroom shared layout</li>
-                  <li>All pricing is per person, per room, per installment</li>
-                </ul>
-              </div>
-            </article>
-            <article class="pricing-card layout-card">
-              <div class="media">
-                <img
-                  src="/assets/images/oasis-layout-2br-office.webp"
-                  alt="Oasis 2 bedroom with office or study floor plan"
-                  loading="lazy"
-                />
-              </div>
-              <div class="pricing-card__body">
-                <div class="kicker">The Oasis</div>
-                <h3>2BR with Office/Study</h3>
-                <div class="price"><strong>$955</strong><span>/installment</span></div>
-                <ul class="tiny-list">
-                  <li>Two bedrooms plus a separate office or study area</li>
-                  <li>Designed for students who want extra workspace</li>
-                </ul>
-              </div>
-            </article>
-            <article class="pricing-card layout-card">
-              <div class="media">
-                <img
-                  src="/assets/images/oasis-layout-3br-office.webp"
-                  alt="Oasis 3 bedroom with office or study floor plan"
-                  loading="lazy"
-                />
-              </div>
-              <div class="pricing-card__body">
-                <div class="kicker">The Oasis</div>
-                <h3>3BR with Office/Study</h3>
-                <div class="price"><strong>$885</strong><span>/installment</span></div>
-                <ul class="tiny-list">
-                  <li>Three bedrooms plus a separate office or study area</li>
-                  <li>A quieter alternative to the larger shared layouts</li>
-                </ul>
-              </div>
-            </article>
-            <article class="pricing-card layout-card">
-              <div class="media">
-                <img src="/assets/images/oasis-layout-4br.webp" alt="Oasis 4 bedroom floor plan" loading="lazy" />
-              </div>
-              <div class="pricing-card__body">
-                <div class="kicker">The Oasis</div>
-                <h3>4BR</h3>
-                <div class="price"><strong>$610-$650</strong><span>/installment</span></div>
-                <ul class="tiny-list">
-                  <li>No-window room: $610</li>
-                  <li>Window room: $650</li>
-                </ul>
-              </div>
-            </article>
-            <article class="pricing-card layout-card">
-              <div class="media">
-                <img src="/assets/images/oasis-layout-6br.webp" alt="Oasis 6 bedroom floor plan" loading="lazy" />
-              </div>
-              <div class="pricing-card__body">
-                <div class="kicker">The Oasis</div>
-                <h3>6BR</h3>
-                <div class="price"><strong>$525-$570</strong><span>/installment</span></div>
-                <ul class="tiny-list">
-                  <li>No-window room: $525</li>
-                  <li>Window room: $570</li>
-                </ul>
-              </div>
-            </article>
-            <article class="pricing-card layout-card">
-              <div class="media">
-                <img src="/assets/images/cornerstone-layout.webp" alt="Cornerstone 3 bedroom, 3 bathroom floor plan" loading="lazy" />
-              </div>
-              <div class="pricing-card__body">
-                <div class="kicker">Cornerstone</div>
-                <h3>3BR / 3BA</h3>
-                <div class="price"><strong>$699</strong><span>/installment</span></div>
-                <ul class="tiny-list">
-                  <li>Private ensuite bathroom for each resident</li>
-                  <li>One consistent furnished layout across the community</li>
-                </ul>
-              </div>
-            </article>
-          </div>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -348,7 +244,6 @@
             leases, roommate matching, and two distinct community options.
           </p>
           <div class="footer-links">
-            <a href="/communities">Communities</a>
             <a href="/the-oasis">The Oasis</a>
             <a href="/cornerstone">Cornerstone</a>
             <a href="/floor-plans-pricing">Pricing</a>
