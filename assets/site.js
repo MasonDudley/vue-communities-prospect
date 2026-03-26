@@ -143,6 +143,7 @@ document.querySelectorAll("[data-year]").forEach((element) => {
 
 const SUPABASE_URL = "https://povizsshrvyqcaszwzmr.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_4EFhT1Gx4qk_PHEm4cdRjw_kFKrEDZJ";
+const CONTACT_ENDPOINT = "/api/contact";
 
 const form = document.querySelector("[data-mailto-form]");
 
@@ -160,6 +161,7 @@ if (form) {
     const community = String(formData.get("community") || "").trim();
     const moveIn = String(formData.get("move-in") || "").trim();
     const message = String(formData.get("message") || "").trim();
+    const website = String(formData.get("website") || "").trim();
 
     if (submitBtn) {
       submitBtn.disabled = true;
@@ -167,36 +169,36 @@ if (form) {
     }
 
     try {
-      const response = await fetch(`${SUPABASE_URL}/rest/v1/contact_submissions`, {
+      const response = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         headers: {
-          "apikey": SUPABASE_ANON_KEY,
-          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
           "Content-Type": "application/json",
-          "Prefer": "return=minimal",
         },
         body: JSON.stringify({
           name,
           email,
-          phone: phone || null,
-          community: community || null,
-          move_in: moveIn || null,
-          message: message || null,
+          phone,
+          community,
+          moveIn,
+          message,
+          website,
         }),
       });
 
-      if (response.ok) {
-        form.innerHTML = `
-          <div style="text-align:center;padding:2rem 0;">
-            <h3 style="color:var(--navy-900);margin-bottom:0.5rem;">Inquiry sent!</h3>
-            <p style="color:var(--muted);">The leasing team will get back to you soon. You can also reach them at <a href="tel:4343297979">434-329-7979</a>.</p>
-          </div>
-        `;
-      } else {
-        throw new Error("Submission failed");
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || "Submission failed");
       }
+
+      form.innerHTML = `
+        <div style="text-align:center;padding:2rem 0;">
+          <h3 style="color:var(--navy-900);margin-bottom:0.5rem;">Inquiry sent!</h3>
+          <p style="color:var(--muted);">The leasing team will get back to you soon. You can also reach them at <a href="tel:4343297979">434-329-7979</a>.</p>
+        </div>
+      `;
     } catch {
-      // Fallback to mailto if Supabase fails
+      // Fallback to mailto if the server endpoint is unavailable.
       const subject = encodeURIComponent(
         `Leasing inquiry${community ? ` - ${community}` : ""}${name ? ` - ${name}` : ""}`,
       );
