@@ -28,6 +28,10 @@ html {
   scroll-behavior: smooth;
 }
 
+[id] {
+  scroll-margin-top: 100px;
+}
+
 body {
   margin: 0;
   font-family: "Instrument Sans", system-ui, sans-serif;
@@ -377,6 +381,16 @@ textarea {
   background: rgba(15, 39, 68, 0.12);
 }
 
+.cta-band .btn-secondary {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.cta-band .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
 input:focus,
 select:focus,
 textarea:focus {
@@ -449,6 +463,19 @@ textarea:focus {
   margin: 4px auto;
   background: currentColor;
   border-radius: 999px;
+  transition: transform 250ms ease, opacity 250ms ease;
+}
+
+body.menu-open .nav-toggle span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+body.menu-open .nav-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+body.menu-open .nav-toggle span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 .btn {
@@ -790,6 +817,13 @@ textarea:focus {
 .community-card,
 .pricing-card {
   overflow: hidden;
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+
+.community-card:hover,
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
 
 .media {
@@ -998,10 +1032,33 @@ textarea:focus {
   padding: 1rem 0;
   font-weight: 700;
   color: var(--navy-900);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.faq-card summary::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  background: currentColor;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E");
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E");
+  transition: transform 250ms ease;
+}
+
+.faq-card details[open] > summary::after {
+  transform: rotate(180deg);
 }
 
 .faq-card summary::-webkit-details-marker {
   display: none;
+}
+
+.faq-card details[open] > summary {
+  color: var(--orange-500);
 }
 
 .faq-card details p {
@@ -1058,6 +1115,11 @@ select {
 textarea {
   min-height: 150px;
   resize: vertical;
+}
+
+::placeholder {
+  color: var(--muted);
+  opacity: 0.6;
 }
 
 .page-hero-wrap {
@@ -1138,6 +1200,13 @@ textarea {
   background: rgba(15, 39, 68, 0.06);
   color: var(--navy-900);
   font-weight: 600;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.footer-links a:hover,
+.social-links a:hover {
+  background: rgba(15, 39, 68, 0.14);
+  color: var(--navy-950);
 }
 
 .js .reveal {
