@@ -225,12 +225,13 @@ textarea {
   white-space: nowrap;
 }
 
-.nav-links__portal-item {
+.nav-links li.nav-links__portal-item {
   display: none;
 }
 
 .nav-links a[href="/floor-plans-pricing"] {
-  max-width: 108px;
+  min-width: 150px;
+  max-width: none;
 }
 
 .nav-links a[href="/communities"] {
@@ -257,9 +258,12 @@ textarea {
   min-width: 92px;
 }
 
-.nav-links a[href="/floor-plans-pricing"],
 .nav-links a[href="/communities"] {
   white-space: normal;
+}
+
+.nav-links a[href="/floor-plans-pricing"] {
+  white-space: nowrap;
 }
 
 .nav-links a:not([href="/floor-plans-pricing"]):not([href="/communities"]) {
@@ -1378,7 +1382,7 @@ textarea {
     display: none;
   }
 
-  .nav-links__portal-item {
+  .nav-links li.nav-links__portal-item {
     display: block;
     margin-top: 0.35rem;
     padding-top: 0.65rem;
