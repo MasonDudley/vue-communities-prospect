@@ -1976,3 +1976,36 @@ textarea {
     font-size: clamp(1.8rem, 6vw, 2.8rem);
   }
 }
+
+/* ---- Availability badges (community pages) ---- */
+
+.avail-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2em 0.625em;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.375rem;
+  white-space: nowrap;
+}
+
+.avail-badge--available {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.avail-badge--limited {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.avail-badge--waitlist {
+  background: #fffbeb;
+  color: #d97706;
+}
+
+.avail-badge--unavailable {
+  background: #f1f5f9;
+  color: #64748b;
+}
