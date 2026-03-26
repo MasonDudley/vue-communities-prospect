@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Admin Login — VUE Communities</title>
+    <link rel="icon" href="/assets/images/vue-logo.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/admin/admin.css" />
+  </head>
+  <body>
+    <main class="login-page">
+      <div class="login-card">
+        <div class="login-card__brand">
+          <img src="/assets/images/vue-logo.png" alt="VUE Communities" />
+          <h1>Admin Portal</h1>
+          <p>Sign in to manage inquiries and availability.</p>
+        </div>
+
+        <div id="login-error" role="alert"></div>
+
+        <form class="login-form" id="login-form" novalidate>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required />
+          </div>
+          <button class="btn btn-primary" type="submit" id="login-btn">Sign in</button>
+        </form>
+      </div>
+    </main>
+
+    <script type="module">
+      import { supabase } from '/admin/admin.js';
+
+      // Redirect to dashboard if already authenticated
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        window.location.replace('/admin/dashboard/');
+      }
+
+      const form = document.getElementById('login-form');
+      const errorEl = document.getElementById('login-error');
+      const btn = document.getElementById('login-btn');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorEl.className = '';
+        btn.disabled = true;
+        btn.textContent = 'Signing in…';
+
+        const email = form.email.value.trim();
+        const password = form.password.value;
+
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+        if (error) {
+          errorEl.textContent = error.message === 'Invalid login credentials'
+            ? 'Invalid email or password.'
+            : error.message;
+          errorEl.className = 'is-visible';
+          btn.disabled = false;
+          btn.textContent = 'Sign in';
+        } else {
+          window.location.replace('/admin/dashboard/');
+        }
+      });
+    </script>
+  </body>
+</html>

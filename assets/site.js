@@ -303,3 +303,47 @@ if (galleries.length) {
     if (Math.abs(diff) > 50) navigate(diff > 0 ? -1 : 1);
   }, { passive: true });
 }
+
+// ── Availability badges on community pages ────────────────────────────────────
+
+const unitCards = document.querySelectorAll("[data-unit-type]");
+
+if (unitCards.length > 0) {
+  const path = window.location.pathname;
+  let community = null;
+  if (path.startsWith("/the-oasis")) community = "The Oasis";
+  else if (path.startsWith("/cornerstone")) community = "Cornerstone";
+
+  if (community) {
+    const STATUS_LABELS = {
+      available: "Available",
+      limited: "Limited",
+      waitlist: "Waitlist",
+      unavailable: "Full",
+    };
+
+    fetch(
+      `${SUPABASE_URL}/rest/v1/availability?community=eq.${encodeURIComponent(community)}&select=unit_type,status,notes`,
+      {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+      }
+    )
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => {
+        const map = Object.fromEntries(data.map((item) => [item.unit_type, item]));
+        unitCards.forEach((card) => {
+          const info = map[card.dataset.unitType];
+          if (!info) return;
+          const badge = document.createElement("span");
+          badge.className = `avail-badge avail-badge--${info.status}`;
+          badge.textContent = STATUS_LABELS[info.status] || info.status;
+          if (info.notes) badge.title = info.notes;
+          card.insertAdjacentElement("afterend", badge);
+        });
+      })
+      .catch(() => {}); // availability display is non-critical — fail silently
+  }
+}

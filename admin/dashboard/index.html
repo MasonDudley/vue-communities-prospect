@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Dashboard — VUE Admin</title>
+    <link rel="icon" href="/assets/images/vue-logo.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/admin/admin.css" />
+  </head>
+  <body>
+    <header class="admin-topbar">
+      <a class="admin-topbar__brand" href="/admin/dashboard/">
+        <img src="/assets/images/vue-logo.png" alt="VUE Communities" />
+      </a>
+      <div class="admin-topbar__divider"></div>
+      <span class="admin-topbar__label">Admin Portal</span>
+      <div class="admin-topbar__spacer"></div>
+      <span class="admin-topbar__user" id="topbar-email"></span>
+      <button class="admin-topbar__signout" id="sign-out-btn" type="button">Sign out</button>
+    </header>
+
+    <div class="admin-page">
+      <div class="admin-container">
+
+        <div class="admin-tabs" role="tablist" aria-label="Dashboard sections">
+          <button
+            class="admin-tab is-active"
+            role="tab"
+            data-tab="inquiries"
+            aria-selected="true"
+            aria-controls="panel-inquiries"
+          >
+            Inquiries
+            <span id="new-badge" class="badge badge--new" style="margin-left:0.375rem;display:none;vertical-align:middle"></span>
+          </button>
+          <button
+            class="admin-tab"
+            role="tab"
+            data-tab="availability"
+            aria-selected="false"
+            aria-controls="panel-availability"
+          >
+            Availability
+          </button>
+        </div>
+
+        <!-- Inquiries Panel -->
+        <div class="admin-panel is-active" id="panel-inquiries" data-panel="inquiries" role="tabpanel">
+          <div class="admin-panel-header">
+            <h2>Contact Inquiries</h2>
+          </div>
+          <div class="admin-filters">
+            <select id="filter-community" aria-label="Filter by community">
+              <option value="">All communities</option>
+              <option value="The Oasis">The Oasis</option>
+              <option value="Cornerstone">Cornerstone</option>
+              <option value="Still deciding">Still deciding</option>
+            </select>
+            <select id="filter-status" aria-label="Filter by status">
+              <option value="">All statuses</option>
+              <option value="new">New only</option>
+              <option value="reviewed">Reviewed only</option>
+            </select>
+          </div>
+          <div id="inquiries-content">
+            <div class="admin-loading">Loading inquiries…</div>
+          </div>
+        </div>
+
+        <!-- Availability Panel -->
+        <div class="admin-panel" id="panel-availability" data-panel="availability" role="tabpanel">
+          <div class="admin-panel-header">
+            <h2>Unit Availability</h2>
+            <span class="admin-panel-meta">Changes are saved per row and reflected immediately on the public site.</span>
+          </div>
+          <div id="availability-content">
+            <div class="admin-loading">Loading availability…</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <script type="module">
+      import { supabase, requireAuth, signOut } from '../admin.js';
+
+      // ── Auth ──────────────────────────────────────────────────────────────
+      const session = await requireAuth();
+      if (!session) throw new Error('Not authenticated');
+
+      document.getElementById('topbar-email').textContent = session.user.email;
+      document.getElementById('sign-out-btn').addEventListener('click', signOut);
+
+      // ── Tabs ──────────────────────────────────────────────────────────────
+      const tabs = document.querySelectorAll('[data-tab]');
+      const panels = document.querySelectorAll('[data-panel]');
+      let availabilityLoaded = false;
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); });
+          panels.forEach(p => p.classList.remove('is-active'));
+          tab.classList.add('is-active');
+          tab.setAttribute('aria-selected', 'true');
+          document.querySelector(`[data-panel="${tab.dataset.tab}"]`).classList.add('is-active');
+
+          if (tab.dataset.tab === 'availability' && !availabilityLoaded) {
+            availabilityLoaded = true;
+            loadAvailability();
+          }
+        });
+      });
+
+      // ── Utility ───────────────────────────────────────────────────────────
+      function esc(str) {
+        return String(str ?? '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      // ── Inquiries ─────────────────────────────────────────────────────────
+      let allSubmissions = [];
+
+      async function loadInquiries() {
+        const { data, error } = await supabase
+          .from('contact_submissions')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        const container = document.getElementById('inquiries-content');
+
+        if (error) {
+          container.innerHTML = `<div class="admin-alert admin-alert--error">Failed to load inquiries: ${esc(error.message)}</div>`;
+          return;
+        }
+
+        allSubmissions = data || [];
+
+        const newCount = allSubmissions.filter(s => !s.reviewed).length;
+        const badge = document.getElementById('new-badge');
+        if (newCount > 0) {
+          badge.textContent = newCount;
+          badge.style.display = 'inline-flex';
+        } else {
+          badge.style.display = 'none';
+        }
+
+        renderInquiries();
+      }
+
+      function renderInquiries() {
+        const communityFilter = document.getElementById('filter-community').value;
+        const statusFilter = document.getElementById('filter-status').value;
+
+        let filtered = allSubmissions;
+        if (communityFilter) filtered = filtered.filter(s => s.community === communityFilter);
+        if (statusFilter === 'new') filtered = filtered.filter(s => !s.reviewed);
+        if (statusFilter === 'reviewed') filtered = filtered.filter(s => s.reviewed);
+
+        const container = document.getElementById('inquiries-content');
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div class="admin-empty">
+              <div class="admin-empty__icon">📭</div>
+              <p>${allSubmissions.length === 0 ? 'No inquiries yet.' : 'No inquiries match your filters.'}</p>
+            </div>`;
+          return;
+        }
+
+        const rows = filtered.map(s => {
+          const date = s.created_at
+            ? new Date(s.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            : '—';
+          const isReviewed = !!s.reviewed;
+          const statusBadge = isReviewed
+            ? '<span class="badge badge--reviewed">Reviewed</span>'
+            : '<span class="badge badge--new">New</span>';
+
+          const reviewBtn = !isReviewed
+            ? `<button class="btn btn-primary btn-sm" data-mark-reviewed="${esc(s.id)}">Mark reviewed</button>`
+            : '';
+
+          return `
+            <tr class="data-row${isReviewed ? ' is-reviewed' : ''}" data-id="${esc(s.id)}">
+              <td class="is-muted" style="white-space:nowrap">${esc(date)}</td>
+              <td><strong>${esc(s.name || '—')}</strong></td>
+              <td>${s.email ? `<a href="mailto:${esc(s.email)}">${esc(s.email)}</a>` : '—'}</td>
+              <td class="is-muted">${esc(s.phone || '—')}</td>
+              <td>${esc(s.community || '—')}</td>
+              <td class="is-muted">${esc(s.move_in || '—')}</td>
+              <td>${statusBadge}</td>
+              <td><button class="btn-expand" data-expand="${esc(s.id)}" aria-expanded="false">View</button></td>
+            </tr>
+            <tr class="submission-detail" id="detail-${esc(s.id)}">
+              <td colspan="8">
+                <p class="submission-detail__message">${esc(s.message || 'No message provided.')}</p>
+                <div class="submission-detail__actions">
+                  ${s.email ? `<a href="mailto:${esc(s.email)}" class="btn btn-secondary btn-sm">Reply by email</a>` : ''}
+                  ${s.phone ? `<a href="tel:${esc(s.phone.replace(/\D/g, ''))}" class="btn btn-secondary btn-sm">Call</a>` : ''}
+                  ${reviewBtn}
+                </div>
+              </td>
+            </tr>`;
+        }).join('');
+
+        container.innerHTML = `
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Community</th>
+                  <th>Move-in</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>`;
+
+        // Expand / collapse detail rows
+        container.querySelectorAll('[data-expand]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.expand;
+            const detail = document.getElementById(`detail-${id}`);
+            const isOpen = detail.classList.contains('is-open');
+            detail.classList.toggle('is-open', !isOpen);
+            btn.setAttribute('aria-expanded', String(!isOpen));
+            btn.textContent = !isOpen ? 'Hide' : 'View';
+          });
+        });
+
+        // Mark as reviewed
+        container.querySelectorAll('[data-mark-reviewed]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const id = btn.dataset.markReviewed;
+            btn.disabled = true;
+            btn.textContent = 'Saving…';
+
+            const { error } = await supabase
+              .from('contact_submissions')
+              .update({ reviewed: true })
+              .eq('id', id);
+
+            if (error) {
+              btn.disabled = false;
+              btn.textContent = 'Mark reviewed';
+              alert(`Error: ${error.message}`);
+            } else {
+              const sub = allSubmissions.find(s => s.id === id);
+              if (sub) sub.reviewed = true;
+
+              // Update new badge count
+              const newCount = allSubmissions.filter(s => !s.reviewed).length;
+              const badge = document.getElementById('new-badge');
+              if (newCount > 0) {
+                badge.textContent = newCount;
+              } else {
+                badge.style.display = 'none';
+              }
+
+              renderInquiries();
+            }
+          });
+        });
+      }
+
+      document.getElementById('filter-community').addEventListener('change', renderInquiries);
+      document.getElementById('filter-status').addEventListener('change', renderInquiries);
+
+      loadInquiries();
+
+      // ── Availability ──────────────────────────────────────────────────────
+      const COMMUNITIES = {
+        'The Oasis': ['1BR', '2BR', '2BR + Office/Study', '3BR + Office/Study', '4BR', '6BR'],
+        'Cornerstone': ['3BR/3BA'],
+      };
+
+      const STATUS_LABELS = {
+        available: 'Available',
+        limited: 'Limited',
+        waitlist: 'Waitlist',
+        unavailable: 'Full',
+      };
+
+      async function loadAvailability() {
+        const { data, error } = await supabase
+          .from('availability')
+          .select('*');
+
+        const container = document.getElementById('availability-content');
+
+        if (error) {
+          container.innerHTML = `<div class="admin-alert admin-alert--error">Failed to load availability: ${esc(error.message)}</div>`;
+          return;
+        }
+
+        // Build lookup: "Community::UnitType" → row
+        const map = {};
+        (data || []).forEach(item => {
+          map[`${item.community}::${item.unit_type}`] = item;
+        });
+
+        const html = Object.entries(COMMUNITIES).map(([community, unitTypes]) => {
+          const rows = unitTypes.map(unitType => {
+            const key = `${community}::${unitType}`;
+            const item = map[key] || { status: 'available', notes: '' };
+            const statusOptions = Object.entries(STATUS_LABELS)
+              .map(([val, label]) => `<option value="${val}"${item.status === val ? ' selected' : ''}>${label}</option>`)
+              .join('');
+            return `
+              <div class="avail-row" data-community="${esc(community)}" data-unit="${esc(unitType)}">
+                <div class="avail-row__label">${esc(unitType)}</div>
+                <select class="avail-status" aria-label="Status for ${esc(unitType)}">${statusOptions}</select>
+                <input
+                  class="avail-notes"
+                  type="text"
+                  placeholder="Notes (optional — shown as tooltip on public site)"
+                  value="${esc(item.notes || '')}"
+                  aria-label="Notes for ${esc(unitType)}"
+                />
+                <button class="btn btn-primary btn-sm avail-save" type="button">Save</button>
+              </div>`;
+          }).join('');
+
+          return `
+            <div class="avail-section">
+              <h3>${esc(community)}</h3>
+              <div class="avail-table-wrap">${rows}</div>
+            </div>`;
+        }).join('');
+
+        container.innerHTML = html;
+
+        // Per-row save handlers
+        container.querySelectorAll('.avail-save').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const row = btn.closest('.avail-row');
+            const community = row.dataset.community;
+            const unit_type = row.dataset.unit;
+            const status = row.querySelector('.avail-status').value;
+            const notes = row.querySelector('.avail-notes').value.trim() || null;
+
+            btn.disabled = true;
+            btn.textContent = 'Saving…';
+
+            const { error } = await supabase
+              .from('availability')
+              .upsert(
+                { community, unit_type, status, notes, updated_at: new Date().toISOString() },
+                { onConflict: 'community,unit_type' }
+              );
+
+            if (error) {
+              btn.disabled = false;
+              btn.textContent = 'Save';
+              alert(`Error saving: ${error.message}`);
+            } else {
+              btn.textContent = 'Saved ✓';
+              btn.className = 'btn btn-success btn-sm avail-save';
+              setTimeout(() => {
+                btn.textContent = 'Save';
+                btn.className = 'btn btn-primary btn-sm avail-save';
+                btn.disabled = false;
+              }, 2000);
+            }
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
