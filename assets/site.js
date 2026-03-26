@@ -38,7 +38,7 @@ if (toggle) {
   });
 }
 
-document.querySelectorAll(".nav-links a").forEach((link) => {
+document.querySelectorAll(".nav-links a, .nav-links__mobile-cta a").forEach((link) => {
   link.addEventListener("click", () => {
     closeSubnavs();
     document.body.classList.remove("menu-open");
