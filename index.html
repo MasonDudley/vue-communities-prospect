@@ -139,10 +139,67 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/assets/styles.css" />
+    <link rel="stylesheet" href="/assets/special-popup.css" />
     <script defer src="/assets/site.js"></script>
     <script defer src="/_vercel/insights/script.js"></script>
   </head>
   <body>
+    <!-- Special popup modal -->
+    <div class="special-popup-overlay" id="special-popup" style="display:none">
+      <div class="special-popup">
+        <button class="special-popup__close" id="special-popup-close" aria-label="Close">&times;</button>
+        <div class="special-popup__badge" id="special-popup-badge"></div>
+        <h2 class="special-popup__title" id="special-popup-title"></h2>
+        <p class="special-popup__summary" id="special-popup-summary"></p>
+        <div class="special-popup__cta" id="special-popup-cta"></div>
+      </div>
+    </div>
+    <script type="module">
+      import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+      if (!sessionStorage.getItem('vue_special_shown')) {
+        const sb = createClient(
+          'https://povizsshrvyqcaszwzmr.supabase.co',
+          'sb_publishable_4EFhT1Gx4qk_PHEm4cdRjw_kFKrEDZJ'
+        );
+
+        const now = new Date().toISOString();
+        const { data } = await sb
+          .from('specials')
+          .select('title, summary, community, cta_label, cta_url')
+          .eq('is_active', true)
+          .or(`starts_at.is.null,starts_at.lte.${now}`)
+          .or(`ends_at.is.null,ends_at.gte.${now}`)
+          .order('sort_order', { ascending: true })
+          .limit(1);
+
+        if (data && data.length) {
+          const s = data[0];
+          document.getElementById('special-popup-badge').textContent = s.community || 'Special';
+          document.getElementById('special-popup-title').textContent = s.title;
+          document.getElementById('special-popup-summary').textContent = s.summary;
+
+          if (s.cta_label) {
+            document.getElementById('special-popup-cta').innerHTML =
+              `<a class="btn btn-primary" href="${s.cta_url || '/contact'}">${s.cta_label}</a>`;
+          }
+
+          document.getElementById('special-popup').style.display = '';
+          sessionStorage.setItem('vue_special_shown', '1');
+        }
+      }
+
+      document.getElementById('special-popup-close').addEventListener('click', () => {
+        document.getElementById('special-popup').style.display = 'none';
+      });
+
+      document.getElementById('special-popup').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+          e.currentTarget.style.display = 'none';
+        }
+      });
+    </script>
+
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="nav-shell">

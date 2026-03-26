@@ -23,6 +23,7 @@
       <span class="admin-topbar__label">Admin Portal</span>
       <div class="admin-topbar__spacer"></div>
       <span class="admin-topbar__user" id="topbar-email"></span>
+      <a class="admin-topbar__back" href="/">Back to site</a>
       <button class="admin-topbar__signout" id="sign-out-btn" type="button">Sign out</button>
     </header>
 
@@ -103,7 +104,7 @@
             </div>
           </div>
 
-          <div class="specials-layout">
+          <div class="specials-add-layout">
             <section class="specials-card">
               <h3>Add special</h3>
               <form id="special-form" class="special-form" novalidate>
@@ -167,6 +168,15 @@
               </form>
             </section>
 
+            <section class="specials-card specials-preview-card">
+              <h3>Live preview</h3>
+              <div id="special-preview" class="special-preview">
+                <div class="special-preview__empty">Fill in the form to see a preview</div>
+              </div>
+            </section>
+          </div>
+
+          <div class="specials-list-section">
             <section class="specials-card">
               <div class="specials-card__header">
                 <h3>Current specials</h3>
@@ -554,6 +564,53 @@
         specialSubmitBtn.disabled = false;
         specialSubmitBtn.textContent = 'Save special';
         await loadSpecials();
+      });
+
+      // ── Live Preview ────────────────────────────────────────────────────
+      const previewEl = document.getElementById('special-preview');
+      const previewFields = ['special-community', 'special-title', 'special-summary', 'special-cta-label', 'special-cta-url', 'special-starts-at', 'special-ends-at', 'special-is-active'];
+
+      function updatePreview() {
+        const title = document.getElementById('special-title').value.trim();
+        const summary = document.getElementById('special-summary').value.trim();
+        const community = document.getElementById('special-community').value;
+        const ctaLabel = document.getElementById('special-cta-label').value.trim();
+        const ctaUrl = document.getElementById('special-cta-url').value.trim();
+        const startsAt = document.getElementById('special-starts-at').value;
+        const endsAt = document.getElementById('special-ends-at').value;
+        const isActive = document.getElementById('special-is-active').checked;
+
+        if (!title && !summary) {
+          previewEl.innerHTML = '<div class="special-preview__empty">Fill in the form to see a preview</div>';
+          return;
+        }
+
+        const statusText = isActive ? 'Active' : 'Hidden';
+        const statusClass = isActive ? 'badge--available' : 'badge--reviewed';
+        const dateRange = (startsAt || endsAt)
+          ? `${startsAt ? formatDate(startsAt + 'T00:00:00') : 'No start'} to ${endsAt ? formatDate(endsAt + 'T00:00:00') : 'No end'}`
+          : 'No date window set';
+        const ctaHtml = ctaLabel
+          ? `<a class="btn btn-primary btn-sm" href="${esc(ctaUrl || '#')}" target="_blank" rel="noopener">${esc(ctaLabel)}</a>`
+          : '';
+
+        previewEl.innerHTML = `
+          <div class="special-preview__card">
+            <div class="special-preview__badges">
+              <span class="badge badge--new">${esc(community)}</span>
+              <span class="badge ${statusClass}">${statusText}</span>
+            </div>
+            <h4 class="special-preview__title">${esc(title) || 'Headline'}</h4>
+            <p class="special-preview__summary">${esc(summary) || 'Summary text will appear here.'}</p>
+            <div class="special-preview__meta">${esc(dateRange)}</div>
+            ${ctaHtml ? `<div class="special-preview__cta">${ctaHtml}</div>` : ''}
+          </div>`;
+      }
+
+      previewFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', updatePreview);
+        if (el) el.addEventListener('change', updatePreview);
       });
 
       async function loadSpecials() {

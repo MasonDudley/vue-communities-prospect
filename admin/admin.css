@@ -620,10 +620,132 @@ table.admin-table {
 
 #login-error.is-visible { display: block; }
 
+/* ---- Password Toggle ---- */
+
+.password-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrap input {
+  padding-right: 2.75rem;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+
+.password-toggle:hover {
+  color: var(--ink);
+}
+
+/* ---- Back to Site ---- */
+
+.admin-topbar__back {
+  padding: 0.375rem 0.875rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.admin-topbar__back:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: white;
+  text-decoration: none;
+}
+
+/* ---- Specials Add Layout (form + preview side by side) ---- */
+
+.specials-add-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(280px, 1fr);
+  gap: 1rem;
+  align-items: start;
+  margin-bottom: 1.25rem;
+}
+
+.specials-list-section {
+  margin-bottom: 0;
+}
+
+/* ---- Live Preview Card ---- */
+
+.specials-preview-card {
+  position: sticky;
+  top: calc(var(--topbar-height) + 1rem);
+}
+
+.special-preview__empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.special-preview__card {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: #fbfdff;
+}
+
+.special-preview__badges {
+  display: flex;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.special-preview__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--navy-900);
+  line-height: 1.35;
+}
+
+.special-preview__summary {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  color: var(--ink);
+  line-height: 1.55;
+}
+
+.special-preview__meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.special-preview__cta {
+  padding-top: 0.25rem;
+}
+
 /* ---- Responsive ---- */
 
 @media (max-width: 920px) {
   .specials-layout {
+    grid-template-columns: 1fr;
+  }
+  .specials-add-layout {
     grid-template-columns: 1fr;
   }
 }
