@@ -5,6 +5,15 @@ const header = document.querySelector(".site-header");
 const navLinks = document.querySelector(".nav-links");
 const nav = navLinks?.closest("nav");
 const mobileMenu = window.matchMedia("(max-width: 900px)");
+const subnavs = Array.from(document.querySelectorAll(".nav-subnav"));
+
+const closeSubnavs = (except) => {
+  subnavs.forEach((subnav) => {
+    if (subnav !== except) {
+      subnav.open = false;
+    }
+  });
+};
 
 const syncMenuState = () => {
   if (!toggle || !navLinks) return;
@@ -31,8 +40,23 @@ if (toggle) {
 
 document.querySelectorAll(".nav-links a").forEach((link) => {
   link.addEventListener("click", () => {
+    closeSubnavs();
     document.body.classList.remove("menu-open");
     syncMenuState();
+  });
+});
+
+document.querySelectorAll(".nav-subnav__summary").forEach((summary) => {
+  summary.addEventListener("click", (event) => {
+    const subnav = summary.parentElement;
+    if (!(subnav instanceof HTMLDetailsElement)) return;
+
+    if (!mobileMenu.matches) {
+      event.preventDefault();
+      const shouldOpen = !subnav.open;
+      closeSubnavs(shouldOpen ? subnav : null);
+      subnav.open = shouldOpen;
+    }
   });
 });
 
@@ -40,6 +64,7 @@ if (navLinks) {
   syncMenuState();
 
   const handleViewportChange = () => {
+    closeSubnavs();
     document.body.classList.remove("menu-open");
     syncMenuState();
   };
@@ -51,10 +76,17 @@ if (navLinks) {
   }
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && document.body.classList.contains("menu-open")) {
-      document.body.classList.remove("menu-open");
-      syncMenuState();
-      toggle?.focus();
+    if (event.key === "Escape") {
+      const hasOpenSubnav = subnavs.some((subnav) => subnav.open);
+      closeSubnavs();
+
+      if (document.body.classList.contains("menu-open")) {
+        document.body.classList.remove("menu-open");
+        syncMenuState();
+        toggle?.focus();
+      } else if (hasOpenSubnav) {
+        document.querySelector(".nav-subnav__summary")?.focus();
+      }
     }
   });
 
@@ -71,6 +103,10 @@ if (navLinks) {
     ) {
       document.body.classList.remove("menu-open");
       syncMenuState();
+    }
+
+    if (nav && !nav.contains(event.target)) {
+      closeSubnavs();
     }
   });
 }

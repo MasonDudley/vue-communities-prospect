@@ -139,46 +139,102 @@ textarea {
 
 .nav-links li {
   display: flex;
+  position: relative;
 }
 
-.nav-links a {
+.nav-links a,
+.nav-subnav__summary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 44px;
   padding: 0.55rem 0.8rem;
+  border: 0;
   border-radius: 14px;
+  background: transparent;
   text-align: center;
   line-height: 1.15;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
   transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease;
 }
 
 .nav-links a:hover,
-.nav-links a.is-active {
+.nav-links a.is-active,
+.nav-subnav__summary:hover,
+.nav-group.is-active .nav-subnav__summary,
+.nav-subnav[open] .nav-subnav__summary {
   color: var(--navy-900);
   background: rgba(19, 58, 98, 0.08);
   box-shadow: inset 0 0 0 1px rgba(19, 58, 98, 0.06);
 }
 
-.nav-links a:focus-visible {
+.nav-links a:focus-visible,
+.nav-subnav__summary:focus-visible {
   outline: 2px solid rgba(255, 127, 42, 0.55);
   outline-offset: 2px;
+}
+
+.nav-subnav {
+  position: relative;
+}
+
+.nav-subnav__summary {
+  gap: 0.5rem;
+  list-style: none;
+  white-space: nowrap;
+}
+
+.nav-subnav__summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-subnav__chevron {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-1px) rotate(45deg);
+  transition: transform 180ms ease;
+}
+
+.nav-subnav[open] .nav-subnav__chevron {
+  transform: translateY(1px) rotate(-135deg);
+}
+
+.nav-subnav__menu {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  left: 0;
+  min-width: 220px;
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.55rem;
+  margin: 0;
+  list-style: none;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: var(--shadow-lg);
+}
+
+.nav-subnav__menu a {
+  justify-content: flex-start;
+  max-width: none;
+  white-space: nowrap;
+}
+
+.nav-links__portal-item {
+  display: none;
 }
 
 .nav-links a[href="/floor-plans-pricing"] {
   max-width: 108px;
 }
 
-.nav-links a[href="/the-oasis"] {
-  max-width: 78px;
-}
-
 .nav-links a[href="/communities"] {
   max-width: 110px;
-}
-
-.nav-links a[href="/cornerstone"] {
-  max-width: 100px;
 }
 
 .nav-links a[href="/"] {
@@ -202,13 +258,11 @@ textarea {
 }
 
 .nav-links a[href="/floor-plans-pricing"],
-.nav-links a[href="/the-oasis"],
-.nav-links a[href="/communities"],
-.nav-links a[href="/cornerstone"] {
+.nav-links a[href="/communities"] {
   white-space: normal;
 }
 
-.nav-links a:not([href="/floor-plans-pricing"]):not([href="/the-oasis"]):not([href="/communities"]):not([href="/cornerstone"]) {
+.nav-links a:not([href="/floor-plans-pricing"]):not([href="/communities"]) {
   white-space: nowrap;
 }
 
@@ -219,6 +273,12 @@ textarea {
 
   .brand img {
     width: 150px;
+  }
+
+  .nav-actions .btn {
+    min-height: 46px;
+    padding-inline: 1rem;
+    font-size: 0.92rem;
   }
 
   .nav-actions .btn-dark {
@@ -232,7 +292,8 @@ textarea {
     font-size: 0.9rem;
   }
 
-  .nav-links a {
+  .nav-links a,
+  .nav-subnav__summary {
     padding: 0.5rem 0.65rem;
   }
 }
@@ -256,12 +317,28 @@ textarea {
 
   .nav-links a,
   .nav-links a[href="/floor-plans-pricing"],
-  .nav-links a[href="/the-oasis"],
   .nav-links a[href="/communities"],
-  .nav-links a[href="/cornerstone"] {
+  .nav-subnav__summary {
     max-width: none;
     justify-content: flex-start;
     white-space: normal;
+  }
+
+  .nav-subnav {
+    width: 100%;
+  }
+
+  .nav-subnav__summary {
+    width: 100%;
+  }
+
+  .nav-subnav__menu {
+    position: static;
+    min-width: 0;
+    margin-top: 0.45rem;
+    box-shadow: none;
+    border-radius: 18px;
+    background: rgba(15, 39, 68, 0.04);
   }
 }
 
@@ -513,6 +590,13 @@ body.menu-open .nav-toggle span:nth-child(3) {
 .btn-secondary {
   color: var(--navy-900);
   background: rgba(15, 39, 68, 0.08);
+}
+
+.btn-portal {
+  min-height: 46px;
+  padding: 0.72rem 1.05rem;
+  border: 1px solid rgba(15, 39, 68, 0.12);
+  box-shadow: none;
 }
 
 .btn-dark {
@@ -1290,8 +1374,21 @@ textarea {
     z-index: 20;
   }
 
-  .nav-actions .btn-dark {
+  .nav-actions {
     display: none;
+  }
+
+  .nav-links__portal-item {
+    display: block;
+    margin-top: 0.35rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .nav-links__portal-item a {
+    justify-content: center;
+    font-weight: 700;
+    background: rgba(15, 39, 68, 0.08);
   }
 
   .hero-meta,
