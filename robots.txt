@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /api/
 
+Host: https://vuecommunities.com
 Sitemap: https://vuecommunities.com/sitemap.xml
