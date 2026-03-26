@@ -2,6 +2,15 @@
 
 Static, multi-page prospect/demo website for VUE Communities in Lynchburg, Virginia. The site is designed as a polished redesign mockup and is ready to preview locally or deploy on Vercel.
 
+## Canonical Baseline
+
+This repository is the single working baseline for the VUE Communities redesign.
+
+- Use this repo for all future website work.
+- The later one-page rewrite has been retired from the working setup.
+- Supporting research and original-site notes live in `docs/reference/`.
+- A local scrape archive lives in `archive/` and is gitignored on purpose.
+
 ## Local preview
 
 Run a simple static server from the project root:
