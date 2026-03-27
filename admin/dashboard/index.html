@@ -588,6 +588,35 @@
         return publicUrlData?.publicUrl || null;
       }
 
+      function getBucketAssetPath(imageUrl) {
+        if (!imageUrl) return null;
+
+        try {
+          const url = new URL(imageUrl, window.location.origin);
+          const marker = `/storage/v1/object/public/${SPECIALS_BUCKET}/`;
+          const index = url.pathname.indexOf(marker);
+          if (index === -1) return null;
+          return decodeURIComponent(url.pathname.slice(index + marker.length));
+        } catch {
+          return null;
+        }
+      }
+
+      async function removeBucketAssetIfManaged(imageUrl) {
+        const assetPath = getBucketAssetPath(imageUrl);
+        if (!assetPath) return false;
+
+        const { error } = await supabase.storage
+          .from(SPECIALS_BUCKET)
+          .remove([assetPath]);
+
+        if (error) {
+          throw error;
+        }
+
+        return true;
+      }
+
       specialImageFileInput?.addEventListener('change', () => {
         const file = specialImageFileInput.files?.[0];
         specialImageUploadStatus.textContent = file
@@ -841,6 +870,9 @@
 
               <div class="special-item__actions">
                 <button class="btn btn-primary btn-sm" type="button" data-special-save>Save changes</button>
+                <button class="btn btn-secondary btn-sm" type="button" data-special-remove-image ${item.image_url ? '' : 'disabled'}>Remove image</button>
+                <button class="btn btn-danger btn-sm" type="button" data-special-delete>Delete special</button>
+                <span class="admin-panel-meta" data-special-action-status></span>
               </div>
             </article>`;
         }).join('');
@@ -860,6 +892,8 @@
             const pdf_url = card.querySelector('[data-special-pdf-url]').value.trim() || null;
             const imageFile = card.querySelector('[data-special-image-file]').files?.[0] || null;
             const uploadStatus = card.querySelector('[data-special-upload-status]');
+            const actionStatus = card.querySelector('[data-special-action-status]');
+            const existingImageUrl = (allSpecials.find(item => item.id === id)?.image_url) || null;
             const sort_order = Number(card.querySelector('[data-special-sort-order]').value || 0);
             const starts_at = toIsoDateBoundary(card.querySelector('[data-special-starts-at]').value.trim(), false);
             const ends_at = toIsoDateBoundary(card.querySelector('[data-special-ends-at]').value.trim(), true);
@@ -875,6 +909,7 @@
               return;
             }
 
+            actionStatus.textContent = '';
             btn.disabled = true;
             btn.textContent = 'Saving…';
 
@@ -895,6 +930,10 @@
                 .eq('id', id);
 
               if (error) throw error;
+
+              if (imageFile && existingImageUrl && existingImageUrl !== image_url) {
+                await removeBucketAssetIfManaged(existingImageUrl);
+              }
             } catch (error) {
               uploadStatus.textContent = '';
               btn.disabled = false;
@@ -912,6 +951,88 @@
               btn.disabled = false;
               await loadSpecials();
             }, 900);
+          });
+        });
+
+        container.querySelectorAll('[data-special-remove-image]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const card = btn.closest('[data-special-id]');
+            const id = card.dataset.specialId;
+            const imageUrlInput = card.querySelector('[data-special-image-url]');
+            const imageAltInput = card.querySelector('[data-special-image-alt]');
+            const imageFileInput = card.querySelector('[data-special-image-file]');
+            const uploadStatus = card.querySelector('[data-special-upload-status]');
+            const actionStatus = card.querySelector('[data-special-action-status]');
+            const currentImageUrl = imageUrlInput.value.trim();
+
+            if (!currentImageUrl) return;
+            if (!window.confirm('Remove this image from the special? This clears the image from the public site.')) {
+              return;
+            }
+
+            btn.disabled = true;
+            actionStatus.textContent = 'Removing image…';
+            uploadStatus.textContent = '';
+
+            try {
+              await removeBucketAssetIfManaged(currentImageUrl);
+
+              const { error } = await supabase
+                .from('specials')
+                .update({ image_url: null, image_alt: null, updated_at: new Date().toISOString() })
+                .eq('id', id);
+
+              if (error) throw error;
+
+              imageUrlInput.value = '';
+              imageAltInput.value = '';
+              imageFileInput.value = '';
+              actionStatus.textContent = 'Image removed.';
+            } catch (error) {
+              actionStatus.textContent = '';
+              btn.disabled = false;
+              alert(`Error removing image: ${error.message}`);
+              return;
+            }
+
+            await loadSpecials();
+          });
+        });
+
+        container.querySelectorAll('[data-special-delete]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const card = btn.closest('[data-special-id]');
+            const id = card.dataset.specialId;
+            const title = card.dataset.specialTitle || 'this special';
+            const imageUrl = card.querySelector('[data-special-image-url]').value.trim() || null;
+            const actionStatus = card.querySelector('[data-special-action-status]');
+
+            if (!window.confirm(`Delete \"${title}\"? This cannot be undone.`)) {
+              return;
+            }
+
+            btn.disabled = true;
+            actionStatus.textContent = 'Deleting…';
+
+            try {
+              if (imageUrl) {
+                await removeBucketAssetIfManaged(imageUrl);
+              }
+
+              const { error } = await supabase
+                .from('specials')
+                .delete()
+                .eq('id', id);
+
+              if (error) throw error;
+            } catch (error) {
+              actionStatus.textContent = '';
+              btn.disabled = false;
+              alert(`Error deleting special: ${error.message}`);
+              return;
+            }
+
+            await loadSpecials();
           });
         });
       }
