@@ -156,6 +156,22 @@
                   </div>
                 </div>
 
+                <div>
+                  <label for="special-image-url">Promo image URL</label>
+                  <input id="special-image-url" name="image_url" type="url" maxlength="500" placeholder="https://example.com/promo.jpg" />
+                </div>
+
+                <div class="special-form__grid">
+                  <div>
+                    <label for="special-image-alt">Image alt text</label>
+                    <input id="special-image-alt" name="image_alt" type="text" maxlength="120" placeholder="Describe the promo image" />
+                  </div>
+                  <div>
+                    <label for="special-pdf-url">PDF flyer URL</label>
+                    <input id="special-pdf-url" name="pdf_url" type="url" maxlength="500" placeholder="https://example.com/flyer.pdf" />
+                  </div>
+                </div>
+
                 <label class="special-checkbox">
                   <input id="special-is-active" name="is_active" type="checkbox" checked />
                   <span>Active now</span>
@@ -525,6 +541,9 @@
           details: String(formData.get('details') || '').trim() || null,
           cta_label: String(formData.get('cta_label') || '').trim() || null,
           cta_url: String(formData.get('cta_url') || '').trim() || null,
+          image_url: String(formData.get('image_url') || '').trim() || null,
+          image_alt: String(formData.get('image_alt') || '').trim() || null,
+          pdf_url: String(formData.get('pdf_url') || '').trim() || null,
           is_active: specialForm.querySelector('#special-is-active').checked,
           sort_order: Number(formData.get('sort_order') || 0),
           starts_at: toIsoDateBoundary(String(formData.get('starts_at') || '').trim(), false),
@@ -568,7 +587,7 @@
 
       // ── Live Preview ────────────────────────────────────────────────────
       const previewEl = document.getElementById('special-preview');
-      const previewFields = ['special-community', 'special-title', 'special-summary', 'special-cta-label', 'special-cta-url', 'special-starts-at', 'special-ends-at', 'special-is-active'];
+      const previewFields = ['special-community', 'special-title', 'special-summary', 'special-cta-label', 'special-cta-url', 'special-starts-at', 'special-ends-at', 'special-is-active', 'special-image-url', 'special-image-alt', 'special-pdf-url'];
 
       function updatePreview() {
         const title = document.getElementById('special-title').value.trim();
@@ -585,6 +604,10 @@
           return;
         }
 
+        const imageUrl = document.getElementById('special-image-url').value.trim();
+        const imageAlt = document.getElementById('special-image-alt').value.trim();
+        const pdfUrl = document.getElementById('special-pdf-url').value.trim();
+
         const statusText = isActive ? 'Active' : 'Hidden';
         const statusClass = isActive ? 'badge--available' : 'badge--reviewed';
         const dateRange = (startsAt || endsAt)
@@ -593,6 +616,12 @@
         const ctaHtml = ctaLabel
           ? `<a class="btn btn-primary btn-sm" href="${esc(ctaUrl || '#')}" target="_blank" rel="noopener">${esc(ctaLabel)}</a>`
           : '';
+        const imageHtml = imageUrl
+          ? `<div class="special-preview__image"><img src="${esc(imageUrl)}" alt="${esc(imageAlt || '')}" /></div>`
+          : '';
+        const pdfHtml = pdfUrl
+          ? `<div class="special-preview__pdf"><a href="${esc(pdfUrl)}" target="_blank" rel="noopener">View flyer (PDF)</a></div>`
+          : '';
 
         previewEl.innerHTML = `
           <div class="special-preview__card">
@@ -600,10 +629,11 @@
               <span class="badge badge--new">${esc(community)}</span>
               <span class="badge ${statusClass}">${statusText}</span>
             </div>
+            ${imageHtml}
             <h4 class="special-preview__title">${esc(title) || 'Headline'}</h4>
             <p class="special-preview__summary">${esc(summary) || 'Summary text will appear here.'}</p>
             <div class="special-preview__meta">${esc(dateRange)}</div>
-            ${ctaHtml ? `<div class="special-preview__cta">${ctaHtml}</div>` : ''}
+            ${ctaHtml || pdfHtml ? `<div class="special-preview__cta">${ctaHtml}${pdfHtml}</div>` : ''}
           </div>`;
       }
 
@@ -676,6 +706,20 @@
                   <span>Internal details / terms</span>
                   <textarea data-special-details rows="3" maxlength="600">${esc(item.details || '')}</textarea>
                 </label>
+                <label>
+                  <span>Promo image URL</span>
+                  <input data-special-image-url type="url" maxlength="500" value="${esc(item.image_url || '')}" placeholder="https://example.com/promo.jpg" />
+                </label>
+                <div class="special-item__grid">
+                  <label>
+                    <span>Image alt text</span>
+                    <input data-special-image-alt type="text" maxlength="120" value="${esc(item.image_alt || '')}" />
+                  </label>
+                  <label>
+                    <span>PDF flyer URL</span>
+                    <input data-special-pdf-url type="url" maxlength="500" value="${esc(item.pdf_url || '')}" placeholder="https://example.com/flyer.pdf" />
+                  </label>
+                </div>
                 <div class="special-item__grid">
                   <label>
                     <span>Start date</span>
@@ -720,6 +764,9 @@
             const details = card.querySelector('[data-special-details]').value.trim() || null;
             const cta_label = card.querySelector('[data-special-cta-label]').value.trim() || null;
             const cta_url = card.querySelector('[data-special-cta-url]').value.trim() || null;
+            const image_url = card.querySelector('[data-special-image-url]').value.trim() || null;
+            const image_alt = card.querySelector('[data-special-image-alt]').value.trim() || null;
+            const pdf_url = card.querySelector('[data-special-pdf-url]').value.trim() || null;
             const sort_order = Number(card.querySelector('[data-special-sort-order]').value || 0);
             const starts_at = toIsoDateBoundary(card.querySelector('[data-special-starts-at]').value.trim(), false);
             const ends_at = toIsoDateBoundary(card.querySelector('[data-special-ends-at]').value.trim(), true);
@@ -740,7 +787,7 @@
 
             const { error } = await supabase
               .from('specials')
-              .update({ summary, details, cta_label, cta_url, sort_order, starts_at, ends_at, is_active, updated_at: new Date().toISOString() })
+              .update({ summary, details, cta_label, cta_url, image_url, image_alt, pdf_url, sort_order, starts_at, ends_at, is_active, updated_at: new Date().toISOString() })
               .eq('id', id);
 
             if (error) {

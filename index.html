@@ -149,6 +149,7 @@
       <div class="special-popup">
         <button class="special-popup__close" id="special-popup-close" aria-label="Close">&times;</button>
         <div class="special-popup__badge" id="special-popup-badge"></div>
+        <div class="special-popup__image" id="special-popup-image" style="display:none"></div>
         <h2 class="special-popup__title" id="special-popup-title"></h2>
         <p class="special-popup__summary" id="special-popup-summary"></p>
         <div class="special-popup__cta" id="special-popup-cta"></div>
@@ -166,7 +167,7 @@
         const now = new Date().toISOString();
         const { data } = await sb
           .from('specials')
-          .select('title, summary, community, cta_label, cta_url')
+          .select('title, summary, community, cta_label, cta_url, image_url, image_alt, pdf_url')
           .eq('is_active', true)
           .or(`starts_at.is.null,starts_at.lte.${now}`)
           .or(`ends_at.is.null,ends_at.gte.${now}`)
@@ -179,9 +180,21 @@
           document.getElementById('special-popup-title').textContent = s.title;
           document.getElementById('special-popup-summary').textContent = s.summary;
 
+          if (s.image_url) {
+            const imgEl = document.getElementById('special-popup-image');
+            imgEl.innerHTML = `<img src="${s.image_url}" alt="${s.image_alt || ''}" />`;
+            imgEl.style.display = '';
+          }
+
+          let ctaHtml = '';
           if (s.cta_label) {
-            document.getElementById('special-popup-cta').innerHTML =
-              `<a class="btn btn-primary" href="${s.cta_url || '/contact'}">${s.cta_label}</a>`;
+            ctaHtml += `<a class="btn btn-primary" href="${s.cta_url || '/contact'}">${s.cta_label}</a>`;
+          }
+          if (s.pdf_url) {
+            ctaHtml += ` <a class="special-popup__pdf-link" href="${s.pdf_url}" target="_blank" rel="noopener noreferrer">View flyer</a>`;
+          }
+          if (ctaHtml) {
+            document.getElementById('special-popup-cta').innerHTML = ctaHtml;
           }
 
           document.getElementById('special-popup').style.display = '';

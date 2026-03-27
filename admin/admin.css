@@ -736,7 +736,35 @@ table.admin-table {
 }
 
 .special-preview__cta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
   padding-top: 0.25rem;
+}
+
+.special-preview__image {
+  margin-bottom: 0.75rem;
+  border-radius: 6px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.special-preview__image img {
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.special-preview__pdf {
+  font-size: 0.8125rem;
+}
+
+.special-preview__pdf a {
+  color: var(--accent, #2563eb);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* ---- Responsive ---- */

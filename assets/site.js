@@ -356,7 +356,7 @@ if (community) {
     const query = new URLSearchParams({
       community: `eq.${community}`,
       is_active: "eq.true",
-      select: "title,summary,cta_label,cta_url,starts_at,ends_at,sort_order,created_at",
+      select: "title,summary,cta_label,cta_url,image_url,image_alt,pdf_url,starts_at,ends_at,sort_order,created_at",
       order: "sort_order.asc,created_at.desc",
     });
 
@@ -378,6 +378,17 @@ if (community) {
         const card = document.createElement("div");
         card.className = "note-card note-card--special";
 
+        if (special.image_url) {
+          const imgWrap = document.createElement("div");
+          imgWrap.className = "note-card__promo";
+          const img = document.createElement("img");
+          img.src = special.image_url;
+          img.alt = special.image_alt || "";
+          img.loading = "lazy";
+          imgWrap.appendChild(img);
+          card.appendChild(imgWrap);
+        }
+
         const title = document.createElement("strong");
         title.textContent = special.title;
         card.appendChild(title);
@@ -397,6 +408,18 @@ if (community) {
           }
           cta.appendChild(link);
           card.appendChild(cta);
+        }
+
+        if (special.pdf_url) {
+          const pdfP = document.createElement("p");
+          pdfP.className = "note-card__pdf";
+          const pdfLink = document.createElement("a");
+          pdfLink.href = special.pdf_url;
+          pdfLink.target = "_blank";
+          pdfLink.rel = "noopener noreferrer";
+          pdfLink.textContent = "View flyer (PDF)";
+          pdfP.appendChild(pdfLink);
+          card.appendChild(pdfP);
         }
 
         noteStack.insertBefore(card, noteStack.firstChild);

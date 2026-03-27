@@ -1986,6 +1986,31 @@ textarea {
   color: var(--navy-900);
 }
 
+.note-card__promo {
+  margin: -0.25rem 0 0.75rem;
+  border-radius: 8px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.note-card__promo img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.note-card__pdf {
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+}
+
+.note-card__pdf a {
+  color: var(--navy-600, #3b6b9a);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* ---- Availability badges (community pages) ---- */
 
 .avail-badge {
