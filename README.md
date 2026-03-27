@@ -58,5 +58,6 @@ A starter `.env.example` is included for deployment setup, and `docs/deployment-
 - Optional Resend notifications are wired behind env vars and do not affect form success if email delivery is disabled or fails.
 - Contact notifications can now route to community-specific inboxes so Oasis and Cornerstone inquiry handling stays separated.
 - `/api/contact` now supports optional origin allowlisting and per-instance rate limiting for basic production hardening.
-- The admin dashboard now includes a lightweight `specials` workflow in addition to inquiries and availability. Run `docs/supabase-setup.sql` to provision the `specials` table/RLS policies before using that tab.
+- The admin dashboard now includes a lightweight `specials` workflow in addition to inquiries and availability. Run `docs/supabase-setup.sql` to provision the `specials` table, storage bucket, and RLS/storage policies before using that tab.
+- Admin users can upload special promo images directly; uploads land in the public `specials-assets` Supabase Storage bucket and auto-populate `image_url`.
 - Community pages now support one live special card each, pulled from Supabase and filtered strictly by matching community.

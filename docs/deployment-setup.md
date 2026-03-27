@@ -53,7 +53,8 @@ That migration does all of the following:
 - enforces community separation checks
 - provisions `availability`
 - provisions `specials`
-- adds RLS policies for public read / authenticated admin write flows
+- creates the public `specials-assets` storage bucket for promo image uploads
+- adds RLS/storage policies for public read / authenticated admin write flows
 - seeds the expected availability unit rows
 
 ## Post-setup verification
@@ -68,6 +69,7 @@ After SQL and env vars are applied:
    - inquiries load
    - availability loads per community
    - specials can be created, edited, and displayed on the matching community page only
+   - uploading a special image stores it in `specials-assets/<community>/...` and the saved record gets an `image_url`
 6. Verify these URLs resolve cleanly:
    - `/`
    - `/about`

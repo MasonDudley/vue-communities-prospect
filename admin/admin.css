@@ -465,6 +465,13 @@ table.admin-table {
   min-height: 92px;
 }
 
+.admin-field-help {
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
 .special-form__grid,
 .special-item__grid {
   display: grid;
