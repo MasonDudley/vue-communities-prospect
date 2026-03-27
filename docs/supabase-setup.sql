@@ -225,6 +225,14 @@ create policy "authenticated_update_specials"
     and (cta_label is null and cta_url is null or cta_label is not null and cta_url is not null)
   );
 
+-- Admin users can delete specials.
+drop policy if exists "authenticated_delete_specials" on public.specials;
+create policy "authenticated_delete_specials"
+  on public.specials
+  for delete
+  to authenticated
+  using (true);
+
 -- ---------------------------------------------------------------------------
 -- specials image uploads: storage bucket + policies
 -- ---------------------------------------------------------------------------
