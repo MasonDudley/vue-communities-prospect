@@ -115,7 +115,7 @@
     <script defer src="/assets/site.js"></script>
     <script defer src="/_vercel/insights/script.js"></script>
   </head>
-  <body>
+  <body data-cms-page="faq">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="nav-shell">
@@ -166,9 +166,9 @@
       <div class="page-hero-wrap">
         <section class="page-hero">
           <div class="reveal">
-            <div class="eyebrow">Frequently asked questions</div>
-            <h1>Clear answers for students, parents, and guarantors.</h1>
-            <p>
+            <div class="eyebrow" data-cms="hero-kicker">Frequently asked questions</div>
+            <h1 data-cms="hero-title">Clear answers for students, parents, and guarantors.</h1>
+            <p data-cms="hero-description">
               These questions cover the lease details, policies, and move-in topics students, parents, and guarantors
               most often ask about for The Oasis and The VUE at Cornerstone.
             </p>
@@ -178,6 +178,7 @@
               <img
                 src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8508.jpg"
                 alt="VUE Communities common area"
+                data-cms="hero-image" data-cms-type="image"
               />
             </div>
           </div>
@@ -187,87 +188,87 @@
       <section class="section reveal">
         <div class="faq-grid">
           <article class="faq-card">
-            <div class="kicker">Leasing basics</div>
-            <h3>Application, lease, and payment</h3>
+            <div class="kicker" data-cms="leasing-kicker">Leasing basics</div>
+            <h3 data-cms="leasing-title">Application, lease, and payment</h3>
             <details open>
-              <summary>Can online students live at VUE Communities?</summary>
-              <p>Yes. Online students are welcome with proof of enrollment in at least one college class, and classes must start within 30 days of the lease start date.</p>
+              <summary data-cms="faq-q1">Can online students live at VUE Communities?</summary>
+              <p data-cms="faq-a1">Yes. Online students are welcome with proof of enrollment in at least one college class, and classes must start within 30 days of the lease start date.</p>
             </details>
             <details>
-              <summary>What is a rent installment?</summary>
-              <p>The total lease amount is divided into 12 equal installments, even though the lease term is typically about 11.5 months.</p>
+              <summary data-cms="faq-q2">What is a rent installment?</summary>
+              <p data-cms="faq-a2">The total lease amount is divided into 12 equal installments, even though the lease term is typically about 11.5 months.</p>
             </details>
             <details>
-              <summary>When is rent due?</summary>
-              <p>Installments are due on or before the 1st of each month, with a grace period through the 5th at 11:59 PM.</p>
+              <summary data-cms="faq-q3">When is rent due?</summary>
+              <p data-cms="faq-a3">Installments are due on or before the 1st of each month, with a grace period through the 5th at 11:59 PM.</p>
             </details>
             <details>
-              <summary>Can I pay through the Resident Portal?</summary>
-              <p>Yes. Autopay is available through the Resident Portal.</p>
+              <summary data-cms="faq-q4">Can I pay through the Resident Portal?</summary>
+              <p data-cms="faq-a4">Yes. Autopay is available through the Resident Portal.</p>
             </details>
           </article>
           <article class="faq-card">
-            <div class="kicker">Parents and guarantors</div>
-            <h3>Protection and qualification</h3>
+            <div class="kicker" data-cms="guarantors-kicker">Parents and guarantors</div>
+            <h3 data-cms="guarantors-title">Protection and qualification</h3>
             <details open>
-              <summary>Why do I need a guarantor?</summary>
-              <p>A guarantor is required for residents paying month to month. No guarantor is needed if the total lease amount is paid upfront.</p>
+              <summary data-cms="faq-q5">Why do I need a guarantor?</summary>
+              <p data-cms="faq-a5">A guarantor is required for residents paying month to month. No guarantor is needed if the total lease amount is paid upfront.</p>
             </details>
             <details>
-              <summary>What are the guarantor income requirements?</summary>
-              <p>The listed income requirement is $65,000 annually for one guarantor or $110,000 combined if married, with proof of income required.</p>
+              <summary data-cms="faq-q6">What are the guarantor income requirements?</summary>
+              <p data-cms="faq-a6">The listed income requirement is $65,000 annually for one guarantor or $110,000 combined if married, with proof of income required.</p>
             </details>
             <details>
-              <summary>Is a credit check required?</summary>
-              <p>The FAQ states that no credit check is run.</p>
+              <summary data-cms="faq-q7">Is a credit check required?</summary>
+              <p data-cms="faq-a7">The FAQ states that no credit check is run.</p>
             </details>
             <details>
-              <summary>What are the benefits of an individual lease?</summary>
-              <p>You are responsible for your own room and charges only, not for a roommate's unpaid share of the apartment.</p>
+              <summary data-cms="faq-q8">What are the benefits of an individual lease?</summary>
+              <p data-cms="faq-a8">You are responsible for your own room and charges only, not for a roommate's unpaid share of the apartment.</p>
             </details>
           </article>
           <article class="faq-card">
-            <div class="kicker">Apartment details</div>
-            <h3>Furnishings, utilities, and bed sizes</h3>
+            <div class="kicker" data-cms="apartment-kicker">Apartment details</div>
+            <h3 data-cms="apartment-title">Furnishings, utilities, and bed sizes</h3>
             <details open>
-              <summary>Are the units furnished?</summary>
-              <p>Yes. Both communities are marketed as fully furnished.</p>
+              <summary data-cms="faq-q9">Are the units furnished?</summary>
+              <p data-cms="faq-a9">Yes. Both communities are marketed as fully furnished.</p>
             </details>
             <details>
-              <summary>What utilities are included?</summary>
-              <p>Electricity is billed separately. Internet is included, and leasing can confirm the full utility bundle for your community.</p>
+              <summary data-cms="faq-q10">What utilities are included?</summary>
+              <p data-cms="faq-a10">Electricity is billed separately. Internet is included, and leasing can confirm the full utility bundle for your community.</p>
             </details>
             <details>
-              <summary>What bed size should I plan for?</summary>
-              <p>Cornerstone, 1BR Oasis, and 2BR Oasis use Full XL beds. Oasis 2BR with office, 3BR with office, 4BR, and 6BR layouts use Twin XL beds.</p>
+              <summary data-cms="faq-q11">What bed size should I plan for?</summary>
+              <p data-cms="faq-a11">Cornerstone, 1BR Oasis, and 2BR Oasis use Full XL beds. Oasis 2BR with office, 3BR with office, 4BR, and 6BR layouts use Twin XL beds.</p>
             </details>
             <details>
-              <summary>Can residents use amenities at another community?</summary>
-              <p>No. Amenities are reserved for residents of their own property.</p>
+              <summary data-cms="faq-q12">Can residents use amenities at another community?</summary>
+              <p data-cms="faq-a12">No. Amenities are reserved for residents of their own property.</p>
             </details>
           </article>
           <article class="faq-card">
-            <div class="kicker">Move-in and daily life</div>
-            <h3>Parking, providers, transfers, and pets</h3>
+            <div class="kicker" data-cms="movein-kicker">Move-in and daily life</div>
+            <h3 data-cms="movein-title">Parking, providers, transfers, and pets</h3>
             <details open>
-              <summary>What do I need before move-in?</summary>
-              <p>Residents are asked to submit a class schedule, student ID, and move-in packet, pay their balance and first month of rent, and sign up for a move-in slot.</p>
+              <summary data-cms="faq-q13">What do I need before move-in?</summary>
+              <p data-cms="faq-a13">Residents are asked to submit a class schedule, student ID, and move-in packet, pay their balance and first month of rent, and sign up for a move-in slot.</p>
             </details>
             <details>
-              <summary>Where do residents and guests park?</summary>
-              <p>Parking is first come, first served, with one vehicle allowed per resident. Guest parking is also first come, first served in non-numbered spaces.</p>
+              <summary data-cms="faq-q14">Where do residents and guests park?</summary>
+              <p data-cms="faq-a14">Parking is first come, first served, with one vehicle allowed per resident. Guest parking is also first come, first served in non-numbered spaces.</p>
             </details>
             <details>
-              <summary>What internet provider serves the communities?</summary>
-              <p>The FAQ lists Lumos for Cornerstone and LUMOS for The Oasis.</p>
+              <summary data-cms="faq-q15">What internet provider serves the communities?</summary>
+              <p data-cms="faq-a15">The FAQ lists Lumos for Cornerstone and LUMOS for The Oasis.</p>
             </details>
             <details>
-              <summary>Can I transfer rooms or communities?</summary>
-              <p>Room transfers can be requested in writing if another room is available. Community transfers can be applied for, but not until the current lease term is over.</p>
+              <summary data-cms="faq-q16">Can I transfer rooms or communities?</summary>
+              <p data-cms="faq-a16">Room transfers can be requested in writing if another room is available. Community transfers can be applied for, but not until the current lease term is over.</p>
             </details>
             <details>
-              <summary>What is the pet policy?</summary>
-              <p>The properties are pet-free, but ESA animals are allowed with proper paperwork.</p>
+              <summary data-cms="faq-q17">What is the pet policy?</summary>
+              <p data-cms="faq-a17">The properties are pet-free, but ESA animals are allowed with proper paperwork.</p>
             </details>
           </article>
         </div>

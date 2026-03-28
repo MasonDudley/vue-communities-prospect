@@ -101,7 +101,7 @@
     <script defer src="/assets/site.js"></script>
     <script defer src="/_vercel/insights/script.js"></script>
   </head>
-  <body>
+  <body data-cms-page="about">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="nav-shell">
@@ -152,14 +152,14 @@
       <div class="page-hero-wrap">
         <section class="page-hero">
           <div class="reveal">
-            <div class="eyebrow">About VUE Communities</div>
-            <h1>Student housing built around a simpler off-campus experience.</h1>
-            <p>
+            <div class="eyebrow" data-cms="hero-kicker">About VUE Communities</div>
+            <h1 data-cms="hero-title">Student housing built around a simpler off-campus experience.</h1>
+            <p data-cms="hero-description">
               VUE Communities serves students in Lynchburg with two furnished apartment communities near Liberty
               University: The Oasis and The VUE at Cornerstone. Both communities are built around student-only leasing,
               individual leases, roommate matching, and a move-in process designed to be easier to manage.
             </p>
-            <p>
+            <p data-cms="hero-description-2">
               The leasing office is centered at 40 Oasis Way, giving students and families one clear point of contact for
               tours, pricing questions, guarantor details, and move-in preparation.
             </p>
@@ -169,6 +169,7 @@
               <img
                 src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8476.jpg"
                 alt="VUE Communities furnished student apartment"
+                data-cms="hero-image" data-cms-type="image"
               />
             </div>
           </div>
@@ -179,22 +180,22 @@
         <div class="surface">
           <div class="section-head">
             <div>
-              <div class="kicker">What to expect</div>
-              <h2>Clear leasing, furnished apartments, and options that fit different student priorities.</h2>
+              <div class="kicker" data-cms="expect-kicker">What to expect</div>
+              <h2 data-cms="expect-title">Clear leasing, furnished apartments, and options that fit different student priorities.</h2>
             </div>
           </div>
           <div class="info-grid three">
             <div class="info-card">
-              <strong>Student-only leasing</strong>
-              <p>VUE Communities is positioned around college students, including online students with current enrollment documentation.</p>
+              <strong data-cms="expect-card1-title">Student-only leasing</strong>
+              <p data-cms="expect-card1-description">VUE Communities is positioned around college students, including online students with current enrollment documentation.</p>
             </div>
             <div class="info-card">
-              <strong>Furnished apartments</strong>
-              <p>Both communities are marketed as fully furnished, helping students move in without bringing major furniture.</p>
+              <strong data-cms="expect-card2-title">Furnished apartments</strong>
+              <p data-cms="expect-card2-description">Both communities are marketed as fully furnished, helping students move in without bringing major furniture.</p>
             </div>
             <div class="info-card">
-              <strong>Two distinct communities</strong>
-              <p>The Oasis emphasizes amenity access and floor plan variety, while Cornerstone focuses on a consistent 3BR/3BA layout with private bathrooms.</p>
+              <strong data-cms="expect-card3-title">Two distinct communities</strong>
+              <p data-cms="expect-card3-description">The Oasis emphasizes amenity access and floor plan variety, while Cornerstone focuses on a consistent 3BR/3BA layout with private bathrooms.</p>
             </div>
           </div>
         </div>
@@ -203,14 +204,14 @@
       <section class="section reveal">
         <div class="spotlight">
           <div class="spotlight__copy">
-            <div class="kicker">One brand, two living styles</div>
-            <h2>Choose the setup that fits how you want to live during the school year.</h2>
-            <p>
+            <div class="kicker" data-cms="spotlight-kicker">One brand, two living styles</div>
+            <h2 data-cms="spotlight-title">Choose the setup that fits how you want to live during the school year.</h2>
+            <p data-cms="spotlight-description">
               The Oasis sits on the edge of Liberty's campus and offers the larger amenity package, plus floor plans from
               1 to 6 bedrooms. Cornerstone offers a single 3BR/3BA layout in a residential neighborhood off Greenview
               Drive, with a private ensuite bathroom and walk-in closet for each resident.
             </p>
-            <ul class="list">
+            <ul class="list" data-cms="spotlight-list" data-cms-type="html">
               <li>The Oasis is the better fit for students who want more floor plan flexibility and stronger community amenities.</li>
               <li>Cornerstone is the better fit for students who want consistent layout quality and more apartment-level privacy.</li>
               <li>Both communities support roommate matching and individual leases.</li>
@@ -221,6 +222,7 @@
               src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/kitchen.png"
               alt="Furnished kitchen at VUE Communities"
               loading="lazy"
+              data-cms="spotlight-image" data-cms-type="image"
             />
           </div>
         </div>
@@ -230,17 +232,17 @@
         <div class="surface navy">
           <div class="section-head">
             <div>
-              <div class="kicker">Why students choose VUE</div>
-              <h2>Strong fundamentals, backed by clear leasing information.</h2>
+              <div class="kicker" data-cms="why-kicker">Why students choose VUE</div>
+              <h2 data-cms="why-title">Strong fundamentals, backed by clear leasing information.</h2>
             </div>
           </div>
           <div class="amenity-grid">
-            <div class="amenity-card"><strong>Individual leases</strong><p>Residents lease their own room and are not responsible for a roommate's share of rent.</p></div>
-            <div class="amenity-card"><strong>Roommate matching</strong><p>Apply with a group, request roommates, or lease on your own and be matched.</p></div>
-            <div class="amenity-card"><strong>Furnished units</strong><p>Students move in with less to buy, borrow, or transport before the semester starts.</p></div>
-            <div class="amenity-card"><strong>Transparent payment timing</strong><p>Installments are due on the 1st, with a grace period through the 5th at 11:59 PM.</p></div>
-            <div class="amenity-card"><strong>Guarantor guidance</strong><p>Income requirements and payment rules are clearly laid out for families planning around the lease.</p></div>
-            <div class="amenity-card"><strong>Community-specific amenities</strong><p>Each property has its own amenity package, and amenities are not shared across communities.</p></div>
+            <div class="amenity-card"><strong data-cms="why-card1-title">Individual leases</strong><p data-cms="why-card1-description">Residents lease their own room and are not responsible for a roommate's share of rent.</p></div>
+            <div class="amenity-card"><strong data-cms="why-card2-title">Roommate matching</strong><p data-cms="why-card2-description">Apply with a group, request roommates, or lease on your own and be matched.</p></div>
+            <div class="amenity-card"><strong data-cms="why-card3-title">Furnished units</strong><p data-cms="why-card3-description">Students move in with less to buy, borrow, or transport before the semester starts.</p></div>
+            <div class="amenity-card"><strong data-cms="why-card4-title">Transparent payment timing</strong><p data-cms="why-card4-description">Installments are due on the 1st, with a grace period through the 5th at 11:59 PM.</p></div>
+            <div class="amenity-card"><strong data-cms="why-card5-title">Guarantor guidance</strong><p data-cms="why-card5-description">Income requirements and payment rules are clearly laid out for families planning around the lease.</p></div>
+            <div class="amenity-card"><strong data-cms="why-card6-title">Community-specific amenities</strong><p data-cms="why-card6-description">Each property has its own amenity package, and amenities are not shared across communities.</p></div>
           </div>
         </div>
       </section>
@@ -248,9 +250,9 @@
       <section class="section reveal">
         <div class="cta-band">
           <div>
-            <div class="kicker">Office support</div>
-            <h2>Need help choosing between The Oasis and Cornerstone?</h2>
-            <p>
+            <div class="kicker" data-cms="cta-kicker">Office support</div>
+            <h2 data-cms="cta-title">Need help choosing between The Oasis and Cornerstone?</h2>
+            <p data-cms="cta-description">
               The leasing office can walk you through availability, pricing, roommate matching, guarantor requirements,
               and the move-in checklist for either community.
             </p>
@@ -260,9 +262,9 @@
             </div>
           </div>
           <div class="note-stack">
-            <div class="note-card"><strong>Leasing office</strong><p>40 Oasis Way, Lynchburg, VA 24502</p></div>
-            <div class="note-card"><strong>Phone</strong><p><a href="tel:4343297979">434-329-7979</a><br /><a href="mailto:gm1@vuecommunities.com">gm1@vuecommunities.com</a></p></div>
-            <div class="note-card"><strong>Hours</strong><p>Monday-Friday: 10:00 AM to 5:00 PM</p></div>
+            <div class="note-card"><strong data-cms="cta-office-label">Leasing office</strong><p data-cms="cta-office-address">40 Oasis Way, Lynchburg, VA 24502</p></div>
+            <div class="note-card"><strong data-cms="cta-phone-label">Phone</strong><p data-cms="cta-phone-value" data-cms-type="html"><a href="tel:4343297979">434-329-7979</a><br /><a href="mailto:gm1@vuecommunities.com">gm1@vuecommunities.com</a></p></div>
+            <div class="note-card"><strong data-cms="cta-hours-label">Hours</strong><p data-cms="cta-hours-value">Monday-Friday: 10:00 AM to 5:00 PM</p></div>
           </div>
         </div>
       </section>

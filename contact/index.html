@@ -103,7 +103,7 @@
     <script defer src="/assets/site.js"></script>
     <script defer src="/_vercel/insights/script.js"></script>
   </head>
-  <body>
+  <body data-cms-page="contact">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="nav-shell">
@@ -154,9 +154,9 @@
       <div class="page-hero-wrap">
         <section class="page-hero">
           <div class="reveal">
-            <div class="eyebrow">Talk to the leasing office</div>
-            <h1>Get pricing, availability, or tour help in one place.</h1>
-            <p>
+            <div class="eyebrow" data-cms="hero-kicker">Talk to the leasing office</div>
+            <h1 data-cms="hero-title">Get pricing, availability, or tour help in one place.</h1>
+            <p data-cms="hero-description">
               Reach the VUE Communities leasing office at 40 Oasis Way in Lynchburg for tours, floor plan questions,
               roommate matching help, guarantor requirements, or move-in guidance for either community.
             </p>
@@ -178,6 +178,7 @@
               <img
                 src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8542.jpg"
                 alt="VUE Communities common area"
+                data-cms="hero-image" data-cms-type="image"
               />
             </div>
           </div>
@@ -187,17 +188,17 @@
       <section class="section reveal">
         <div class="contact-grid">
           <article class="contact-card">
-            <div class="kicker">Office details</div>
-            <h3>VUE Communities Leasing Office</h3>
-            <p>40 Oasis Way<br />Lynchburg, Virginia 24502</p>
-            <p><strong>Phone</strong><br /><a href="tel:4343297979">434-329-7979</a></p>
-            <p><strong>Email</strong><br /><a href="mailto:gm1@vuecommunities.com">gm1@vuecommunities.com</a></p>
+            <div class="kicker" data-cms="office-kicker">Office details</div>
+            <h3 data-cms="office-title">VUE Communities Leasing Office</h3>
+            <p data-cms="office-address" data-cms-type="html">40 Oasis Way<br />Lynchburg, Virginia 24502</p>
+            <p data-cms="office-phone" data-cms-type="html"><strong>Phone</strong><br /><a href="tel:4343297979">434-329-7979</a></p>
+            <p data-cms="office-email" data-cms-type="html"><strong>Email</strong><br /><a href="mailto:gm1@vuecommunities.com">gm1@vuecommunities.com</a></p>
           </article>
           <article class="contact-card">
-            <div class="kicker">Hours</div>
-            <h3>Office hours</h3>
-            <p>Monday-Friday: 10:00 AM to 5:00 PM</p>
-            <p>Use the leasing office for questions about The Oasis, Cornerstone, pricing, and current availability.</p>
+            <div class="kicker" data-cms="hours-kicker">Hours</div>
+            <h3 data-cms="hours-title">Office hours</h3>
+            <p data-cms="office-hours">Monday-Friday: 10:00 AM to 5:00 PM</p>
+            <p data-cms="hours-description">Use the leasing office for questions about The Oasis, Cornerstone, pricing, and current availability.</p>
             <div class="hero-actions">
               <a
                 class="btn btn-primary"
@@ -232,10 +233,10 @@
         <div class="form-card">
           <div class="section-head">
             <div>
-              <div class="kicker">Inquiry form</div>
-              <h2>Send a quick leasing inquiry</h2>
+              <div class="kicker" data-cms="form-kicker">Inquiry form</div>
+              <h2 data-cms="form-title">Send a quick leasing inquiry</h2>
             </div>
-            <p class="section-intro">Your inquiry goes directly to the leasing team. They typically respond within one business day.</p>
+            <p class="section-intro" data-cms="form-description">Your inquiry goes directly to the leasing team. They typically respond within one business day.</p>
           </div>
           <form class="form-grid" data-mailto-form>
             <div>

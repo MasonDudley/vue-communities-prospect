@@ -99,7 +99,7 @@
     <script defer src="/assets/site.js"></script>
     <script defer src="/_vercel/insights/script.js"></script>
   </head>
-  <body>
+  <body data-cms-page="cornerstone">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="nav-shell">
@@ -150,9 +150,9 @@
       <div class="page-hero-wrap">
         <section class="page-hero">
           <div class="reveal">
-            <div class="eyebrow">The VUE at Cornerstone</div>
-            <h1>A cleaner, calmer student setup with <span class="accent">3BR / 3BA privacy</span> built in.</h1>
-            <p>
+            <div class="eyebrow" data-cms="hero-eyebrow">The VUE at Cornerstone</div>
+            <h1 data-cms="hero-title" data-cms-type="html">A cleaner, calmer student setup with <span class="accent">3BR / 3BA privacy</span> built in.</h1>
+            <p data-cms="hero-description">
               Cornerstone is the focused option in the VUE Communities lineup. It offers one furnished 3-bedroom,
               3-bathroom layout in a residential neighborhood off Greenview Drive, with each resident getting a private
               ensuite bathroom and walk-in closet.
@@ -170,9 +170,9 @@
               <a class="btn btn-secondary" href="/contact">Schedule a Visit</a>
             </div>
             <div class="pill-row">
-              <span class="pill">$699 per person, per installment</span>
-              <span class="pill">3BR / 3BA only</span>
-              <span class="pill">Private ensuite bath for each resident</span>
+              <span class="pill" data-cms="hero-pill-1">$699 per person, per installment</span>
+              <span class="pill" data-cms="hero-pill-2">3BR / 3BA only</span>
+              <span class="pill" data-cms="hero-pill-3">Private ensuite bath for each resident</span>
             </div>
           </div>
           <div class="reveal">
@@ -180,6 +180,7 @@
               <img
                 src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-7788.jpg"
                 alt="Cornerstone student apartment exterior"
+                data-cms="hero-image" data-cms-type="image"
               />
             </div>
           </div>
@@ -189,16 +190,16 @@
       <section class="section reveal">
         <div class="info-grid three">
           <div class="info-card">
-            <strong>Ensuite bathrooms for every room</strong>
-            <p>Private bathrooms are one of Cornerstone's clearest day-to-day advantages.</p>
+            <strong data-cms="highlights-card-1-title">Ensuite bathrooms for every room</strong>
+            <p data-cms="highlights-card-1-description">Private bathrooms are one of Cornerstone's clearest day-to-day advantages.</p>
           </div>
           <div class="info-card">
-            <strong>Walk-in closet in every bedroom</strong>
-            <p>Each resident gets more storage and a more complete personal space.</p>
+            <strong data-cms="highlights-card-2-title">Walk-in closet in every bedroom</strong>
+            <p data-cms="highlights-card-2-description">Each resident gets more storage and a more complete personal space.</p>
           </div>
           <div class="info-card">
-            <strong>Consistent furnished layout</strong>
-            <p>Every apartment follows the same 3BR / 3BA setup, with a TV, washer/dryer, and internet-ready living room.</p>
+            <strong data-cms="highlights-card-3-title">Consistent furnished layout</strong>
+            <p data-cms="highlights-card-3-description">Every apartment follows the same 3BR / 3BA setup, with a TV, washer/dryer, and internet-ready living room.</p>
           </div>
         </div>
       </section>
@@ -207,49 +208,49 @@
         <div class="surface navy">
           <div class="section-head">
             <div>
-              <div class="kicker">Quick comparison</div>
-              <h2>How Cornerstone compares to The Oasis.</h2>
+              <div class="kicker" data-cms="comparison-kicker">Quick comparison</div>
+              <h2 data-cms="comparison-title">How Cornerstone compares to The Oasis.</h2>
             </div>
           </div>
           <div class="table-wrap">
             <table class="compare-table">
               <thead>
                 <tr>
-                  <th>Category</th>
-                  <th>The Oasis</th>
-                  <th class="is-highlight">Cornerstone</th>
+                  <th data-cms="comparison-header-category">Category</th>
+                  <th data-cms="comparison-header-oasis">The Oasis</th>
+                  <th class="is-highlight" data-cms="comparison-header-cornerstone">Cornerstone</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td data-label="Category"><strong>Location feel</strong></td>
-                  <td data-label="The Oasis">Edge of Liberty's campus with Liberty Shuttle access.</td>
-                  <td data-label="Cornerstone" class="is-highlight">Residential neighborhood off Greenview Drive near local restaurants.</td>
+                  <td data-label="Category" data-cms="comparison-row-1-label" data-cms-type="html"><strong>Location feel</strong></td>
+                  <td data-label="The Oasis" data-cms="comparison-row-1-oasis">Edge of Liberty's campus with Liberty Shuttle access.</td>
+                  <td data-label="Cornerstone" class="is-highlight" data-cms="comparison-row-1-cornerstone">Residential neighborhood off Greenview Drive near local restaurants.</td>
                 </tr>
                 <tr>
-                  <td data-label="Category"><strong>Best fit</strong></td>
-                  <td data-label="The Oasis">Students who want more floor plan options and a larger amenity package.</td>
-                  <td data-label="Cornerstone" class="is-highlight">Students who want a consistent 3BR/3BA layout and more apartment-level privacy.</td>
+                  <td data-label="Category" data-cms="comparison-row-2-label" data-cms-type="html"><strong>Best fit</strong></td>
+                  <td data-label="The Oasis" data-cms="comparison-row-2-oasis">Students who want more floor plan options and a larger amenity package.</td>
+                  <td data-label="Cornerstone" class="is-highlight" data-cms="comparison-row-2-cornerstone">Students who want a consistent 3BR/3BA layout and more apartment-level privacy.</td>
                 </tr>
                 <tr>
-                  <td data-label="Category"><strong>Layout range</strong></td>
-                  <td data-label="The Oasis">1BR to 6BR, including select office/study layouts.</td>
-                  <td data-label="Cornerstone" class="is-highlight">All units are 3BR / 3BA.</td>
+                  <td data-label="Category" data-cms="comparison-row-3-label" data-cms-type="html"><strong>Layout range</strong></td>
+                  <td data-label="The Oasis" data-cms="comparison-row-3-oasis">1BR to 6BR, including select office/study layouts.</td>
+                  <td data-label="Cornerstone" class="is-highlight" data-cms="comparison-row-3-cornerstone">All units are 3BR / 3BA.</td>
                 </tr>
                 <tr>
-                  <td data-label="Category"><strong>Utilities</strong></td>
-                  <td data-label="The Oasis">Furnished apartments with internet and water included, and electricity billed separately.</td>
-                  <td data-label="Cornerstone" class="is-highlight">Internet, water, sewer, and trash are included; electricity is separate.</td>
+                  <td data-label="Category" data-cms="comparison-row-4-label" data-cms-type="html"><strong>Utilities</strong></td>
+                  <td data-label="The Oasis" data-cms="comparison-row-4-oasis">Furnished apartments with internet and water included, and electricity billed separately.</td>
+                  <td data-label="Cornerstone" class="is-highlight" data-cms="comparison-row-4-cornerstone">Internet, water, sewer, and trash are included; electricity is separate.</td>
                 </tr>
                 <tr>
-                  <td data-label="Category"><strong>Signature benefit</strong></td>
-                  <td data-label="The Oasis">Liberty Shuttle access plus a larger amenity lineup.</td>
-                  <td data-label="Cornerstone" class="is-highlight">Each resident has a private ensuite bathroom and walk-in closet.</td>
+                  <td data-label="Category" data-cms="comparison-row-5-label" data-cms-type="html"><strong>Signature benefit</strong></td>
+                  <td data-label="The Oasis" data-cms="comparison-row-5-oasis">Liberty Shuttle access plus a larger amenity lineup.</td>
+                  <td data-label="Cornerstone" class="is-highlight" data-cms="comparison-row-5-cornerstone">Each resident has a private ensuite bathroom and walk-in closet.</td>
                 </tr>
                 <tr>
-                  <td data-label="Category"><strong>Current pricing</strong></td>
-                  <td data-label="The Oasis">$525 to $955 depending on layout.</td>
-                  <td data-label="Cornerstone" class="is-highlight">$699 for the 3BR / 3BA layout.</td>
+                  <td data-label="Category" data-cms="comparison-row-6-label" data-cms-type="html"><strong>Current pricing</strong></td>
+                  <td data-label="The Oasis" data-cms="comparison-row-6-oasis">$525 to $955 depending on layout.</td>
+                  <td data-label="Cornerstone" class="is-highlight" data-cms="comparison-row-6-cornerstone">$699 for the 3BR / 3BA layout.</td>
                 </tr>
               </tbody>
             </table>
@@ -260,13 +261,13 @@
       <section id="cornerstone-pricing" class="section reveal">
         <div class="spotlight">
           <div class="spotlight__copy">
-            <div class="kicker">Floor plan</div>
-            <h2>All units are 3BR / 3BA, with one consistent layout across the community.</h2>
-            <p>
+            <div class="kicker" data-cms="floorplan-kicker">Floor plan</div>
+            <h2 data-cms="floorplan-title">All units are 3BR / 3BA, with one consistent layout across the community.</h2>
+            <p data-cms="floorplan-description">
               Cornerstone is built around a single furnished floor plan, which makes it easier to compare availability,
               understand exactly what is included, and move forward quickly once the fit is right.
             </p>
-            <ul class="list">
+            <ul class="list" data-cms="floorplan-features" data-cms-type="html">
               <li>All units are 3 bedroom, 3 bathroom apartments.</li>
               <li>Fully furnished living, gigabyte internet, and washer/dryer are already built in.</li>
               <li>Internet, water, sewer, and trash are included. Electricity is the resident responsibility.</li>
@@ -277,6 +278,7 @@
               src="/assets/images/cornerstone-layout.webp"
               alt="Cornerstone 3 bedroom, 3 bathroom apartment floor plan"
               loading="lazy"
+              data-cms="floorplan-image" data-cms-type="image"
             />
           </div>
         </div>
@@ -286,19 +288,19 @@
         <div class="surface">
           <div class="section-head">
             <div>
-              <div class="kicker">Layout detail</div>
-              <h2>One consistent floor plan across every unit.</h2>
+              <div class="kicker" data-cms="layout-kicker">Layout detail</div>
+              <h2 data-cms="layout-title">One consistent floor plan across every unit.</h2>
             </div>
           </div>
           <div class="pricing-grid three">
             <article class="pricing-card layout-card">
               <div class="media">
-                <img src="/assets/images/cornerstone-layout.webp" alt="Cornerstone 3 bedroom, 3 bathroom floor plan" loading="lazy" />
+                <img src="/assets/images/cornerstone-layout.webp" alt="Cornerstone 3 bedroom, 3 bathroom floor plan" loading="lazy" data-cms="layout-card-image" data-cms-type="image" />
               </div>
               <div class="pricing-card__body">
-                <h3 data-unit-type="3BR/3BA">3BR / 3BA</h3>
-                <div class="price"><strong>$699</strong><span>/installment</span></div>
-                <ul class="tiny-list">
+                <h3 data-unit-type="3BR/3BA" data-cms="layout-card-heading">3BR / 3BA</h3>
+                <div class="price" data-cms="layout-card-price" data-cms-type="html"><strong>$699</strong><span>/installment</span></div>
+                <ul class="tiny-list" data-cms="layout-card-features" data-cms-type="html">
                   <li>Private ensuite bathroom for each resident</li>
                   <li>One consistent furnished layout across the community</li>
                 </ul>
@@ -312,22 +314,22 @@
         <div class="surface">
           <div class="section-head">
             <div>
-              <div class="kicker">How pricing works</div>
-              <h2>Installments, lease structure, and what is included.</h2>
+              <div class="kicker" data-cms="pricing-kicker">How pricing works</div>
+              <h2 data-cms="pricing-title">Installments, lease structure, and what is included.</h2>
             </div>
           </div>
           <div class="info-grid three">
             <div class="info-card">
-              <strong>Installment structure</strong>
-              <p>Lease totals are divided into 12 equal installments even though the lease term is typically about 11.5 months.</p>
+              <strong data-cms="pricing-card-1-title">Installment structure</strong>
+              <p data-cms="pricing-card-1-description">Lease totals are divided into 12 equal installments even though the lease term is typically about 11.5 months.</p>
             </div>
             <div class="info-card">
-              <strong>Individual lease protection</strong>
-              <p>Your pricing is tied to your room only, so you are not responsible for another roommate's balance.</p>
+              <strong data-cms="pricing-card-2-title">Individual lease protection</strong>
+              <p data-cms="pricing-card-2-description">Your pricing is tied to your room only, so you are not responsible for another roommate's balance.</p>
             </div>
             <div class="info-card">
-              <strong>Utility structure</strong>
-              <p>Electricity is resident-paid. Internet is included, and the rest of the bundled utilities vary by community.</p>
+              <strong data-cms="pricing-card-3-title">Utility structure</strong>
+              <p data-cms="pricing-card-3-description">Electricity is resident-paid. Internet is included, and the rest of the bundled utilities vary by community.</p>
             </div>
           </div>
         </div>
@@ -337,17 +339,17 @@
         <div class="surface">
           <div class="section-head">
             <div>
-              <div class="kicker">Apartment features</div>
-              <h2>Everything residents need for a straightforward move-in.</h2>
+              <div class="kicker" data-cms="amenities-kicker">Apartment features</div>
+              <h2 data-cms="amenities-title">Everything residents need for a straightforward move-in.</h2>
             </div>
           </div>
           <div class="amenity-grid">
-            <div class="amenity-card"><strong>Fully furnished</strong><p>Move in lighter and avoid furnishing a three-bedroom apartment from scratch.</p></div>
-            <div class="amenity-card"><strong>Private bathroom and closet</strong><p>Every resident has a private ensuite bath and walk-in closet.</p></div>
-            <div class="amenity-card"><strong>50-inch flat screen TV</strong><p>The shared living room is already set up before move-in day.</p></div>
-            <div class="amenity-card"><strong>Gigabyte internet</strong><p>Built for streaming, coursework, and connected households.</p></div>
-            <div class="amenity-card"><strong>Washer and dryer</strong><p>In-unit laundry keeps daily routines simple and self-contained.</p></div>
-            <div class="amenity-card"><strong>Outdoor seating and grilling</strong><p>Cornerstone's shared exterior spaces offer a lighter amenity footprint.</p></div>
+            <div class="amenity-card"><strong data-cms="amenity-1-title">Fully furnished</strong><p data-cms="amenity-1-description">Move in lighter and avoid furnishing a three-bedroom apartment from scratch.</p></div>
+            <div class="amenity-card"><strong data-cms="amenity-2-title">Private bathroom and closet</strong><p data-cms="amenity-2-description">Every resident has a private ensuite bath and walk-in closet.</p></div>
+            <div class="amenity-card"><strong data-cms="amenity-3-title">50-inch flat screen TV</strong><p data-cms="amenity-3-description">The shared living room is already set up before move-in day.</p></div>
+            <div class="amenity-card"><strong data-cms="amenity-4-title">Gigabyte internet</strong><p data-cms="amenity-4-description">Built for streaming, coursework, and connected households.</p></div>
+            <div class="amenity-card"><strong data-cms="amenity-5-title">Washer and dryer</strong><p data-cms="amenity-5-description">In-unit laundry keeps daily routines simple and self-contained.</p></div>
+            <div class="amenity-card"><strong data-cms="amenity-6-title">Outdoor seating and grilling</strong><p data-cms="amenity-6-description">Cornerstone's shared exterior spaces offer a lighter amenity footprint.</p></div>
           </div>
         </div>
       </section>
@@ -355,46 +357,46 @@
       <section class="section reveal">
         <div class="section-head">
           <div>
-            <div class="kicker">Photo gallery</div>
-            <h2>See Cornerstone up close.</h2>
+            <div class="kicker" data-cms="gallery-kicker">Photo gallery</div>
+            <h2 data-cms="gallery-title">See Cornerstone up close.</h2>
           </div>
         </div>
         <div class="photo-gallery" data-gallery="cornerstone">
           <div class="photo-gallery__item photo-gallery__item--wide">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-7788.jpg" alt="Cornerstone exterior" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-7788.jpg" alt="Cornerstone exterior" loading="lazy" data-cms="gallery-image-1" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-7815.jpg" alt="Cornerstone building" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-7815.jpg" alt="Cornerstone building" loading="lazy" data-cms="gallery-image-2" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8476.jpg" alt="Cornerstone hallway" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8476.jpg" alt="Cornerstone hallway" loading="lazy" data-cms="gallery-image-3" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8477.jpg" alt="Cornerstone interior" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8477.jpg" alt="Cornerstone interior" loading="lazy" data-cms="gallery-image-4" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8481.jpg" alt="Cornerstone furnished room" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8481.jpg" alt="Cornerstone furnished room" loading="lazy" data-cms="gallery-image-5" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8483.jpg" alt="Cornerstone bedroom" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8483.jpg" alt="Cornerstone bedroom" loading="lazy" data-cms="gallery-image-6" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8573.jpg" alt="Cornerstone living area" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8573.jpg" alt="Cornerstone living area" loading="lazy" data-cms="gallery-image-7" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item photo-gallery__item--wide">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8508.jpg" alt="Cornerstone common area" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8508.jpg" alt="Cornerstone common area" loading="lazy" data-cms="gallery-image-8" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8505.jpg" alt="Cornerstone kitchen" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8505.jpg" alt="Cornerstone kitchen" loading="lazy" data-cms="gallery-image-9" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8504.jpg" alt="Cornerstone dining" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8504.jpg" alt="Cornerstone dining" loading="lazy" data-cms="gallery-image-10" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8529.jpg" alt="Cornerstone bathroom" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8529.jpg" alt="Cornerstone bathroom" loading="lazy" data-cms="gallery-image-11" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8532.jpg" alt="Cornerstone closet" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/img-8532.jpg" alt="Cornerstone closet" loading="lazy" data-cms="gallery-image-12" data-cms-type="image" />
           </div>
         </div>
       </section>
@@ -402,9 +404,9 @@
       <section class="section reveal">
         <div class="cta-band">
           <div>
-            <div class="kicker">Current pricing</div>
-            <h2>One furnished layout at $699 per person, per installment.</h2>
-            <p>
+            <div class="kicker" data-cms="cta-kicker">Current pricing</div>
+            <h2 data-cms="cta-title">One furnished layout at $699 per person, per installment.</h2>
+            <p data-cms="cta-description">
               Cornerstone offers one consistent 3BR / 3BA floor plan, making it easier to compare availability and move
               forward quickly once you know it is the right fit.
             </p>
@@ -421,10 +423,10 @@
             </div>
           </div>
           <div class="note-stack">
-            <div class="note-card"><strong>Included services</strong><p>Internet, water, sewer, and trash are included. Electricity is separate.</p></div>
-            <div class="note-card"><strong>Availability note</strong><p>Limited April and May move-in availability may be offered. Contact leasing for current openings.</p></div>
-            <div class="note-card"><strong>Leasing office</strong><p>40 Oasis Way, Lynchburg, VA 24502</p></div>
-            <div class="note-card"><strong>Contact</strong><p><a href="tel:4343297979">434-329-7979</a><br /><a href="mailto:gm1@vuecommunities.com">gm1@vuecommunities.com</a><br />Pricing is subject to change.</p></div>
+            <div class="note-card"><strong data-cms="cta-note-1-title">Included services</strong><p data-cms="cta-note-1-description">Internet, water, sewer, and trash are included. Electricity is separate.</p></div>
+            <div class="note-card"><strong data-cms="cta-note-2-title">Availability note</strong><p data-cms="cta-note-2-description">Limited April and May move-in availability may be offered. Contact leasing for current openings.</p></div>
+            <div class="note-card"><strong data-cms="cta-note-3-title">Leasing office</strong><p data-cms="cta-note-3-description">40 Oasis Way, Lynchburg, VA 24502</p></div>
+            <div class="note-card"><strong data-cms="cta-note-4-title">Contact</strong><p data-cms="cta-note-4-description" data-cms-type="html"><a href="tel:4343297979">434-329-7979</a><br /><a href="mailto:gm1@vuecommunities.com">gm1@vuecommunities.com</a><br />Pricing is subject to change.</p></div>
           </div>
         </div>
       </section>

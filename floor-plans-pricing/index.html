@@ -78,7 +78,7 @@
     <script defer src="/assets/site.js"></script>
     <script defer src="/_vercel/insights/script.js"></script>
   </head>
-  <body>
+  <body data-cms-page="pricing">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="nav-shell">
@@ -129,9 +129,9 @@
       <div class="page-hero-wrap">
         <section class="page-hero">
           <div class="reveal">
-            <div class="eyebrow">Current pricing snapshot</div>
-            <h1>Floor plans for students who want either <span class="accent">value</span> or <span class="accent">privacy</span>.</h1>
-            <p>
+            <div class="eyebrow" data-cms="hero-kicker">Current pricing snapshot</div>
+            <h1 data-cms="hero-title" data-cms-type="html">Floor plans for students who want either <span class="accent">value</span> or <span class="accent">privacy</span>.</h1>
+            <p data-cms="hero-description">
               VUE Communities lists rates by room and installment. The options below are shown per person, per room, per
               installment, and pricing remains subject to change.
             </p>
@@ -145,6 +145,7 @@
               <img
                 src="/assets/images/oasis-layout-2br-office.webp"
                 alt="Oasis 2 bedroom with office or study floor plan"
+                data-cms="hero-image" data-cms-type="image"
               />
             </div>
           </div>
@@ -155,10 +156,10 @@
         <div class="pricing-grid three">
           <article class="pricing-card">
             <div class="pricing-card__body">
-              <div class="kicker">The Oasis</div>
-              <h3>Entry pricing</h3>
-              <div class="price"><strong>$525-$650</strong><span>/installment</span></div>
-              <ul class="tiny-list">
+              <div class="kicker" data-cms="oasis-entry-kicker">The Oasis</div>
+              <h3 data-cms="oasis-entry-title">Entry pricing</h3>
+              <div class="price" data-cms="oasis-entry-price" data-cms-type="html"><strong>$525-$650</strong><span>/installment</span></div>
+              <ul class="tiny-list" data-cms="oasis-entry-details" data-cms-type="html">
                 <li>6BR no window: $525</li>
                 <li>6BR window: $570</li>
                 <li>4BR no window: $610</li>
@@ -168,10 +169,10 @@
           </article>
           <article class="pricing-card">
             <div class="pricing-card__body">
-              <div class="kicker">The Oasis</div>
-              <h3>Smaller layouts</h3>
-              <div class="price"><strong>$885-$955</strong><span>/installment</span></div>
-              <ul class="tiny-list">
+              <div class="kicker" data-cms="oasis-small-kicker">The Oasis</div>
+              <h3 data-cms="oasis-small-title">Smaller layouts</h3>
+              <div class="price" data-cms="oasis-small-price" data-cms-type="html"><strong>$885-$955</strong><span>/installment</span></div>
+              <ul class="tiny-list" data-cms="oasis-small-details" data-cms-type="html">
                 <li>2BR: $895</li>
                 <li>2BR with office/study: $955</li>
                 <li>3BR with office/study: $885</li>
@@ -181,10 +182,10 @@
           </article>
           <article class="pricing-card">
             <div class="pricing-card__body">
-              <div class="kicker">Cornerstone</div>
-              <h3>3BR / 3BA</h3>
-              <div class="price"><strong>$699</strong><span>/installment</span></div>
-              <ul class="tiny-list">
+              <div class="kicker" data-cms="cornerstone-kicker">Cornerstone</div>
+              <h3 data-cms="cornerstone-title">3BR / 3BA</h3>
+              <div class="price" data-cms="cornerstone-price" data-cms-type="html"><strong>$699</strong><span>/installment</span></div>
+              <ul class="tiny-list" data-cms="cornerstone-details" data-cms-type="html">
                 <li>Private ensuite bathroom</li>
                 <li>Walk-in closet</li>
                 <li>Furnished living room and in-unit washer/dryer</li>
@@ -197,16 +198,16 @@
       <section class="section reveal">
         <div class="section-head">
           <div>
-            <div class="kicker">See full details</div>
-            <h2>Explore floor plans, photos, and amenities on each community page.</h2>
+            <div class="kicker" data-cms="explore-kicker">See full details</div>
+            <h2 data-cms="explore-title">Explore floor plans, photos, and amenities on each community page.</h2>
           </div>
         </div>
         <div class="community-grid">
           <article class="community-card">
             <div class="community-card__body">
-              <div class="kicker">The Oasis</div>
-              <h3>6 floor plans from $525 to $955</h3>
-              <p>1BR through 6BR layouts with full amenity access, shuttle service, and campus-edge living.</p>
+              <div class="kicker" data-cms="explore-oasis-kicker">The Oasis</div>
+              <h3 data-cms="explore-oasis-title">6 floor plans from $525 to $955</h3>
+              <p data-cms="explore-oasis-description">1BR through 6BR layouts with full amenity access, shuttle service, and campus-edge living.</p>
               <div class="hero-actions">
                 <a class="btn btn-primary" href="/the-oasis">Explore The Oasis</a>
               </div>
@@ -214,9 +215,9 @@
           </article>
           <article class="community-card">
             <div class="community-card__body">
-              <div class="kicker">Cornerstone</div>
-              <h3>One consistent 3BR/3BA at $699</h3>
-              <p>Private ensuite bathroom, walk-in closet, and a quieter residential setting for every resident.</p>
+              <div class="kicker" data-cms="explore-cornerstone-kicker">Cornerstone</div>
+              <h3 data-cms="explore-cornerstone-title">One consistent 3BR/3BA at $699</h3>
+              <p data-cms="explore-cornerstone-description">Private ensuite bathroom, walk-in closet, and a quieter residential setting for every resident.</p>
               <div class="hero-actions">
                 <a class="btn btn-primary" href="/cornerstone">Explore Cornerstone</a>
               </div>
@@ -229,22 +230,22 @@
         <div class="surface">
           <div class="section-head">
             <div>
-              <div class="kicker">How pricing works</div>
-              <h2>Installments, lease structure, and what is included.</h2>
+              <div class="kicker" data-cms="how-kicker">How pricing works</div>
+              <h2 data-cms="how-title">Installments, lease structure, and what is included.</h2>
             </div>
           </div>
           <div class="info-grid three">
             <div class="info-card">
-              <strong>Installment structure</strong>
-              <p>Lease totals are divided into 12 equal installments even though the lease term is typically about 11.5 months.</p>
+              <strong data-cms="how-card1-title">Installment structure</strong>
+              <p data-cms="how-card1-description">Lease totals are divided into 12 equal installments even though the lease term is typically about 11.5 months.</p>
             </div>
             <div class="info-card">
-              <strong>Individual lease protection</strong>
-              <p>Your pricing is tied to your room only, so you are not responsible for another roommate's balance.</p>
+              <strong data-cms="how-card2-title">Individual lease protection</strong>
+              <p data-cms="how-card2-description">Your pricing is tied to your room only, so you are not responsible for another roommate's balance.</p>
             </div>
             <div class="info-card">
-              <strong>Utility structure</strong>
-              <p>Electricity is resident-paid. Internet is included, and the rest of the bundled utilities vary by community.</p>
+              <strong data-cms="how-card3-title">Utility structure</strong>
+              <p data-cms="how-card3-description">Electricity is resident-paid. Internet is included, and the rest of the bundled utilities vary by community.</p>
             </div>
           </div>
         </div>
@@ -253,9 +254,9 @@
       <section class="section reveal">
         <div class="spotlight">
           <div class="spotlight__copy">
-            <div class="kicker">Best-fit guidance</div>
-            <h2>Which plan type makes the most sense?</h2>
-            <ul class="list">
+            <div class="kicker" data-cms="bestfit-kicker">Best-fit guidance</div>
+            <h2 data-cms="bestfit-title">Which plan type makes the most sense?</h2>
+            <ul class="list" data-cms="bestfit-list" data-cms-type="html">
               <li><strong>Oasis 4BR / 6BR:</strong> best for students who want the lowest monthly entry point in an amenity-rich community.</li>
               <li><strong>Oasis office/study layouts:</strong> best for students who want fewer roommates and extra workspace.</li>
               <li><strong>Cornerstone 3BR / 3BA:</strong> best for students who want a private bathroom and one consistent layout option.</li>
@@ -269,6 +270,7 @@
               src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/oasis-4br-lightbox.png"
               alt="Oasis 4 bedroom floor plan"
               loading="lazy"
+              data-cms="bestfit-image" data-cms-type="image"
             />
           </div>
         </div>

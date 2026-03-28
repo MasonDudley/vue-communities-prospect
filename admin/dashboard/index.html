@@ -59,6 +59,15 @@
           >
             Specials
           </button>
+          <button
+            class="admin-tab"
+            role="tab"
+            data-tab="editor"
+            aria-selected="false"
+            aria-controls="panel-editor"
+          >
+            Edit Pages
+          </button>
         </div>
 
         <!-- Inquiries Panel -->
@@ -211,6 +220,33 @@
           </div>
         </div>
 
+        <!-- Editor Panel -->
+        <div class="admin-panel" id="panel-editor" data-panel="editor" role="tabpanel">
+          <div class="editor-toolbar">
+            <div class="editor-toolbar__left">
+              <label for="editor-page-select" class="editor-toolbar__label">Page</label>
+              <select id="editor-page-select" class="editor-page-select">
+                <option value="home">Home</option>
+                <option value="the-oasis">The Oasis</option>
+                <option value="cornerstone">Cornerstone</option>
+                <option value="pricing">Pricing</option>
+                <option value="faq">FAQ</option>
+                <option value="about">About</option>
+                <option value="contact">Contact</option>
+              </select>
+            </div>
+            <div class="editor-toolbar__right">
+              <span id="editor-change-count" class="editor-change-count" style="display:none"></span>
+              <button id="editor-discard" class="btn btn-outline btn-sm" type="button" disabled>Discard</button>
+              <button id="editor-save" class="btn btn-primary btn-sm" type="button" disabled>Save changes</button>
+            </div>
+          </div>
+          <div class="editor-preview-wrap">
+            <iframe id="editor-iframe" class="editor-iframe" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+          </div>
+          <div id="editor-toast" class="editor-toast" style="display:none"></div>
+        </div>
+
       </div>
     </div>
 
@@ -229,6 +265,7 @@
       const panels = document.querySelectorAll('[data-panel]');
       let availabilityLoaded = false;
       let specialsLoaded = false;
+      let editorLoaded = false;
 
       tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -246,6 +283,11 @@
           if (tab.dataset.tab === 'specials' && !specialsLoaded) {
             specialsLoaded = true;
             loadSpecials();
+          }
+
+          if (tab.dataset.tab === 'editor' && !editorLoaded) {
+            editorLoaded = true;
+            initEditor();
           }
         });
       });
@@ -1035,6 +1077,133 @@
             await loadSpecials();
           });
         });
+      }
+
+      // ── Page Editor ──────────────────────────────────────────────────────
+
+      const PAGE_URLS = {
+        home: '/',
+        'the-oasis': '/the-oasis',
+        cornerstone: '/cornerstone',
+        pricing: '/floor-plans-pricing',
+        faq: '/faq',
+        about: '/about',
+        contact: '/contact',
+      };
+
+      let editorPendingChanges = [];
+
+      function initEditor() {
+        const pageSelect = document.getElementById('editor-page-select');
+        const iframe = document.getElementById('editor-iframe');
+        const saveBtn = document.getElementById('editor-save');
+        const discardBtn = document.getElementById('editor-discard');
+        const changeCount = document.getElementById('editor-change-count');
+        const toast = document.getElementById('editor-toast');
+
+        function loadPage(pageKey) {
+          const url = PAGE_URLS[pageKey];
+          if (!url) return;
+          editorPendingChanges = [];
+          updateEditorUI();
+          iframe.src = url + '?cms-edit=1';
+        }
+
+        function updateEditorUI() {
+          const n = editorPendingChanges.length;
+          if (n > 0) {
+            changeCount.textContent = `${n} unsaved change${n === 1 ? '' : 's'}`;
+            changeCount.style.display = '';
+            saveBtn.disabled = false;
+            discardBtn.disabled = false;
+          } else {
+            changeCount.style.display = 'none';
+            saveBtn.disabled = true;
+            discardBtn.disabled = true;
+          }
+        }
+
+        function showEditorToast(msg, isError) {
+          toast.textContent = msg;
+          toast.className = 'editor-toast' + (isError ? ' editor-toast--error' : '');
+          toast.style.display = '';
+          clearTimeout(toast._timer);
+          toast._timer = setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        // Listen for messages from the iframe
+        window.addEventListener('message', (e) => {
+          if (!e.data?.type) return;
+
+          if (e.data.type === 'cms-changes') {
+            editorPendingChanges = e.data.changes || [];
+            updateEditorUI();
+          }
+
+          if (e.data.type === 'cms-ready') {
+            // iframe edit mode is initialized
+          }
+        });
+
+        // Page selector
+        pageSelect.addEventListener('change', () => {
+          if (editorPendingChanges.length > 0) {
+            if (!confirm('You have unsaved changes. Discard and switch pages?')) {
+              pageSelect.value = iframe.src.includes('cms-edit')
+                ? Object.entries(PAGE_URLS).find(([, url]) => iframe.src.includes(url))?.[0] || 'home'
+                : 'home';
+              return;
+            }
+          }
+          loadPage(pageSelect.value);
+        });
+
+        // Save
+        saveBtn.addEventListener('click', async () => {
+          if (!editorPendingChanges.length) return;
+
+          saveBtn.disabled = true;
+          saveBtn.textContent = 'Saving…';
+
+          try {
+            // Upsert all changes
+            const rows = editorPendingChanges.map((c) => ({
+              page: c.page,
+              cms_key: c.cms_key,
+              content_type: c.content_type,
+              value: c.value,
+              updated_at: new Date().toISOString(),
+            }));
+
+            const { error } = await supabase
+              .from('cms_content')
+              .upsert(rows, { onConflict: 'page,cms_key' });
+
+            if (error) throw error;
+
+            editorPendingChanges = [];
+            updateEditorUI();
+            iframe.contentWindow.postMessage({ type: 'cms-saved' }, '*');
+            showEditorToast('Changes saved and live!');
+          } catch (err) {
+            showEditorToast('Save failed: ' + err.message, true);
+          } finally {
+            saveBtn.textContent = 'Save changes';
+            saveBtn.disabled = editorPendingChanges.length === 0;
+          }
+        });
+
+        // Discard
+        discardBtn.addEventListener('click', () => {
+          if (!editorPendingChanges.length) return;
+          if (!confirm('Discard all unsaved changes?')) return;
+          editorPendingChanges = [];
+          updateEditorUI();
+          iframe.contentWindow.postMessage({ type: 'cms-discard' }, '*');
+        });
+
+        // Initial load
+        loadPage(pageSelect.value);
       }
     </script>
   </body>

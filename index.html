@@ -143,7 +143,7 @@
     <script defer src="/assets/site.js"></script>
     <script defer src="/_vercel/insights/script.js"></script>
   </head>
-  <body>
+  <body data-cms-page="home">
     <!-- Special popup modal -->
     <div class="special-popup-overlay" id="special-popup" style="display:none">
       <div class="special-popup">
@@ -265,12 +265,12 @@
       <div class="hero-wrap">
         <section class="hero">
           <div class="hero-copy reveal">
-            <div class="eyebrow">Student-only housing in Lynchburg, VA</div>
-            <h1>
+            <div class="eyebrow" data-cms="hero-eyebrow">Student-only housing in Lynchburg, VA</div>
+            <h1 data-cms="hero-title" data-cms-type="html">
               Off-campus living with
               <span class="accent">more privacy</span> and room to focus.
             </h1>
-            <p>
+            <p data-cms="hero-description">
               VUE Communities offers furnished student apartments near Liberty University with individual leases,
               roommate matching, and two distinct community options. Choose The Oasis for broader floor plan variety and
               a larger amenity package, or The VUE at Cornerstone for a consistent 3BR/3BA layout with private bathrooms.
@@ -298,27 +298,30 @@
             <div class="photo-stack">
               <div class="photo-main">
                 <img
+                  data-cms="hero-image-main" data-cms-type="image"
                   src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/outside-7.jpg"
                   alt="VUE Communities exterior"
                 />
               </div>
               <div class="photo-float">
                 <img
+                  data-cms="hero-image-float" data-cms-type="image"
                   src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/kitchen.png"
                   alt="Modern student apartment kitchen"
                 />
               </div>
               <div class="photo-small">
                 <img
+                  data-cms="hero-image-small" data-cms-type="image"
                   src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/bedroom-1.png"
                   alt="Furnished student bedroom"
                 />
               </div>
-              <div class="visual-chip">
+              <div class="visual-chip" data-cms="hero-chip-oasis" data-cms-type="html">
                 <strong>The Oasis</strong>
                 Shuttle access, a pool, fitness center, clubhouse, study space, and floor plans from 1 to 6 bedrooms.
               </div>
-              <div class="visual-chip is-orange">
+              <div class="visual-chip is-orange" data-cms="hero-chip-cornerstone" data-cms-type="html">
                 <strong>Cornerstone</strong>
                 One 3BR/3BA layout with private ensuite bathrooms, walk-in closets, and a quieter neighborhood feel.
               </div>
@@ -331,28 +334,28 @@
         <div class="surface navy">
           <div class="section-head">
             <div>
-              <div class="kicker">Why families choose VUE</div>
-              <h2>Built around the details students and guarantors ask about first.</h2>
+              <div class="kicker" data-cms="why-kicker">Why families choose VUE</div>
+              <h2 data-cms="why-title">Built around the details students and guarantors ask about first.</h2>
             </div>
-            <p class="section-intro">
+            <p class="section-intro" data-cms="why-intro">
               VUE Communities combines student-only leasing, furnished apartments, roommate matching, and clear
               installment structure across both communities.
             </p>
           </div>
           <div class="stat-grid">
-            <div class="stat-card">
+            <div class="stat-card" data-cms="stat-1" data-cms-type="html">
               <strong>Near LU</strong>
               <span>The Oasis sits on the edge of Liberty's campus and includes Liberty Shuttle access.</span>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" data-cms="stat-2" data-cms-type="html">
               <strong>Roommate matching</strong>
               <span>Apply with friends, request roommates, or lease on your own and be matched.</span>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" data-cms="stat-3" data-cms-type="html">
               <strong>Parent clarity</strong>
               <span>Individual leases help reduce roommate-related financial risk.</span>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" data-cms="stat-4" data-cms-type="html">
               <strong>Move-in ready</strong>
               <span>Fully furnished apartments remove a major setup step before the semester starts.</span>
             </div>
@@ -363,10 +366,10 @@
       <section class="section reveal">
         <div class="section-head">
           <div>
-            <div class="kicker">Student housing essentials</div>
-            <h2>The features that make off-campus living easier to manage.</h2>
+            <div class="kicker" data-cms="essentials-kicker">Student housing essentials</div>
+            <h2 data-cms="essentials-title">The features that make off-campus living easier to manage.</h2>
           </div>
-          <p class="section-intro">
+          <p class="section-intro" data-cms="essentials-intro">
             From furnished apartments to individual leases, VUE Communities highlights the basics that matter most during
             the leasing and move-in process.
           </p>
@@ -383,8 +386,8 @@
         <div class="surface">
           <div class="section-head">
             <div>
-              <div class="kicker">Community comparison</div>
-              <h2>Choose the lifestyle that fits your school year.</h2>
+              <div class="kicker" data-cms="compare-kicker">Community comparison</div>
+              <h2 data-cms="compare-title">Choose the lifestyle that fits your school year.</h2>
             </div>
             <a class="btn btn-secondary" href="/floor-plans-pricing">See all pricing</a>
           </div>
@@ -392,6 +395,7 @@
             <article class="community-card">
               <div class="media">
                 <img
+                  data-cms="oasis-card-image" data-cms-type="image"
                   src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/drone-3.jpg"
                   alt="The Oasis aerial view"
                   loading="lazy"
@@ -399,8 +403,8 @@
               </div>
               <div class="community-card__body">
                 <div class="kicker">The Oasis</div>
-                <h3>Amenities-first, right on the edge of Liberty.</h3>
-                <p>
+                <h3 data-cms="oasis-card-title">Amenities-first, right on the edge of Liberty.</h3>
+                <p data-cms="oasis-card-description">
                   Best for students who want the widest range of floor plans, stronger amenity access, and a community
                   closely tied to campus movement.
                 </p>
@@ -417,6 +421,7 @@
             <article class="community-card">
               <div class="media">
                 <img
+                  data-cms="cornerstone-card-image" data-cms-type="image"
                   src="/assets/images/cornerstone-exterior.jpg"
                   alt="Exterior of The VUE at Cornerstone"
                   loading="lazy"
@@ -424,8 +429,8 @@
               </div>
               <div class="community-card__body">
                 <div class="kicker">Cornerstone</div>
-                <h3>Streamlined 3BR/3BA living near restaurants and retail.</h3>
-                <p>
+                <h3 data-cms="cornerstone-card-title">Streamlined 3BR/3BA living near restaurants and retail.</h3>
+                <p data-cms="cornerstone-card-description">
                   Best for students who want a private bathroom, walk-in closet, and a more focused residential setting
                   off Greenview Drive.
                 </p>
@@ -446,10 +451,10 @@
       <section class="section reveal">
         <div class="section-head">
           <div>
-            <div class="kicker">Floor plans snapshot</div>
-            <h2>Pricing that covers a wide range of student housing needs.</h2>
+            <div class="kicker" data-cms="pricing-kicker">Floor plans snapshot</div>
+            <h2 data-cms="pricing-title">Pricing that covers a wide range of student housing needs.</h2>
           </div>
-          <p class="section-intro">
+          <p class="section-intro" data-cms="pricing-intro">
             Rates shown below are per person, per room, per installment, and pricing remains subject to change.
           </p>
         </div>
@@ -457,10 +462,10 @@
           <article class="pricing-card">
             <div class="pricing-card__body">
               <div class="kicker">The Oasis</div>
-              <h3>Shared layouts</h3>
-              <p>4BR and 6BR rooms offer the lowest monthly entry point in the current pricing set.</p>
-              <div class="price"><strong>$525-$650</strong><span>/installment</span></div>
-              <ul class="tiny-list">
+              <h3 data-cms="pricing-shared-title">Shared layouts</h3>
+              <p data-cms="pricing-shared-desc">4BR and 6BR rooms offer the lowest monthly entry point in the current pricing set.</p>
+              <div class="price"><strong data-cms="pricing-shared-price">$525-$650</strong><span>/installment</span></div>
+              <ul class="tiny-list" data-cms="pricing-shared-list" data-cms-type="html">
                 <li>6BR no window from $525</li>
                 <li>6BR window from $570</li>
                 <li>4BR no window from $610</li>
@@ -471,10 +476,10 @@
           <article class="pricing-card">
             <div class="pricing-card__body">
               <div class="kicker">The Oasis</div>
-              <h3>Smaller layouts</h3>
-              <p>Two- and three-bedroom office/study layouts suit students who want more privacy and dedicated workspace.</p>
-              <div class="price"><strong>$885-$955</strong><span>/installment</span></div>
-              <ul class="tiny-list">
+              <h3 data-cms="pricing-smaller-title">Smaller layouts</h3>
+              <p data-cms="pricing-smaller-desc">Two- and three-bedroom office/study layouts suit students who want more privacy and dedicated workspace.</p>
+              <div class="price"><strong data-cms="pricing-smaller-price">$885-$955</strong><span>/installment</span></div>
+              <ul class="tiny-list" data-cms="pricing-smaller-list" data-cms-type="html">
                 <li>2BR from $895</li>
                 <li>2BR with office/study from $955</li>
                 <li>3BR with office/study from $885</li>
@@ -484,10 +489,10 @@
           <article class="pricing-card">
             <div class="pricing-card__body">
               <div class="kicker">Cornerstone</div>
-              <h3>3BR / 3BA layout</h3>
-              <p>Cornerstone offers one consistent layout with a private bathroom and walk-in closet for each resident.</p>
-              <div class="price"><strong>$699</strong><span>/installment</span></div>
-              <div class="pricing-note">Current pricing shown for the 3BR / 3BA layout at The VUE at Cornerstone.</div>
+              <h3 data-cms="pricing-cornerstone-title">3BR / 3BA layout</h3>
+              <p data-cms="pricing-cornerstone-desc">Cornerstone offers one consistent layout with a private bathroom and walk-in closet for each resident.</p>
+              <div class="price"><strong data-cms="pricing-cornerstone-price">$699</strong><span>/installment</span></div>
+              <div class="pricing-note" data-cms="pricing-cornerstone-note">Current pricing shown for the 3BR / 3BA layout at The VUE at Cornerstone.</div>
             </div>
           </article>
         </div>
@@ -496,13 +501,13 @@
       <section class="section reveal">
         <div class="spotlight">
           <div class="spotlight__copy">
-            <div class="kicker">Parent and guarantor reassurance</div>
-            <h2>Clear expectations, transparent installments, and a simpler lease structure.</h2>
-            <p>
+            <div class="kicker" data-cms="spotlight-kicker">Parent and guarantor reassurance</div>
+            <h2 data-cms="spotlight-title">Clear expectations, transparent installments, and a simpler lease structure.</h2>
+            <p data-cms="spotlight-description">
               VUE Communities highlights the details families usually want clarified before move-in: individual leases,
               furnished apartments, rent timing, and guarantor guidelines.
             </p>
-            <ul class="list">
+            <ul class="list" data-cms="spotlight-list" data-cms-type="html">
               <li>Installments are due on or before the 1st, with a grace period through the 5th at 11:59 PM.</li>
               <li>A guarantor is required for month-to-month payment unless the lease term is paid in full upfront.</li>
               <li>The guarantor income requirement shown is $65,000 annually or $110,000 combined if married.</li>
@@ -513,6 +518,7 @@
           </div>
           <div class="spotlight__media">
             <img
+              data-cms="spotlight-image" data-cms-type="image"
               src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/bathroom-1.png"
               alt="Private student bathroom"
               loading="lazy"
@@ -524,9 +530,9 @@
       <section class="section reveal">
         <div class="cta-band">
           <div>
-            <div class="kicker">Contact the leasing office</div>
-            <h2>Need current availability, pricing, or move-in help?</h2>
-            <p>
+            <div class="kicker" data-cms="cta-kicker">Contact the leasing office</div>
+            <h2 data-cms="cta-title">Need current availability, pricing, or move-in help?</h2>
+            <p data-cms="cta-description">
               The leasing office is located at 40 Oasis Way in Lynchburg, Virginia. Office hours are Monday through
               Friday from 10:00 AM to 5:00 PM.
             </p>

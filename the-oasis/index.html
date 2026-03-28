@@ -100,7 +100,7 @@
     <script defer src="/assets/site.js"></script>
     <script defer src="/_vercel/insights/script.js"></script>
   </head>
-  <body>
+  <body data-cms-page="the-oasis">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="nav-shell">
@@ -151,9 +151,9 @@
       <div class="page-hero-wrap">
         <section class="page-hero">
           <div class="reveal">
-            <div class="eyebrow">The Oasis at VUE Communities</div>
-            <h1>Campus-edge living with <span class="accent">more amenities</span> and more floor plan options.</h1>
-            <p>
+            <div class="eyebrow" data-cms="hero-eyebrow">The Oasis at VUE Communities</div>
+            <h1 data-cms="hero-title" data-cms-type="html">Campus-edge living with <span class="accent">more amenities</span> and more floor plan options.</h1>
+            <p data-cms="hero-description">
               The Oasis is the amenity-forward community in the VUE Communities lineup. Located on the edge of Liberty's
               campus, it offers floor plans from 1 to 6 bedrooms plus Liberty Shuttle access.
             </p>
@@ -170,14 +170,14 @@
               <a class="btn btn-secondary" href="/contact">Book a Tour</a>
             </div>
             <div class="pill-row">
-              <span class="pill">Floor plans from 1BR to 6BR</span>
-              <span class="pill">Student-only community</span>
-              <span class="pill">Electric billed separately</span>
+              <span class="pill" data-cms="hero-pill-1">Floor plans from 1BR to 6BR</span>
+              <span class="pill" data-cms="hero-pill-2">Student-only community</span>
+              <span class="pill" data-cms="hero-pill-3">Electric billed separately</span>
             </div>
           </div>
           <div class="reveal">
             <div class="photo-banner">
-              <img src="/assets/images/oasis-pool.jpg" alt="The Oasis pool and apartment community" />
+              <img src="/assets/images/oasis-pool.jpg" alt="The Oasis pool and apartment community" data-cms="hero-image" data-cms-type="image" />
             </div>
           </div>
         </section>
@@ -186,16 +186,16 @@
       <section class="section reveal">
         <div class="info-grid three">
           <div class="info-card">
-            <strong>Floor plans from 1BR to 6BR</strong>
-            <p>The Oasis spans single-occupancy living through highly budget-conscious shared layouts.</p>
+            <strong data-cms="info-card-1-title">Floor plans from 1BR to 6BR</strong>
+            <p data-cms="info-card-1-description">The Oasis spans single-occupancy living through highly budget-conscious shared layouts.</p>
           </div>
           <div class="info-card">
-            <strong>Bundled monthly setup</strong>
-            <p>The Oasis offers furnished apartments with internet and water included, while electricity is billed separately.</p>
+            <strong data-cms="info-card-2-title">Bundled monthly setup</strong>
+            <p data-cms="info-card-2-description">The Oasis offers furnished apartments with internet and water included, while electricity is billed separately.</p>
           </div>
           <div class="info-card">
-            <strong>Designed for students</strong>
-            <p>Clubhouse access, study rooms, game rooms, courtyards, and a nature trail support both focus time and downtime.</p>
+            <strong data-cms="info-card-3-title">Designed for students</strong>
+            <p data-cms="info-card-3-description">Clubhouse access, study rooms, game rooms, courtyards, and a nature trail support both focus time and downtime.</p>
           </div>
         </div>
       </section>
@@ -204,8 +204,8 @@
         <div class="surface navy">
           <div class="section-head">
             <div>
-              <div class="kicker">Quick comparison</div>
-              <h2>How The Oasis compares to Cornerstone.</h2>
+              <div class="kicker" data-cms="compare-kicker">Quick comparison</div>
+              <h2 data-cms="compare-title">How The Oasis compares to Cornerstone.</h2>
             </div>
           </div>
           <div class="table-wrap">
@@ -219,34 +219,34 @@
               </thead>
               <tbody>
                 <tr>
-                  <td data-label="Category"><strong>Location feel</strong></td>
-                  <td data-label="The Oasis" class="is-highlight">Edge of Liberty's campus with Liberty Shuttle access.</td>
-                  <td data-label="Cornerstone">Residential neighborhood off Greenview Drive near local restaurants.</td>
+                  <td data-label="Category"><strong data-cms="compare-row-1-label">Location feel</strong></td>
+                  <td data-label="The Oasis" class="is-highlight" data-cms="compare-row-1-oasis">Edge of Liberty's campus with Liberty Shuttle access.</td>
+                  <td data-label="Cornerstone" data-cms="compare-row-1-cornerstone">Residential neighborhood off Greenview Drive near local restaurants.</td>
                 </tr>
                 <tr>
-                  <td data-label="Category"><strong>Best fit</strong></td>
-                  <td data-label="The Oasis" class="is-highlight">Students who want more floor plan options and a larger amenity package.</td>
-                  <td data-label="Cornerstone">Students who want a consistent 3BR/3BA layout and more apartment-level privacy.</td>
+                  <td data-label="Category"><strong data-cms="compare-row-2-label">Best fit</strong></td>
+                  <td data-label="The Oasis" class="is-highlight" data-cms="compare-row-2-oasis">Students who want more floor plan options and a larger amenity package.</td>
+                  <td data-label="Cornerstone" data-cms="compare-row-2-cornerstone">Students who want a consistent 3BR/3BA layout and more apartment-level privacy.</td>
                 </tr>
                 <tr>
-                  <td data-label="Category"><strong>Layout range</strong></td>
-                  <td data-label="The Oasis" class="is-highlight">1BR to 6BR, including select office/study layouts.</td>
-                  <td data-label="Cornerstone">All units are 3BR / 3BA.</td>
+                  <td data-label="Category"><strong data-cms="compare-row-3-label">Layout range</strong></td>
+                  <td data-label="The Oasis" class="is-highlight" data-cms="compare-row-3-oasis">1BR to 6BR, including select office/study layouts.</td>
+                  <td data-label="Cornerstone" data-cms="compare-row-3-cornerstone">All units are 3BR / 3BA.</td>
                 </tr>
                 <tr>
-                  <td data-label="Category"><strong>Utilities</strong></td>
-                  <td data-label="The Oasis" class="is-highlight">Furnished apartments with internet and water included, and electricity billed separately.</td>
-                  <td data-label="Cornerstone">Internet, water, sewer, and trash are included; electricity is separate.</td>
+                  <td data-label="Category"><strong data-cms="compare-row-4-label">Utilities</strong></td>
+                  <td data-label="The Oasis" class="is-highlight" data-cms="compare-row-4-oasis">Furnished apartments with internet and water included, and electricity billed separately.</td>
+                  <td data-label="Cornerstone" data-cms="compare-row-4-cornerstone">Internet, water, sewer, and trash are included; electricity is separate.</td>
                 </tr>
                 <tr>
-                  <td data-label="Category"><strong>Signature benefit</strong></td>
-                  <td data-label="The Oasis" class="is-highlight">Liberty Shuttle access plus a larger amenity lineup.</td>
-                  <td data-label="Cornerstone">Each resident has a private ensuite bathroom and walk-in closet.</td>
+                  <td data-label="Category"><strong data-cms="compare-row-5-label">Signature benefit</strong></td>
+                  <td data-label="The Oasis" class="is-highlight" data-cms="compare-row-5-oasis">Liberty Shuttle access plus a larger amenity lineup.</td>
+                  <td data-label="Cornerstone" data-cms="compare-row-5-cornerstone">Each resident has a private ensuite bathroom and walk-in closet.</td>
                 </tr>
                 <tr>
-                  <td data-label="Category"><strong>Current pricing</strong></td>
-                  <td data-label="The Oasis" class="is-highlight">$525 to $955 depending on layout.</td>
-                  <td data-label="Cornerstone">$699 for the 3BR / 3BA layout.</td>
+                  <td data-label="Category"><strong data-cms="compare-row-6-label">Current pricing</strong></td>
+                  <td data-label="The Oasis" class="is-highlight" data-cms="compare-row-6-oasis">$525 to $955 depending on layout.</td>
+                  <td data-label="Cornerstone" data-cms="compare-row-6-cornerstone">$699 for the 3BR / 3BA layout.</td>
                 </tr>
               </tbody>
             </table>
@@ -258,8 +258,8 @@
         <div class="surface">
           <div class="section-head">
             <div>
-              <div class="kicker">Oasis floor plan highlights</div>
-              <h2>Flexible room counts, from solo living to value-driven shared layouts.</h2>
+              <div class="kicker" data-cms="pricing-highlights-kicker">Oasis floor plan highlights</div>
+              <h2 data-cms="pricing-highlights-title">Flexible room counts, from solo living to value-driven shared layouts.</h2>
             </div>
           </div>
           <div class="pricing-grid three">
@@ -269,12 +269,13 @@
                   src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/oasis-1br-lightbox.png"
                   alt="Oasis 1 bedroom floor plan"
                   loading="lazy"
+                  data-cms="pricing-card-1-image" data-cms-type="image"
                 />
               </div>
               <div class="pricing-card__body">
-                <h3>1BR and 2BR options</h3>
-                <p>The 1BR has limited availability, while the 2BR starts at $895.</p>
-                <ul class="tiny-list">
+                <h3 data-cms="pricing-card-1-title">1BR and 2BR options</h3>
+                <p data-cms="pricing-card-1-description">The 1BR has limited availability, while the 2BR starts at $895.</p>
+                <ul class="tiny-list" data-cms="pricing-card-1-list" data-cms-type="html">
                   <li>1BR: contact leasing for current availability</li>
                   <li>2BR: $895</li>
                   <li>2BR with office/study: $955</li>
@@ -287,12 +288,13 @@
                   src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/oasis-3br-office.jpg"
                   alt="Oasis 3 bedroom with office layout"
                   loading="lazy"
+                  data-cms="pricing-card-2-image" data-cms-type="image"
                 />
               </div>
               <div class="pricing-card__body">
-                <h3>Office/study layouts</h3>
-                <p>These layouts give smaller groups extra flexibility and a quieter setup for studying.</p>
-                <ul class="tiny-list">
+                <h3 data-cms="pricing-card-2-title">Office/study layouts</h3>
+                <p data-cms="pricing-card-2-description">These layouts give smaller groups extra flexibility and a quieter setup for studying.</p>
+                <ul class="tiny-list" data-cms="pricing-card-2-list" data-cms-type="html">
                   <li>3BR with office/study: $885</li>
                   <li>2BR with office/study: $955</li>
                   <li>Popular for students who want more privacy and workspace</li>
@@ -305,12 +307,13 @@
                   src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/oasis-6br-lightbox.png"
                   alt="Oasis 6 bedroom floor plan"
                   loading="lazy"
+                  data-cms="pricing-card-3-image" data-cms-type="image"
                 />
               </div>
               <div class="pricing-card__body">
-                <h3>4BR and 6BR value options</h3>
-                <p>Shared layouts separate window and no-window room types to create the lowest price points at Oasis.</p>
-                <ul class="tiny-list">
+                <h3 data-cms="pricing-card-3-title">4BR and 6BR value options</h3>
+                <p data-cms="pricing-card-3-description">Shared layouts separate window and no-window room types to create the lowest price points at Oasis.</p>
+                <ul class="tiny-list" data-cms="pricing-card-3-list" data-cms-type="html">
                   <li>4BR window: $650</li>
                   <li>4BR no window: $610</li>
                   <li>6BR window: $570</li>
@@ -326,19 +329,19 @@
         <div class="surface">
           <div class="section-head">
             <div>
-              <div class="kicker">Full floor plan gallery</div>
-              <h2>Every Oasis layout, with pricing.</h2>
+              <div class="kicker" data-cms="floorplans-kicker">Full floor plan gallery</div>
+              <h2 data-cms="floorplans-title">Every Oasis layout, with pricing.</h2>
             </div>
           </div>
           <div class="pricing-grid three">
             <article class="pricing-card layout-card">
               <div class="media">
-                <img src="/assets/images/oasis-layout-1br.webp" alt="Oasis 1 bedroom floor plan" loading="lazy" />
+                <img src="/assets/images/oasis-layout-1br.webp" alt="Oasis 1 bedroom floor plan" loading="lazy" data-cms="layout-1br-image" data-cms-type="image" />
               </div>
               <div class="pricing-card__body">
-                <h3 data-unit-type="1BR">1BR</h3>
-                <div class="price"><strong>Contact for availability</strong></div>
-                <ul class="tiny-list">
+                <h3 data-unit-type="1BR" data-cms="layout-1br-title">1BR</h3>
+                <div class="price" data-cms="layout-1br-price" data-cms-type="html"><strong>Contact for availability</strong></div>
+                <ul class="tiny-list" data-cms="layout-1br-details" data-cms-type="html">
                   <li>Single-occupancy layout</li>
                   <li>Best fit for students who want a solo setup</li>
                 </ul>
@@ -346,12 +349,12 @@
             </article>
             <article class="pricing-card layout-card">
               <div class="media">
-                <img src="/assets/images/oasis-layout-2br.webp" alt="Oasis 2 bedroom floor plan" loading="lazy" />
+                <img src="/assets/images/oasis-layout-2br.webp" alt="Oasis 2 bedroom floor plan" loading="lazy" data-cms="layout-2br-image" data-cms-type="image" />
               </div>
               <div class="pricing-card__body">
-                <h3 data-unit-type="2BR">2BR</h3>
-                <div class="price"><strong>$895</strong><span>/installment</span></div>
-                <ul class="tiny-list">
+                <h3 data-unit-type="2BR" data-cms="layout-2br-title">2BR</h3>
+                <div class="price" data-cms="layout-2br-price" data-cms-type="html"><strong>$895</strong><span>/installment</span></div>
+                <ul class="tiny-list" data-cms="layout-2br-details" data-cms-type="html">
                   <li>Two-bedroom shared layout</li>
                   <li>All pricing is per person, per room, per installment</li>
                 </ul>
@@ -359,12 +362,12 @@
             </article>
             <article class="pricing-card layout-card">
               <div class="media">
-                <img src="/assets/images/oasis-layout-2br-office.webp" alt="Oasis 2 bedroom with office or study floor plan" loading="lazy" />
+                <img src="/assets/images/oasis-layout-2br-office.webp" alt="Oasis 2 bedroom with office or study floor plan" loading="lazy" data-cms="layout-2br-office-image" data-cms-type="image" />
               </div>
               <div class="pricing-card__body">
-                <h3 data-unit-type="2BR + Office/Study">2BR with Office/Study</h3>
-                <div class="price"><strong>$955</strong><span>/installment</span></div>
-                <ul class="tiny-list">
+                <h3 data-unit-type="2BR + Office/Study" data-cms="layout-2br-office-title">2BR with Office/Study</h3>
+                <div class="price" data-cms="layout-2br-office-price" data-cms-type="html"><strong>$955</strong><span>/installment</span></div>
+                <ul class="tiny-list" data-cms="layout-2br-office-details" data-cms-type="html">
                   <li>Two bedrooms plus a separate office or study area</li>
                   <li>Designed for students who want extra workspace</li>
                 </ul>
@@ -372,12 +375,12 @@
             </article>
             <article class="pricing-card layout-card">
               <div class="media">
-                <img src="/assets/images/oasis-layout-3br-office.webp" alt="Oasis 3 bedroom with office or study floor plan" loading="lazy" />
+                <img src="/assets/images/oasis-layout-3br-office.webp" alt="Oasis 3 bedroom with office or study floor plan" loading="lazy" data-cms="layout-3br-office-image" data-cms-type="image" />
               </div>
               <div class="pricing-card__body">
-                <h3 data-unit-type="3BR + Office/Study">3BR with Office/Study</h3>
-                <div class="price"><strong>$885</strong><span>/installment</span></div>
-                <ul class="tiny-list">
+                <h3 data-unit-type="3BR + Office/Study" data-cms="layout-3br-office-title">3BR with Office/Study</h3>
+                <div class="price" data-cms="layout-3br-office-price" data-cms-type="html"><strong>$885</strong><span>/installment</span></div>
+                <ul class="tiny-list" data-cms="layout-3br-office-details" data-cms-type="html">
                   <li>Three bedrooms plus a separate office or study area</li>
                   <li>A quieter alternative to the larger shared layouts</li>
                 </ul>
@@ -385,12 +388,12 @@
             </article>
             <article class="pricing-card layout-card">
               <div class="media">
-                <img src="/assets/images/oasis-layout-4br.webp" alt="Oasis 4 bedroom floor plan" loading="lazy" />
+                <img src="/assets/images/oasis-layout-4br.webp" alt="Oasis 4 bedroom floor plan" loading="lazy" data-cms="layout-4br-image" data-cms-type="image" />
               </div>
               <div class="pricing-card__body">
-                <h3 data-unit-type="4BR">4BR</h3>
-                <div class="price"><strong>$610-$650</strong><span>/installment</span></div>
-                <ul class="tiny-list">
+                <h3 data-unit-type="4BR" data-cms="layout-4br-title">4BR</h3>
+                <div class="price" data-cms="layout-4br-price" data-cms-type="html"><strong>$610-$650</strong><span>/installment</span></div>
+                <ul class="tiny-list" data-cms="layout-4br-details" data-cms-type="html">
                   <li>No-window room: $610</li>
                   <li>Window room: $650</li>
                 </ul>
@@ -398,12 +401,12 @@
             </article>
             <article class="pricing-card layout-card">
               <div class="media">
-                <img src="/assets/images/oasis-layout-6br.webp" alt="Oasis 6 bedroom floor plan" loading="lazy" />
+                <img src="/assets/images/oasis-layout-6br.webp" alt="Oasis 6 bedroom floor plan" loading="lazy" data-cms="layout-6br-image" data-cms-type="image" />
               </div>
               <div class="pricing-card__body">
-                <h3 data-unit-type="6BR">6BR</h3>
-                <div class="price"><strong>$525-$570</strong><span>/installment</span></div>
-                <ul class="tiny-list">
+                <h3 data-unit-type="6BR" data-cms="layout-6br-title">6BR</h3>
+                <div class="price" data-cms="layout-6br-price" data-cms-type="html"><strong>$525-$570</strong><span>/installment</span></div>
+                <ul class="tiny-list" data-cms="layout-6br-details" data-cms-type="html">
                   <li>No-window room: $525</li>
                   <li>Window room: $570</li>
                 </ul>
@@ -417,22 +420,22 @@
         <div class="surface">
           <div class="section-head">
             <div>
-              <div class="kicker">How pricing works</div>
-              <h2>Installments, lease structure, and what is included.</h2>
+              <div class="kicker" data-cms="pricing-info-kicker">How pricing works</div>
+              <h2 data-cms="pricing-info-title">Installments, lease structure, and what is included.</h2>
             </div>
           </div>
           <div class="info-grid three">
             <div class="info-card">
-              <strong>Installment structure</strong>
-              <p>Lease totals are divided into 12 equal installments even though the lease term is typically about 11.5 months.</p>
+              <strong data-cms="pricing-info-card-1-title">Installment structure</strong>
+              <p data-cms="pricing-info-card-1-description">Lease totals are divided into 12 equal installments even though the lease term is typically about 11.5 months.</p>
             </div>
             <div class="info-card">
-              <strong>Individual lease protection</strong>
-              <p>Your pricing is tied to your room only, so you are not responsible for another roommate's balance.</p>
+              <strong data-cms="pricing-info-card-2-title">Individual lease protection</strong>
+              <p data-cms="pricing-info-card-2-description">Your pricing is tied to your room only, so you are not responsible for another roommate's balance.</p>
             </div>
             <div class="info-card">
-              <strong>Utility structure</strong>
-              <p>Electricity is resident-paid. Internet is included, and the rest of the bundled utilities vary by community.</p>
+              <strong data-cms="pricing-info-card-3-title">Utility structure</strong>
+              <p data-cms="pricing-info-card-3-description">Electricity is resident-paid. Internet is included, and the rest of the bundled utilities vary by community.</p>
             </div>
           </div>
         </div>
@@ -442,46 +445,46 @@
         <div class="surface navy">
           <div class="section-head">
             <div>
-              <div class="kicker">Amenities</div>
-              <h2>Why The Oasis feels like the flagship community.</h2>
+              <div class="kicker" data-cms="amenities-kicker">Amenities</div>
+              <h2 data-cms="amenities-title">Why The Oasis feels like the flagship community.</h2>
             </div>
-            <p class="section-intro">
+            <p class="section-intro" data-cms="amenities-description">
               The Oasis combines a larger amenity package with a broader range of floor plans than the rest of the VUE
               Communities lineup.
             </p>
           </div>
           <div class="icon-amenity-grid">
             <div class="icon-amenity">
-              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-study-areas.webp" alt="Study areas icon" loading="lazy" />
-              <span>Study Areas</span>
+              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-study-areas.webp" alt="Study areas icon" loading="lazy" data-cms="amenity-study-areas-icon" data-cms-type="image" />
+              <span data-cms="amenity-study-areas-label">Study Areas</span>
             </div>
             <div class="icon-amenity">
-              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-tech-center.webp" alt="Tech center icon" loading="lazy" />
-              <span>Tech Center</span>
+              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-tech-center.webp" alt="Tech center icon" loading="lazy" data-cms="amenity-tech-center-icon" data-cms-type="image" />
+              <span data-cms="amenity-tech-center-label">Tech Center</span>
             </div>
             <div class="icon-amenity">
-              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-pool.webp" alt="Resort style pool icon" loading="lazy" />
-              <span>Resort Style Pool</span>
+              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-pool.webp" alt="Resort style pool icon" loading="lazy" data-cms="amenity-pool-icon" data-cms-type="image" />
+              <span data-cms="amenity-pool-label">Resort Style Pool</span>
             </div>
             <div class="icon-amenity">
-              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-fitness-center.webp" alt="Fitness center icon" loading="lazy" />
-              <span>Fitness Center</span>
+              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-fitness-center.webp" alt="Fitness center icon" loading="lazy" data-cms="amenity-fitness-center-icon" data-cms-type="image" />
+              <span data-cms="amenity-fitness-center-label">Fitness Center</span>
             </div>
             <div class="icon-amenity">
-              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-clubhouse.webp" alt="Clubhouse icon" loading="lazy" />
-              <span>Clubhouse Access</span>
+              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-clubhouse.webp" alt="Clubhouse icon" loading="lazy" data-cms="amenity-clubhouse-icon" data-cms-type="image" />
+              <span data-cms="amenity-clubhouse-label">Clubhouse Access</span>
             </div>
             <div class="icon-amenity">
-              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-vending-area.webp" alt="Vending area icon" loading="lazy" />
-              <span>Vending Area</span>
+              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-vending-area.webp" alt="Vending area icon" loading="lazy" data-cms="amenity-vending-area-icon" data-cms-type="image" />
+              <span data-cms="amenity-vending-area-label">Vending Area</span>
             </div>
             <div class="icon-amenity">
-              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-internet.webp" alt="High speed internet icon" loading="lazy" />
-              <span>High Speed Internet</span>
+              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-internet.webp" alt="High speed internet icon" loading="lazy" data-cms="amenity-internet-icon" data-cms-type="image" />
+              <span data-cms="amenity-internet-label">High Speed Internet</span>
             </div>
             <div class="icon-amenity">
-              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-nature-trail.webp" alt="Nature trail icon" loading="lazy" />
-              <span>Nature Trail</span>
+              <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/icon-nature-trail.webp" alt="Nature trail icon" loading="lazy" data-cms="amenity-nature-trail-icon" data-cms-type="image" />
+              <span data-cms="amenity-nature-trail-label">Nature Trail</span>
             </div>
           </div>
         </div>
@@ -490,46 +493,46 @@
       <section class="section reveal">
         <div class="section-head">
           <div>
-            <div class="kicker">Photo gallery</div>
-            <h2>See The Oasis community up close.</h2>
+            <div class="kicker" data-cms="gallery-kicker">Photo gallery</div>
+            <h2 data-cms="gallery-title">See The Oasis community up close.</h2>
           </div>
         </div>
         <div class="photo-gallery" data-gallery="oasis">
           <div class="photo-gallery__item photo-gallery__item--wide">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/drone-3.jpg" alt="Oasis aerial view" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/drone-3.jpg" alt="Oasis aerial view" loading="lazy" data-cms="gallery-image-1" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/outside-5.jpg" alt="Oasis exterior" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/outside-5.jpg" alt="Oasis exterior" loading="lazy" data-cms="gallery-image-2" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/oasis-pool.jpg" alt="Oasis pool area" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/oasis-pool.jpg" alt="Oasis pool area" loading="lazy" data-cms="gallery-image-3" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/clubhouse-6.png" alt="Oasis clubhouse" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/clubhouse-6.png" alt="Oasis clubhouse" loading="lazy" data-cms="gallery-image-4" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/clubhouse-2.png" alt="Oasis clubhouse seating" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/clubhouse-2.png" alt="Oasis clubhouse seating" loading="lazy" data-cms="gallery-image-5" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/clubhouse-5.png" alt="Oasis clubhouse interior" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/clubhouse-5.png" alt="Oasis clubhouse interior" loading="lazy" data-cms="gallery-image-6" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/clubhouse-1.png" alt="Oasis game room" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/clubhouse-1.png" alt="Oasis game room" loading="lazy" data-cms="gallery-image-7" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item photo-gallery__item--wide">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/drone-16.jpg" alt="Oasis community from above" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/drone-16.jpg" alt="Oasis community from above" loading="lazy" data-cms="gallery-image-8" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/outside-29.jpg" alt="Oasis building exterior" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/outside-29.jpg" alt="Oasis building exterior" loading="lazy" data-cms="gallery-image-9" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/outside-30.jpg" alt="Oasis grounds" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/outside-30.jpg" alt="Oasis grounds" loading="lazy" data-cms="gallery-image-10" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/outside-2.jpg" alt="Oasis entrance" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/outside-2.jpg" alt="Oasis entrance" loading="lazy" data-cms="gallery-image-11" data-cms-type="image" />
           </div>
           <div class="photo-gallery__item">
-            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/kitchen.png" alt="Oasis apartment kitchen" loading="lazy" />
+            <img src="https://povizsshrvyqcaszwzmr.supabase.co/storage/v1/object/public/vue-site-assets/kitchen.png" alt="Oasis apartment kitchen" loading="lazy" data-cms="gallery-image-12" data-cms-type="image" />
           </div>
         </div>
       </section>
@@ -537,9 +540,9 @@
       <section class="section reveal">
         <div class="cta-band">
           <div>
-            <div class="kicker">Lease structure</div>
-            <h2>Individual leases and roommate matching come standard.</h2>
-            <p>
+            <div class="kicker" data-cms="cta-kicker">Lease structure</div>
+            <h2 data-cms="cta-title">Individual leases and roommate matching come standard.</h2>
+            <p data-cms="cta-description">
               Students can request roommates, apply with friends, or lease on their own and be matched. Each resident
               leases their own room rather than taking responsibility for the apartment as a whole.
             </p>
@@ -556,9 +559,9 @@
             </div>
           </div>
           <div class="note-stack">
-            <div class="note-card"><strong>Current pricing range</strong><p>$525 to $955 per person, per room, per installment</p></div>
-            <div class="note-card"><strong>Move-in note</strong><p>Current availability may include limited April and May move-ins. Contact leasing for details.</p></div>
-            <div class="note-card"><strong>Office contact</strong><p>40 Oasis Way, Lynchburg, VA 24502<br /><a href="tel:4343297979">434-329-7979</a></p></div>
+            <div class="note-card"><strong data-cms="note-card-1-title">Current pricing range</strong><p data-cms="note-card-1-description">$525 to $955 per person, per room, per installment</p></div>
+            <div class="note-card"><strong data-cms="note-card-2-title">Move-in note</strong><p data-cms="note-card-2-description">Current availability may include limited April and May move-ins. Contact leasing for details.</p></div>
+            <div class="note-card"><strong data-cms="note-card-3-title">Office contact</strong><p data-cms="note-card-3-description" data-cms-type="html">40 Oasis Way, Lynchburg, VA 24502<br /><a href="tel:4343297979">434-329-7979</a></p></div>
           </div>
         </div>
       </section>

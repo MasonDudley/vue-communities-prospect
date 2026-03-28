@@ -145,6 +145,40 @@ const SUPABASE_URL = "https://povizsshrvyqcaszwzmr.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_4EFhT1Gx4qk_PHEm4cdRjw_kFKrEDZJ";
 const CONTACT_ENDPOINT = "/api/contact";
 
+// ── CMS content overrides ────────────────────────────────────────────────────
+
+const cmsPage = document.body.dataset.cmsPage;
+
+if (cmsPage) {
+  const pages = `page=in.("${cmsPage}","shared")`;
+  fetch(`${SUPABASE_URL}/rest/v1/cms_content?${pages}&select=cms_key,content_type,value`, {
+    headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
+  })
+    .then((r) => (r.ok ? r.json() : Promise.reject()))
+    .then((rows) => {
+      (rows || []).forEach((row) => {
+        const el = document.querySelector(`[data-cms="${row.cms_key}"]`);
+        if (!el) return;
+        if (row.content_type === "image") {
+          el.src = row.value;
+        } else if (row.content_type === "html") {
+          el.innerHTML = row.value;
+        } else {
+          el.textContent = row.value;
+        }
+      });
+    })
+    .catch(() => {}); // CMS overrides are non-critical — fall back to baked-in HTML
+
+  // Load edit-mode script when opened from admin editor
+  if (new URLSearchParams(window.location.search).has("cms-edit")) {
+    const s = document.createElement("script");
+    s.src = "/admin/cms-edit-mode.js";
+    s.type = "module";
+    document.head.appendChild(s);
+  }
+}
+
 const form = document.querySelector("[data-mailto-form]");
 
 if (form) {
