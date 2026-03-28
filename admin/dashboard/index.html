@@ -282,8 +282,13 @@
               <select id="media-folder-filter" aria-label="Filter by folder">
                 <option value="">All folders</option>
               </select>
+              <button id="media-new-folder-btn" class="btn btn-secondary btn-sm" type="button">+ New folder</button>
             </div>
-            <div>
+            <div style="display:flex;gap:0.5rem;align-items:center;">
+              <label style="font-size:0.8125rem;color:var(--muted);white-space:nowrap;">Upload to:</label>
+              <select id="media-upload-folder" aria-label="Upload destination folder" style="padding:0.375rem 0.75rem;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:0.8125rem;background:#fff;">
+                <option value="uploads">uploads</option>
+              </select>
               <button id="media-upload-btn" class="btn btn-primary btn-sm" type="button">Upload image</button>
               <input id="media-file-input" type="file" accept="image/*" multiple style="display:none" />
             </div>
@@ -1445,18 +1450,39 @@
         return files;
       }
 
+      let mediaFolders = [];
+
       async function loadMedia() {
         allMediaFiles = await listAllFiles();
 
-        // Populate folder filter
-        const folders = new Set();
+        // Collect unique top-level folders
+        const folderSet = new Set();
         allMediaFiles.forEach(f => {
           const parts = f.fullPath.split('/');
-          if (parts.length > 1) folders.add(parts[0]);
+          if (parts.length > 1) folderSet.add(parts[0]);
         });
+        mediaFolders = Array.from(folderSet).sort();
+
+        // Populate folder filter
         const folderSelect = document.getElementById('media-folder-filter');
         folderSelect.innerHTML = '<option value="">All folders</option>' +
-          Array.from(folders).sort().map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join('');
+          mediaFolders.map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join('');
+
+        // Populate upload destination dropdown
+        const uploadFolderSelect = document.getElementById('media-upload-folder');
+        const currentVal = uploadFolderSelect.value;
+        uploadFolderSelect.innerHTML =
+          mediaFolders.map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join('') +
+          '<option value="uploads"' + (!mediaFolders.includes('uploads') ? '' : '') + '>uploads</option>';
+        // Deduplicate if uploads already in folders
+        const seen = new Set();
+        Array.from(uploadFolderSelect.options).forEach(opt => {
+          if (seen.has(opt.value)) opt.remove();
+          else seen.add(opt.value);
+        });
+        if (currentVal && Array.from(uploadFolderSelect.options).some(o => o.value === currentVal)) {
+          uploadFolderSelect.value = currentVal;
+        }
 
         renderMediaGrid();
       }
@@ -1570,6 +1596,72 @@
       }
 
       // Upload handler
+      // New folder button
+      document.getElementById('media-new-folder-btn').addEventListener('click', async () => {
+        const backdrop = document.createElement('div');
+        backdrop.className = 'admin-modal-backdrop';
+        backdrop.innerHTML = `
+          <div class="admin-modal">
+            <h3>Create new folder</h3>
+            <p>Enter a folder name (lowercase letters, numbers, and hyphens only).</p>
+            <input id="new-folder-name" type="text" placeholder="e.g. property-photos" style="width:100%;padding:0.5rem 0.75rem;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:0.875rem;margin-bottom:1rem;" />
+            <div class="admin-modal__actions">
+              <button class="btn btn-secondary btn-sm" data-modal="cancel">Cancel</button>
+              <button class="btn btn-primary btn-sm" data-modal="confirm">Create folder</button>
+            </div>
+          </div>`;
+        document.body.appendChild(backdrop);
+
+        const input = backdrop.querySelector('#new-folder-name');
+        input.focus();
+
+        const cleanup = () => backdrop.remove();
+        backdrop.querySelector('[data-modal="cancel"]').addEventListener('click', cleanup);
+        backdrop.addEventListener('click', (e) => { if (e.target === backdrop) cleanup(); });
+
+        backdrop.querySelector('[data-modal="confirm"]').addEventListener('click', async () => {
+          const raw = input.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+          if (!raw) {
+            showToast('Please enter a valid folder name.', 'error');
+            return;
+          }
+
+          // Supabase storage creates "folders" implicitly when you upload a file into them.
+          // Upload a tiny placeholder file to create the folder.
+          const placeholder = new Blob([''], { type: 'text/plain' });
+          const { error } = await supabase.storage.from(MEDIA_BUCKET).upload(`${raw}/.folder`, placeholder, { contentType: 'text/plain', upsert: true });
+
+          if (error) {
+            showToast('Failed to create folder: ' + error.message, 'error');
+            return;
+          }
+
+          cleanup();
+          showToast(`Folder "${raw}" created`, 'success');
+
+          // Add to dropdowns immediately
+          if (!mediaFolders.includes(raw)) {
+            mediaFolders.push(raw);
+            mediaFolders.sort();
+          }
+          const folderSelect = document.getElementById('media-folder-filter');
+          if (!Array.from(folderSelect.options).some(o => o.value === raw)) {
+            folderSelect.add(new Option(raw, raw));
+          }
+          const uploadSelect = document.getElementById('media-upload-folder');
+          if (!Array.from(uploadSelect.options).some(o => o.value === raw)) {
+            uploadSelect.add(new Option(raw, raw), uploadSelect.firstChild);
+          }
+          uploadSelect.value = raw;
+        });
+
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') backdrop.querySelector('[data-modal="confirm"]').click();
+          if (e.key === 'Escape') cleanup();
+        });
+      });
+
+      // Upload button
       document.getElementById('media-upload-btn').addEventListener('click', () => {
         document.getElementById('media-file-input').click();
       });
@@ -1578,6 +1670,7 @@
         const files = Array.from(e.target.files || []);
         if (!files.length) return;
 
+        const destFolder = document.getElementById('media-upload-folder').value || 'uploads';
         const btn = document.getElementById('media-upload-btn');
         btn.disabled = true;
         btn.classList.add('is-loading');
@@ -1589,7 +1682,7 @@
             continue;
           }
           const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '-').toLowerCase();
-          const path = `uploads/${Date.now()}-${safeName}`;
+          const path = `${destFolder}/${Date.now()}-${safeName}`;
           const { error } = await supabase.storage.from(MEDIA_BUCKET).upload(path, file, { contentType: file.type, upsert: false });
           if (error) {
             showToast(`Failed to upload ${file.name}`, 'error');
@@ -1603,7 +1696,7 @@
         e.target.value = '';
 
         if (uploaded > 0) {
-          showToast(`${uploaded} image${uploaded > 1 ? 's' : ''} uploaded`, 'success');
+          showToast(`${uploaded} image${uploaded > 1 ? 's' : ''} uploaded to ${destFolder}/`, 'success');
           await loadMedia();
         }
       });
