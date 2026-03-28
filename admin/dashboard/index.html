@@ -1522,12 +1522,14 @@
           const url = getMediaPublicUrl(f.fullPath);
           const size = formatFileSize(f.metadata?.size);
           const name = f.name;
+          const folderPath = f.fullPath.includes('/') ? f.fullPath.substring(0, f.fullPath.lastIndexOf('/')) : '';
           return `
             <div class="media-card" data-path="${esc(f.fullPath)}">
               <div class="media-card__thumb" data-preview="${esc(f.fullPath)}">
                 <img src="${esc(url)}" alt="${esc(name)}" loading="lazy" />
               </div>
               <div class="media-card__info">
+                ${folderPath ? `<div class="media-card__folder">${esc(folderPath)}/</div>` : ''}
                 <div class="media-card__name" title="${esc(f.fullPath)}">${esc(name)}</div>
                 <div class="media-card__size">${esc(size)}</div>
               </div>

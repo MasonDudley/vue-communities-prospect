@@ -1273,6 +1273,17 @@ table.admin-table {
   padding: 0.5rem 0.625rem;
 }
 
+.media-card__folder {
+  font-size: 0.625rem;
+  color: var(--orange-500);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0.0625rem;
+}
+
 .media-card__name {
   font-size: 0.75rem;
   color: var(--ink);
