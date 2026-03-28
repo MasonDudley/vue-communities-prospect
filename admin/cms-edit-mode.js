@@ -82,6 +82,13 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+// ── Edit mode banner ─────────────────────────────────────────────────────────
+
+const banner = document.createElement('div');
+banner.style.cssText = 'position:sticky;top:0;z-index:9999;background:#1e40af;color:#fff;text-align:center;padding:0.5rem 1rem;font:500 0.8125rem/1.4 system-ui,sans-serif;';
+banner.textContent = 'Editing mode — click any highlighted element to edit text, or click images to replace them';
+document.body.prepend(banner);
+
 // ── Disable page links & navigation in edit mode ─────────────────────────────
 
 document.addEventListener('click', (e) => {
@@ -102,7 +109,7 @@ function notifyParent() {
     content_type: data.content_type,
     value: data.value,
   }));
-  window.parent.postMessage({ type: 'cms-changes', changes, count: changes.length }, '*');
+  window.parent.postMessage({ type: 'cms-changes', changes, count: changes.length }, window.location.origin);
 }
 
 function recordChange(el) {
@@ -132,6 +139,34 @@ const cmsElements = document.querySelectorAll('[data-cms]');
 
 cmsElements.forEach((el) => {
   const contentType = el.dataset.cmsType || 'text';
+
+  // Store original content for reset-to-default
+  if (contentType === 'image') {
+    el.dataset.cmsOriginal = el.src;
+  } else if (contentType === 'html') {
+    el.dataset.cmsOriginal = el.innerHTML;
+  } else {
+    el.dataset.cmsOriginal = el.textContent;
+  }
+
+  // Right-click to reset to baked-in default
+  el.addEventListener('contextmenu', (e) => {
+    if (!el.dataset.cmsOriginal) return; // no original stored, nothing to reset
+    e.preventDefault();
+    const restore = confirm('Reset this element to its default content?');
+    if (!restore) return;
+    if (contentType === 'image') {
+      el.src = el.dataset.cmsOriginal;
+    } else if (contentType === 'html') {
+      el.innerHTML = el.dataset.cmsOriginal;
+    } else {
+      el.textContent = el.dataset.cmsOriginal;
+    }
+    el.classList.remove('cms-changed');
+    pendingChanges.delete(el.dataset.cms);
+    notifyParent();
+    showToast('Reset to default');
+  });
 
   if (contentType === 'image') {
     // Image: add overlay and click-to-upload
@@ -212,6 +247,15 @@ cmsElements.forEach((el) => {
         el.blur();
       }
     });
+
+    // Strip HTML when pasting into text-only fields
+    if ((el.dataset.cmsType || 'text') === 'text') {
+      el.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+        document.execCommand('insertText', false, text);
+      });
+    }
   }
 });
 
@@ -230,6 +274,18 @@ window.addEventListener('message', (e) => {
   }
 });
 
+// ── Keyboard shortcuts ───────────────────────────────────────────────────────
+
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+    e.preventDefault();
+    if (pendingChanges.size > 0) {
+      window.parent.postMessage({ type: 'cms-save-request' }, window.location.origin);
+      showToast('Saving...');
+    }
+  }
+});
+
 // ── Toast helper ─────────────────────────────────────────────────────────────
 
 function showToast(msg) {
@@ -242,10 +298,19 @@ function showToast(msg) {
   toast.textContent = msg;
   toast.classList.add('is-visible');
   clearTimeout(toast._timer);
-  toast._timer = setTimeout(() => toast.classList.remove('is-visible'), 2000);
+  toast._timer = setTimeout(() => toast.classList.remove('is-visible'), 3000);
 }
+
+// ── Warn on unload with pending changes ──────────────────────────────────────
+
+window.addEventListener('beforeunload', (e) => {
+  if (pendingChanges.size > 0) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
 
 // ── Notify parent that edit mode is ready ────────────────────────────────────
 
-window.parent.postMessage({ type: 'cms-ready', page: cmsPage }, '*');
+window.parent.postMessage({ type: 'cms-ready', page: cmsPage }, window.location.origin);
 notifyParent();

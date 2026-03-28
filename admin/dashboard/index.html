@@ -76,6 +76,7 @@
             <h2>Contact Inquiries</h2>
           </div>
           <div class="admin-filters">
+            <input id="filter-search" type="search" placeholder="Search name, email, message…" aria-label="Search inquiries" />
             <select id="filter-community" aria-label="Filter by community">
               <option value="">All communities</option>
               <option value="The Oasis">The Oasis</option>
@@ -88,8 +89,18 @@
               <option value="reviewed">Reviewed only</option>
             </select>
           </div>
+          <div id="inquiries-bulk-bar" class="admin-bulk-bar" style="display:none">
+            <span id="bulk-count">0 selected</span>
+            <button id="bulk-mark-reviewed" class="btn btn-primary btn-sm" type="button">Mark selected as reviewed</button>
+          </div>
           <div id="inquiries-content">
-            <div class="admin-loading">Loading inquiries…</div>
+            <div class="admin-skeleton">
+              <div class="admin-skeleton__row admin-skeleton__row--wide admin-skeleton__row--tall"></div>
+              <div class="admin-skeleton__row admin-skeleton__row--wide"></div>
+              <div class="admin-skeleton__row admin-skeleton__row--wide"></div>
+              <div class="admin-skeleton__row admin-skeleton__row--medium"></div>
+              <div class="admin-skeleton__row admin-skeleton__row--wide"></div>
+            </div>
           </div>
         </div>
 
@@ -100,7 +111,11 @@
             <span class="admin-panel-meta">Changes are saved per row and reflected immediately on the public site.</span>
           </div>
           <div id="availability-content">
-            <div class="admin-loading">Loading availability…</div>
+            <div class="admin-skeleton">
+              <div class="admin-skeleton__row admin-skeleton__row--wide admin-skeleton__row--tall"></div>
+              <div class="admin-skeleton__row admin-skeleton__row--wide"></div>
+              <div class="admin-skeleton__row admin-skeleton__row--medium"></div>
+            </div>
           </div>
         </div>
 
@@ -214,7 +229,11 @@
                 <span class="admin-panel-meta">Top active special per community shows on the public page.</span>
               </div>
               <div id="specials-content">
-                <div class="admin-loading">Loading specials…</div>
+                <div class="admin-skeleton">
+                  <div class="admin-skeleton__row admin-skeleton__row--wide admin-skeleton__row--tall"></div>
+                  <div class="admin-skeleton__row admin-skeleton__row--wide"></div>
+                  <div class="admin-skeleton__row admin-skeleton__row--medium"></div>
+                </div>
               </div>
             </section>
           </div>
@@ -244,11 +263,12 @@
           <div class="editor-preview-wrap">
             <iframe id="editor-iframe" class="editor-iframe" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
           </div>
-          <div id="editor-toast" class="editor-toast" style="display:none"></div>
         </div>
 
       </div>
     </div>
+
+    <div class="admin-toast-container" id="toast-container" role="status" aria-live="polite"></div>
 
     <script type="module">
       import { supabase, requireAuth, signOut } from '../admin.js';
@@ -292,6 +312,62 @@
         });
       });
 
+      // ── Keyboard Tab Navigation ──────────────────────────────────────────
+      const tabList = document.querySelector('[role="tablist"]');
+      tabList.addEventListener('keydown', (e) => {
+        const tabBtns = Array.from(tabList.querySelectorAll('[role="tab"]'));
+        const idx = tabBtns.indexOf(document.activeElement);
+        if (idx === -1) return;
+        let next = -1;
+        if (e.key === 'ArrowRight') next = (idx + 1) % tabBtns.length;
+        else if (e.key === 'ArrowLeft') next = (idx - 1 + tabBtns.length) % tabBtns.length;
+        if (next !== -1) {
+          e.preventDefault();
+          tabBtns[next].focus();
+          tabBtns[next].click();
+        }
+      });
+
+      // ── Toast System ────────────────────────────────────────────────────
+      const toastContainer = document.getElementById('toast-container');
+
+      function showToast(msg, variant = 'info') {
+        const el = document.createElement('div');
+        el.className = `admin-toast admin-toast--${variant}`;
+        el.textContent = msg;
+        toastContainer.appendChild(el);
+        setTimeout(() => {
+          el.classList.add('is-leaving');
+          el.addEventListener('animationend', () => el.remove());
+        }, 3000);
+      }
+
+      // ── Confirm Modal ──────────────────────────────────────────────────
+      function confirmModal(title, message, confirmLabel = 'Confirm', variant = 'btn-primary') {
+        return new Promise((resolve) => {
+          const backdrop = document.createElement('div');
+          backdrop.className = 'admin-modal-backdrop';
+          backdrop.innerHTML = `
+            <div class="admin-modal">
+              <h3>${esc(title)}</h3>
+              <p>${esc(message)}</p>
+              <div class="admin-modal__actions">
+                <button class="btn btn-secondary btn-sm" data-modal="cancel">Cancel</button>
+                <button class="btn ${variant} btn-sm" data-modal="confirm">${esc(confirmLabel)}</button>
+              </div>
+            </div>`;
+          document.body.appendChild(backdrop);
+
+          const cleanup = (result) => { backdrop.remove(); resolve(result); };
+          backdrop.querySelector('[data-modal="cancel"]').addEventListener('click', () => cleanup(false));
+          backdrop.querySelector('[data-modal="confirm"]').addEventListener('click', () => cleanup(true));
+          backdrop.addEventListener('click', (e) => { if (e.target === backdrop) cleanup(false); });
+          document.addEventListener('keydown', function handler(e) {
+            if (e.key === 'Escape') { document.removeEventListener('keydown', handler); cleanup(false); }
+          });
+        });
+      }
+
       // ── Utility ───────────────────────────────────────────────────────────
       function esc(str) {
         return String(str ?? '')
@@ -323,6 +399,10 @@
 
       // ── Inquiries ─────────────────────────────────────────────────────────
       let allSubmissions = [];
+      let inquirySort = { col: 'created_at', dir: 'desc' };
+      let inquiryPage = 0;
+      const PAGE_SIZE = 25;
+      const selectedIds = new Set();
 
       async function loadInquiries() {
         const { data, error } = await supabase
@@ -333,12 +413,16 @@
         const container = document.getElementById('inquiries-content');
 
         if (error) {
-          container.innerHTML = `<div class="admin-alert admin-alert--error">Failed to load inquiries: ${esc(error.message)}</div>`;
+          container.innerHTML = `<div class="admin-alert admin-alert--error">Could not load inquiries. Please refresh the page.</div>`;
           return;
         }
 
         allSubmissions = data || [];
+        updateNewBadge();
+        renderInquiries();
+      }
 
+      function updateNewBadge() {
         const newCount = allSubmissions.filter(s => !s.reviewed).length;
         const badge = document.getElementById('new-badge');
         if (newCount > 0) {
@@ -347,20 +431,48 @@
         } else {
           badge.style.display = 'none';
         }
-
-        renderInquiries();
       }
 
-      function renderInquiries() {
+      function getFilteredInquiries() {
         const communityFilter = document.getElementById('filter-community').value;
         const statusFilter = document.getElementById('filter-status').value;
+        const search = document.getElementById('filter-search').value.toLowerCase().trim();
 
         let filtered = allSubmissions;
         if (communityFilter) filtered = filtered.filter(s => s.community === communityFilter);
         if (statusFilter === 'new') filtered = filtered.filter(s => !s.reviewed);
         if (statusFilter === 'reviewed') filtered = filtered.filter(s => s.reviewed);
+        if (search) {
+          filtered = filtered.filter(s =>
+            (s.name || '').toLowerCase().includes(search) ||
+            (s.email || '').toLowerCase().includes(search) ||
+            (s.phone || '').toLowerCase().includes(search) ||
+            (s.message || '').toLowerCase().includes(search)
+          );
+        }
 
+        // Sort
+        const { col, dir } = inquirySort;
+        filtered.sort((a, b) => {
+          let va = a[col] ?? '', vb = b[col] ?? '';
+          if (col === 'created_at') { va = new Date(va).getTime() || 0; vb = new Date(vb).getTime() || 0; }
+          else { va = String(va).toLowerCase(); vb = String(vb).toLowerCase(); }
+          if (va < vb) return dir === 'asc' ? -1 : 1;
+          if (va > vb) return dir === 'asc' ? 1 : -1;
+          return 0;
+        });
+
+        return filtered;
+      }
+
+      function renderInquiries() {
+        const filtered = getFilteredInquiries();
         const container = document.getElementById('inquiries-content');
+        const bulkBar = document.getElementById('inquiries-bulk-bar');
+
+        // Reset selection on re-render
+        selectedIds.clear();
+        bulkBar.style.display = 'none';
 
         if (filtered.length === 0) {
           container.innerHTML = `
@@ -371,7 +483,20 @@
           return;
         }
 
-        const rows = filtered.map(s => {
+        // Pagination
+        const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+        if (inquiryPage >= totalPages) inquiryPage = totalPages - 1;
+        if (inquiryPage < 0) inquiryPage = 0;
+        const start = inquiryPage * PAGE_SIZE;
+        const pageItems = filtered.slice(start, start + PAGE_SIZE);
+
+        function thClass(col) {
+          let cls = 'is-sortable';
+          if (inquirySort.col === col) cls += ` is-sorted-${inquirySort.dir}`;
+          return cls;
+        }
+
+        const rows = pageItems.map(s => {
           const date = s.created_at
             ? new Date(s.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
             : '—';
@@ -386,6 +511,7 @@
 
           return `
             <tr class="data-row${isReviewed ? ' is-reviewed' : ''}" data-id="${esc(s.id)}">
+              <td class="col-check"><input type="checkbox" data-select-id="${esc(s.id)}" aria-label="Select ${esc(s.name || 'inquiry')}" /></td>
               <td class="is-muted" style="white-space:nowrap">${esc(date)}</td>
               <td><strong>${esc(s.name || '—')}</strong></td>
               <td>${s.email ? `<a href="mailto:${esc(s.email)}">${esc(s.email)}</a>` : '—'}</td>
@@ -396,7 +522,7 @@
               <td><button class="btn-expand" data-expand="${esc(s.id)}" aria-expanded="false">View</button></td>
             </tr>
             <tr class="submission-detail" id="detail-${esc(s.id)}">
-              <td colspan="8">
+              <td colspan="9">
                 <p class="submission-detail__message">${esc(s.message || 'No message provided.')}</p>
                 <div class="submission-detail__actions">
                   ${s.email ? `<a href="mailto:${esc(s.email)}" class="btn btn-secondary btn-sm">Reply by email</a>` : ''}
@@ -407,16 +533,27 @@
             </tr>`;
         }).join('');
 
+        const paginationHtml = totalPages > 1 ? `
+          <div class="admin-pagination">
+            <span>Showing ${start + 1}–${Math.min(start + PAGE_SIZE, filtered.length)} of ${filtered.length}</span>
+            <div class="admin-pagination__controls">
+              <button class="admin-pagination__btn" data-page="prev" ${inquiryPage === 0 ? 'disabled' : ''}>Prev</button>
+              <span>Page ${inquiryPage + 1} of ${totalPages}</span>
+              <button class="admin-pagination__btn" data-page="next" ${inquiryPage >= totalPages - 1 ? 'disabled' : ''}>Next</button>
+            </div>
+          </div>` : '';
+
         container.innerHTML = `
           <div class="admin-table-wrap">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th>Date</th>
-                  <th>Name</th>
+                  <th class="col-check"><input type="checkbox" id="select-all" aria-label="Select all" /></th>
+                  <th class="${thClass('created_at')}" data-sort="created_at">Date</th>
+                  <th class="${thClass('name')}" data-sort="name">Name</th>
                   <th>Email</th>
                   <th>Phone</th>
-                  <th>Community</th>
+                  <th class="${thClass('community')}" data-sort="community">Community</th>
                   <th>Move-in</th>
                   <th>Status</th>
                   <th></th>
@@ -424,8 +561,53 @@
               </thead>
               <tbody>${rows}</tbody>
             </table>
+            ${paginationHtml}
           </div>`;
 
+        // Sort handlers
+        container.querySelectorAll('[data-sort]').forEach(th => {
+          th.addEventListener('click', () => {
+            const col = th.dataset.sort;
+            if (inquirySort.col === col) {
+              inquirySort.dir = inquirySort.dir === 'asc' ? 'desc' : 'asc';
+            } else {
+              inquirySort = { col, dir: 'asc' };
+            }
+            renderInquiries();
+          });
+        });
+
+        // Pagination handlers
+        container.querySelectorAll('[data-page]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (btn.dataset.page === 'prev') inquiryPage--;
+            else inquiryPage++;
+            renderInquiries();
+          });
+        });
+
+        // Select all
+        const selectAll = container.querySelector('#select-all');
+        selectAll?.addEventListener('change', () => {
+          const checks = container.querySelectorAll('[data-select-id]');
+          checks.forEach(cb => {
+            cb.checked = selectAll.checked;
+            if (selectAll.checked) selectedIds.add(cb.dataset.selectId);
+            else selectedIds.delete(cb.dataset.selectId);
+          });
+          updateBulkBar();
+        });
+
+        // Individual checkboxes
+        container.querySelectorAll('[data-select-id]').forEach(cb => {
+          cb.addEventListener('change', () => {
+            if (cb.checked) selectedIds.add(cb.dataset.selectId);
+            else selectedIds.delete(cb.dataset.selectId);
+            updateBulkBar();
+          });
+        });
+
+        // Expand/collapse
         container.querySelectorAll('[data-expand]').forEach(btn => {
           btn.addEventListener('click', () => {
             const id = btn.dataset.expand;
@@ -437,11 +619,12 @@
           });
         });
 
+        // Mark reviewed (single)
         container.querySelectorAll('[data-mark-reviewed]').forEach(btn => {
           btn.addEventListener('click', async () => {
             const id = btn.dataset.markReviewed;
             btn.disabled = true;
-            btn.textContent = 'Saving…';
+            btn.classList.add('is-loading');
 
             const { error } = await supabase
               .from('contact_submissions')
@@ -450,28 +633,67 @@
 
             if (error) {
               btn.disabled = false;
-              btn.textContent = 'Mark reviewed';
-              alert(`Error: ${error.message}`);
+              btn.classList.remove('is-loading');
+              showToast('Failed to update. Please try again.', 'error');
             } else {
               const sub = allSubmissions.find(s => s.id === id);
               if (sub) sub.reviewed = true;
-
-              const newCount = allSubmissions.filter(s => !s.reviewed).length;
-              const badge = document.getElementById('new-badge');
-              if (newCount > 0) {
-                badge.textContent = newCount;
-              } else {
-                badge.style.display = 'none';
-              }
-
+              updateNewBadge();
+              showToast('Marked as reviewed', 'success');
               renderInquiries();
             }
           });
         });
       }
 
-      document.getElementById('filter-community').addEventListener('change', renderInquiries);
-      document.getElementById('filter-status').addEventListener('change', renderInquiries);
+      function updateBulkBar() {
+        const bar = document.getElementById('inquiries-bulk-bar');
+        const count = selectedIds.size;
+        if (count > 0) {
+          bar.style.display = '';
+          document.getElementById('bulk-count').textContent = `${count} selected`;
+        } else {
+          bar.style.display = 'none';
+        }
+      }
+
+      // Bulk mark reviewed
+      document.getElementById('bulk-mark-reviewed').addEventListener('click', async () => {
+        if (selectedIds.size === 0) return;
+        const ids = Array.from(selectedIds);
+        const btn = document.getElementById('bulk-mark-reviewed');
+        btn.disabled = true;
+        btn.classList.add('is-loading');
+
+        const { error } = await supabase
+          .from('contact_submissions')
+          .update({ reviewed: true })
+          .in('id', ids);
+
+        btn.disabled = false;
+        btn.classList.remove('is-loading');
+
+        if (error) {
+          showToast('Bulk update failed. Please try again.', 'error');
+        } else {
+          ids.forEach(id => {
+            const sub = allSubmissions.find(s => s.id === id);
+            if (sub) sub.reviewed = true;
+          });
+          updateNewBadge();
+          showToast(`${ids.length} inquiries marked as reviewed`, 'success');
+          renderInquiries();
+        }
+      });
+
+      document.getElementById('filter-community').addEventListener('change', () => { inquiryPage = 0; renderInquiries(); });
+      document.getElementById('filter-status').addEventListener('change', () => { inquiryPage = 0; renderInquiries(); });
+
+      let searchDebounce;
+      document.getElementById('filter-search').addEventListener('input', () => {
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(() => { inquiryPage = 0; renderInquiries(); }, 200);
+      });
 
       loadInquiries();
 
@@ -529,7 +751,13 @@
 
           return `
             <div class="avail-section">
-              <h3>${esc(community)}</h3>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.875rem;">
+                <h3 style="margin:0">${esc(community)}</h3>
+                <div style="display:flex;gap:0.375rem;">
+                  <button class="btn btn-secondary btn-sm" data-set-all="${esc(community)}" data-set-status="available">Set all Available</button>
+                  <button class="btn btn-secondary btn-sm" data-set-all="${esc(community)}" data-set-status="unavailable">Set all Full</button>
+                </div>
+              </div>
               <div class="avail-table-wrap">${rows}</div>
             </div>`;
         }).join('');
@@ -557,15 +785,54 @@
             if (error) {
               btn.disabled = false;
               btn.textContent = 'Save';
-              alert(`Error saving: ${error.message}`);
+              showToast('Failed to save. Please try again.', 'error');
             } else {
               btn.textContent = 'Saved ✓';
               btn.className = 'btn btn-success btn-sm avail-save';
+              row.style.background = 'rgba(22,163,74,0.06)';
               setTimeout(() => {
                 btn.textContent = 'Save';
                 btn.className = 'btn btn-primary btn-sm avail-save';
                 btn.disabled = false;
+                row.style.background = '';
               }, 2000);
+              showToast('Availability updated', 'success');
+            }
+          });
+        });
+
+        // Batch "Set all" buttons
+        container.querySelectorAll('[data-set-all]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const community = btn.dataset.setAll;
+            const status = btn.dataset.setStatus;
+            const rows = container.querySelectorAll(`.avail-row[data-community="${community}"]`);
+
+            btn.disabled = true;
+            btn.classList.add('is-loading');
+
+            const upserts = Array.from(rows).map(row => ({
+              community,
+              unit_type: row.dataset.unit,
+              status,
+              notes: row.querySelector('.avail-notes').value.trim() || null,
+              updated_at: new Date().toISOString(),
+            }));
+
+            const { error } = await supabase
+              .from('availability')
+              .upsert(upserts, { onConflict: 'community,unit_type' });
+
+            btn.disabled = false;
+            btn.classList.remove('is-loading');
+
+            if (error) {
+              showToast('Batch update failed.', 'error');
+            } else {
+              rows.forEach(row => {
+                row.querySelector('.avail-status').value = status;
+              });
+              showToast(`All ${community} units set to ${STATUS_LABELS[status] || status}`, 'success');
             }
           });
         });
@@ -659,8 +926,15 @@
         return true;
       }
 
+      const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+
       specialImageFileInput?.addEventListener('change', () => {
         const file = specialImageFileInput.files?.[0];
+        if (file && file.size > MAX_IMAGE_SIZE) {
+          specialImageUploadStatus.textContent = 'Image must be under 5 MB. Please choose a smaller file.';
+          specialImageFileInput.value = '';
+          return;
+        }
         specialImageUploadStatus.textContent = file
           ? `Selected: ${file.name}. It will upload when you save the special.`
           : '';
@@ -691,12 +965,12 @@
         };
 
         if (!payload.community || !payload.title || !payload.summary) {
-          specialFormStatus.textContent = 'Community, headline, and summary are required.';
+          showToast('Community, headline, and summary are required.', 'error');
           return;
         }
 
         if (payload.cta_url && !/^\/|https?:\/\//i.test(payload.cta_url)) {
-          specialFormStatus.textContent = 'CTA URL should start with / or http(s)://';
+          showToast('CTA URL should start with / or http(s)://', 'error');
           return;
         }
 
@@ -732,7 +1006,7 @@
         document.getElementById('special-sort-order').value = '0';
         document.getElementById('special-is-active').checked = true;
         specialImageUploadStatus.textContent = '';
-        specialFormStatus.textContent = 'Special saved.';
+        showToast('Special saved!', 'success');
         specialSubmitBtn.disabled = false;
         specialSubmitBtn.textContent = 'Save special';
         updatePreview();
@@ -912,6 +1186,7 @@
 
               <div class="special-item__actions">
                 <button class="btn btn-primary btn-sm" type="button" data-special-save>Save changes</button>
+                <button class="btn btn-secondary btn-sm" type="button" data-special-duplicate>Duplicate</button>
                 <button class="btn btn-secondary btn-sm" type="button" data-special-remove-image ${item.image_url ? '' : 'disabled'}>Remove image</button>
                 <button class="btn btn-danger btn-sm" type="button" data-special-delete>Delete special</button>
                 <span class="admin-panel-meta" data-special-action-status></span>
@@ -942,12 +1217,18 @@
             const is_active = card.querySelector('[data-special-active]').checked;
 
             if (!summary) {
-              alert('Summary is required.');
+              showToast('Summary is required.', 'error');
               return;
             }
 
             if (cta_url && !/^\/|https?:\/\//i.test(cta_url)) {
-              alert('CTA URL should start with / or http(s)://');
+              showToast('CTA URL should start with / or http(s)://', 'error');
+              return;
+            }
+
+            // File size check for inline uploads
+            if (imageFile && imageFile.size > MAX_IMAGE_SIZE) {
+              showToast('Image must be under 5 MB.', 'error');
               return;
             }
 
@@ -980,7 +1261,7 @@
               uploadStatus.textContent = '';
               btn.disabled = false;
               btn.textContent = 'Save changes';
-              alert(`Error saving: ${error.message}`);
+              showToast('Failed to save changes. Please try again.', 'error');
               return;
             }
 
@@ -1008,9 +1289,8 @@
             const currentImageUrl = imageUrlInput.value.trim();
 
             if (!currentImageUrl) return;
-            if (!window.confirm('Remove this image from the special? This clears the image from the public site.')) {
-              return;
-            }
+            const confirmRemove = await confirmModal('Remove image?', 'This will clear the image from the public site.', 'Remove', 'btn-danger');
+            if (!confirmRemove) return;
 
             btn.disabled = true;
             actionStatus.textContent = 'Removing image…';
@@ -1029,11 +1309,10 @@
               imageUrlInput.value = '';
               imageAltInput.value = '';
               imageFileInput.value = '';
-              actionStatus.textContent = 'Image removed.';
+              showToast('Image removed', 'success');
             } catch (error) {
-              actionStatus.textContent = '';
               btn.disabled = false;
-              alert(`Error removing image: ${error.message}`);
+              showToast('Failed to remove image.', 'error');
               return;
             }
 
@@ -1049,9 +1328,8 @@
             const imageUrl = card.querySelector('[data-special-image-url]').value.trim() || null;
             const actionStatus = card.querySelector('[data-special-action-status]');
 
-            if (!window.confirm(`Delete \"${title}\"? This cannot be undone.`)) {
-              return;
-            }
+            const confirmDel = await confirmModal('Delete special?', `"${title}" will be permanently removed. This cannot be undone.`, 'Delete', 'btn-danger');
+            if (!confirmDel) return;
 
             btn.disabled = true;
             actionStatus.textContent = 'Deleting…';
@@ -1068,13 +1346,40 @@
 
               if (error) throw error;
             } catch (error) {
-              actionStatus.textContent = '';
               btn.disabled = false;
-              alert(`Error deleting special: ${error.message}`);
+              showToast('Failed to delete special.', 'error');
               return;
             }
 
             await loadSpecials();
+          });
+        });
+
+        // Duplicate
+        container.querySelectorAll('[data-special-duplicate]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const card = btn.closest('[data-special-id]');
+            const id = card.dataset.specialId;
+            const item = allSpecials.find(s => s.id === id);
+            if (!item) return;
+
+            // Pre-fill the "Add special" form with this item's data
+            document.getElementById('special-community').value = item.community;
+            document.getElementById('special-title').value = item.title + ' (copy)';
+            document.getElementById('special-summary').value = item.summary || '';
+            document.getElementById('special-details').value = item.details || '';
+            document.getElementById('special-cta-label').value = item.cta_label || '';
+            document.getElementById('special-cta-url').value = item.cta_url || '';
+            document.getElementById('special-image-url').value = item.image_url || '';
+            document.getElementById('special-image-alt').value = item.image_alt || '';
+            document.getElementById('special-pdf-url').value = item.pdf_url || '';
+            document.getElementById('special-sort-order').value = item.sort_order ?? 0;
+            document.getElementById('special-is-active').checked = false; // Start inactive
+            updatePreview();
+
+            // Scroll to form
+            document.querySelector('.specials-add-layout').scrollIntoView({ behavior: 'smooth' });
+            showToast('Form pre-filled. Edit and save as a new special.', 'info');
           });
         });
       }
@@ -1099,8 +1404,6 @@
         const saveBtn = document.getElementById('editor-save');
         const discardBtn = document.getElementById('editor-discard');
         const changeCount = document.getElementById('editor-change-count');
-        const toast = document.getElementById('editor-toast');
-
         function loadPage(pageKey) {
           const url = PAGE_URLS[pageKey];
           if (!url) return;
@@ -1123,14 +1426,6 @@
           }
         }
 
-        function showEditorToast(msg, isError) {
-          toast.textContent = msg;
-          toast.className = 'editor-toast' + (isError ? ' editor-toast--error' : '');
-          toast.style.display = '';
-          clearTimeout(toast._timer);
-          toast._timer = setTimeout(() => { toast.style.display = 'none'; }, 3000);
-        }
-
         // Listen for messages from the iframe
         window.addEventListener('message', (e) => {
           if (!e.data?.type) return;
@@ -1140,8 +1435,21 @@
             updateEditorUI();
           }
 
+          if (e.data.type === 'cms-save-request') {
+            // Cmd+S from within the iframe
+            saveBtn.click();
+          }
+
           if (e.data.type === 'cms-ready') {
             // iframe edit mode is initialized
+          }
+        });
+
+        // Warn before leaving with unsaved editor changes
+        window.addEventListener('beforeunload', (e) => {
+          if (editorPendingChanges.length > 0) {
+            e.preventDefault();
+            e.returnValue = '';
           }
         });
 
@@ -1184,9 +1492,9 @@
             editorPendingChanges = [];
             updateEditorUI();
             iframe.contentWindow.postMessage({ type: 'cms-saved' }, '*');
-            showEditorToast('Changes saved and live!');
+            showToast('Changes saved and live!', 'success');
           } catch (err) {
-            showEditorToast('Save failed: ' + err.message, true);
+            showToast('Save failed: ' + err.message, 'error');
           } finally {
             saveBtn.textContent = 'Save changes';
             saveBtn.disabled = editorPendingChanges.length === 0;
