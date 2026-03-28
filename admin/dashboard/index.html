@@ -68,6 +68,15 @@
           >
             Edit Pages
           </button>
+          <button
+            class="admin-tab"
+            role="tab"
+            data-tab="media"
+            aria-selected="false"
+            aria-controls="panel-media"
+          >
+            Media
+          </button>
         </div>
 
         <!-- Inquiries Panel -->
@@ -265,6 +274,30 @@
           </div>
         </div>
 
+        <!-- Media Panel -->
+        <div class="admin-panel" id="panel-media" data-panel="media" role="tabpanel">
+          <div class="media-toolbar">
+            <div class="media-toolbar__left">
+              <input id="media-search" type="search" placeholder="Search images…" aria-label="Search images" />
+              <select id="media-folder-filter" aria-label="Filter by folder">
+                <option value="">All folders</option>
+              </select>
+            </div>
+            <div>
+              <button id="media-upload-btn" class="btn btn-primary btn-sm" type="button">Upload image</button>
+              <input id="media-file-input" type="file" accept="image/*" multiple style="display:none" />
+            </div>
+          </div>
+          <div id="media-content">
+            <div class="admin-skeleton">
+              <div class="admin-skeleton__row admin-skeleton__row--wide admin-skeleton__row--tall"></div>
+              <div class="admin-skeleton__row admin-skeleton__row--wide"></div>
+              <div class="admin-skeleton__row admin-skeleton__row--medium"></div>
+            </div>
+          </div>
+          <div id="media-count" style="margin-top:0.75rem;font-size:0.8125rem;color:var(--muted)"></div>
+        </div>
+
       </div>
     </div>
 
@@ -286,6 +319,7 @@
       let availabilityLoaded = false;
       let specialsLoaded = false;
       let editorLoaded = false;
+      let mediaLoaded = false;
 
       tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -308,6 +342,11 @@
           if (tab.dataset.tab === 'editor' && !editorLoaded) {
             editorLoaded = true;
             initEditor();
+          }
+
+          if (tab.dataset.tab === 'media' && !mediaLoaded) {
+            mediaLoaded = true;
+            loadMedia();
           }
         });
       });
@@ -1383,6 +1422,199 @@
           });
         });
       }
+
+      // ── Media Library ─────────────────────────────────────────────────────
+
+      const MEDIA_BUCKET = 'vue-site-assets';
+      const MEDIA_MAX_SIZE = 5 * 1024 * 1024;
+      let allMediaFiles = [];
+
+      async function listAllFiles(prefix = '') {
+        const files = [];
+        const { data, error } = await supabase.storage.from(MEDIA_BUCKET).list(prefix, { limit: 1000, sortBy: { column: 'name', order: 'asc' } });
+        if (error || !data) return files;
+        for (const item of data) {
+          const fullPath = prefix ? `${prefix}/${item.name}` : item.name;
+          if (item.id) {
+            files.push({ ...item, fullPath });
+          } else {
+            const nested = await listAllFiles(fullPath);
+            files.push(...nested);
+          }
+        }
+        return files;
+      }
+
+      async function loadMedia() {
+        allMediaFiles = await listAllFiles();
+
+        // Populate folder filter
+        const folders = new Set();
+        allMediaFiles.forEach(f => {
+          const parts = f.fullPath.split('/');
+          if (parts.length > 1) folders.add(parts[0]);
+        });
+        const folderSelect = document.getElementById('media-folder-filter');
+        folderSelect.innerHTML = '<option value="">All folders</option>' +
+          Array.from(folders).sort().map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join('');
+
+        renderMediaGrid();
+      }
+
+      function getMediaPublicUrl(filePath) {
+        const { data } = supabase.storage.from(MEDIA_BUCKET).getPublicUrl(filePath);
+        return data?.publicUrl || '';
+      }
+
+      function formatFileSize(bytes) {
+        if (!bytes) return '—';
+        if (bytes < 1024) return bytes + ' B';
+        return (bytes / 1024).toFixed(1) + ' KB';
+      }
+
+      function renderMediaGrid() {
+        const search = document.getElementById('media-search').value.toLowerCase().trim();
+        const folder = document.getElementById('media-folder-filter').value;
+        const imgExts = /\.(jpe?g|png|webp|gif|svg)$/i;
+
+        let filtered = allMediaFiles.filter(f => imgExts.test(f.name));
+        if (folder) filtered = filtered.filter(f => f.fullPath.startsWith(folder + '/'));
+        if (search) filtered = filtered.filter(f => f.fullPath.toLowerCase().includes(search));
+
+        const container = document.getElementById('media-content');
+        const countEl = document.getElementById('media-count');
+
+        if (filtered.length === 0) {
+          container.innerHTML = `<div class="admin-empty"><div class="admin-empty__icon">🖼️</div><p>${allMediaFiles.length === 0 ? 'No images found in storage.' : 'No images match your search.'}</p></div>`;
+          countEl.textContent = '';
+          return;
+        }
+
+        countEl.textContent = `${filtered.length} image${filtered.length === 1 ? '' : 's'}`;
+
+        container.innerHTML = `<div class="media-grid">${filtered.map(f => {
+          const url = getMediaPublicUrl(f.fullPath);
+          const size = formatFileSize(f.metadata?.size);
+          const name = f.name;
+          return `
+            <div class="media-card" data-path="${esc(f.fullPath)}">
+              <div class="media-card__thumb" data-preview="${esc(f.fullPath)}">
+                <img src="${esc(url)}" alt="${esc(name)}" loading="lazy" />
+              </div>
+              <div class="media-card__info">
+                <div class="media-card__name" title="${esc(f.fullPath)}">${esc(name)}</div>
+                <div class="media-card__size">${esc(size)}</div>
+              </div>
+              <div class="media-card__actions">
+                <button class="btn btn-secondary btn-sm" data-copy-url="${esc(url)}">Copy URL</button>
+                <button class="btn btn-danger btn-sm" data-delete-path="${esc(f.fullPath)}">Delete</button>
+              </div>
+            </div>`;
+        }).join('')}</div>`;
+
+        // Preview handler
+        container.querySelectorAll('[data-preview]').forEach(thumb => {
+          thumb.addEventListener('click', () => {
+            const path = thumb.dataset.preview;
+            const file = allMediaFiles.find(f => f.fullPath === path);
+            if (!file) return;
+            const url = getMediaPublicUrl(path);
+            const backdrop = document.createElement('div');
+            backdrop.className = 'admin-modal-backdrop';
+            backdrop.innerHTML = `
+              <div class="admin-modal admin-modal--media">
+                <img src="${esc(url)}" alt="${esc(file.name)}" />
+                <div class="media-preview__path">${esc(path)}</div>
+                <div class="media-preview__meta">${esc(formatFileSize(file.metadata?.size))} · ${esc(file.metadata?.mimetype || '')}</div>
+                <div class="admin-modal__actions">
+                  <button class="btn btn-secondary btn-sm" data-modal-copy="${esc(url)}">Copy URL</button>
+                  <button class="btn btn-secondary btn-sm" data-modal="cancel">Close</button>
+                </div>
+              </div>`;
+            document.body.appendChild(backdrop);
+            backdrop.querySelector('[data-modal="cancel"]').addEventListener('click', () => backdrop.remove());
+            backdrop.addEventListener('click', (e) => { if (e.target === backdrop) backdrop.remove(); });
+            backdrop.querySelector('[data-modal-copy]')?.addEventListener('click', (e) => {
+              navigator.clipboard.writeText(e.target.dataset.modalCopy).then(() => showToast('URL copied', 'success'));
+            });
+          });
+        });
+
+        // Copy URL handler
+        container.querySelectorAll('[data-copy-url]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            navigator.clipboard.writeText(btn.dataset.copyUrl).then(() => showToast('URL copied', 'success'));
+          });
+        });
+
+        // Delete handler
+        container.querySelectorAll('[data-delete-path]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const path = btn.dataset.deletePath;
+            const confirmed = await confirmModal('Delete image?', `"${path}" will be permanently removed from storage.`, 'Delete', 'btn-danger');
+            if (!confirmed) return;
+            btn.disabled = true;
+            btn.classList.add('is-loading');
+            const { error } = await supabase.storage.from(MEDIA_BUCKET).remove([path]);
+            if (error) {
+              btn.disabled = false;
+              btn.classList.remove('is-loading');
+              showToast('Delete failed: ' + error.message, 'error');
+            } else {
+              allMediaFiles = allMediaFiles.filter(f => f.fullPath !== path);
+              showToast('Image deleted', 'success');
+              renderMediaGrid();
+            }
+          });
+        });
+      }
+
+      // Upload handler
+      document.getElementById('media-upload-btn').addEventListener('click', () => {
+        document.getElementById('media-file-input').click();
+      });
+
+      document.getElementById('media-file-input').addEventListener('change', async (e) => {
+        const files = Array.from(e.target.files || []);
+        if (!files.length) return;
+
+        const btn = document.getElementById('media-upload-btn');
+        btn.disabled = true;
+        btn.classList.add('is-loading');
+
+        let uploaded = 0;
+        for (const file of files) {
+          if (file.size > MEDIA_MAX_SIZE) {
+            showToast(`${file.name} exceeds 5 MB limit`, 'error');
+            continue;
+          }
+          const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '-').toLowerCase();
+          const path = `uploads/${Date.now()}-${safeName}`;
+          const { error } = await supabase.storage.from(MEDIA_BUCKET).upload(path, file, { contentType: file.type, upsert: false });
+          if (error) {
+            showToast(`Failed to upload ${file.name}`, 'error');
+          } else {
+            uploaded++;
+          }
+        }
+
+        btn.disabled = false;
+        btn.classList.remove('is-loading');
+        e.target.value = '';
+
+        if (uploaded > 0) {
+          showToast(`${uploaded} image${uploaded > 1 ? 's' : ''} uploaded`, 'success');
+          await loadMedia();
+        }
+      });
+
+      // Search and filter
+      let mediaSearchDebounce;
+      document.getElementById('media-search').addEventListener('input', () => {
+        clearTimeout(mediaSearchDebounce);
+        mediaSearchDebounce = setTimeout(renderMediaGrid, 200);
+      });
+      document.getElementById('media-folder-filter').addEventListener('change', renderMediaGrid);
 
       // ── Page Editor ──────────────────────────────────────────────────────
 
