@@ -1533,6 +1533,7 @@
               </div>
               <div class="media-card__actions">
                 <button class="btn btn-secondary btn-sm" data-copy-url="${esc(url)}">Copy URL</button>
+                <button class="btn btn-secondary btn-sm" data-move-path="${esc(f.fullPath)}">Move</button>
                 <button class="btn btn-danger btn-sm" data-delete-path="${esc(f.fullPath)}">Delete</button>
               </div>
             </div>`;
@@ -1591,6 +1592,94 @@
               showToast('Image deleted', 'success');
               renderMediaGrid();
             }
+          });
+        });
+
+        // Move handler
+        container.querySelectorAll('[data-move-path]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const oldPath = btn.dataset.movePath;
+            const fileName = oldPath.split('/').pop();
+            const currentFolder = oldPath.includes('/') ? oldPath.substring(0, oldPath.lastIndexOf('/')) : '(root)';
+
+            // Build folder options — include all known folders + root
+            const folderOptions = ['(root)', ...mediaFolders]
+              .filter(f => f !== currentFolder && !(currentFolder === '(root)' && f === '(root)'))
+              .map(f => `<option value="${esc(f)}">${esc(f === '(root)' ? 'Root (no folder)' : f)}</option>`)
+              .join('');
+
+            if (!folderOptions) {
+              showToast('No other folders to move to. Create a folder first.', 'info');
+              return;
+            }
+
+            const backdrop = document.createElement('div');
+            backdrop.className = 'admin-modal-backdrop';
+            backdrop.innerHTML = `
+              <div class="admin-modal">
+                <h3>Move image</h3>
+                <p>Move <strong>${esc(fileName)}</strong> from <strong>${esc(currentFolder)}</strong> to:</p>
+                <select id="move-dest-folder" style="width:100%;padding:0.5rem 0.75rem;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:0.875rem;margin-bottom:1rem;">
+                  ${folderOptions}
+                </select>
+                <div class="admin-modal__actions">
+                  <button class="btn btn-secondary btn-sm" data-modal="cancel">Cancel</button>
+                  <button class="btn btn-primary btn-sm" data-modal="confirm">Move</button>
+                </div>
+              </div>`;
+            document.body.appendChild(backdrop);
+
+            const cleanup = () => backdrop.remove();
+            backdrop.querySelector('[data-modal="cancel"]').addEventListener('click', cleanup);
+            backdrop.addEventListener('click', (e) => { if (e.target === backdrop) cleanup(); });
+
+            backdrop.querySelector('[data-modal="confirm"]').addEventListener('click', async () => {
+              const dest = backdrop.querySelector('#move-dest-folder').value;
+              const confirmBtn = backdrop.querySelector('[data-modal="confirm"]');
+              confirmBtn.disabled = true;
+              confirmBtn.classList.add('is-loading');
+
+              const newPath = dest === '(root)' ? fileName : `${dest}/${fileName}`;
+
+              if (newPath === oldPath) {
+                cleanup();
+                return;
+              }
+
+              try {
+                // Download the file
+                const { data: fileData, error: dlError } = await supabase.storage
+                  .from(MEDIA_BUCKET)
+                  .download(oldPath);
+
+                if (dlError) throw dlError;
+
+                // Upload to new location
+                const { error: upError } = await supabase.storage
+                  .from(MEDIA_BUCKET)
+                  .upload(newPath, fileData, { contentType: fileData.type, upsert: false });
+
+                if (upError) throw upError;
+
+                // Delete the old file
+                const { error: rmError } = await supabase.storage
+                  .from(MEDIA_BUCKET)
+                  .remove([oldPath]);
+
+                if (rmError) {
+                  // Upload succeeded but delete failed — warn but don't block
+                  showToast('Moved, but could not remove old file.', 'info');
+                }
+
+                cleanup();
+                showToast(`Moved to ${dest === '(root)' ? 'root' : dest}/`, 'success');
+                await loadMedia();
+              } catch (err) {
+                confirmBtn.disabled = false;
+                confirmBtn.classList.remove('is-loading');
+                showToast('Move failed: ' + err.message, 'error');
+              }
+            });
           });
         });
       }
